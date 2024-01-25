@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use App\Models\Folder;
+use App\Models\Site;
+use App\Models\Scopes\DataAccessScope;
+use Spatie\Sluggable\HasSlug;
+use Spatie\Sluggable\SlugOptions;
+
+// use App\Models\Trait\CampaignSluggable;
+
+
+
+class Campaign extends Model
+{
+    use HasFactory;
+
+    use HasSlug;
+
+    /**
+     * Get the options for generating the slug.
+     */
+    public function getSlugOptions() : SlugOptions
+    {
+        return SlugOptions::create()
+            ->generateSlugsFrom('name')
+            ->saveSlugsTo('slug');
+    }
+
+    protected $guarded= [];
+    public function folder()
+    {
+        return $this->belongsTo(Folder::class);
+    }
+    public function site()
+    {
+        return $this->belongsTo(Site::class);
+    }
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new DataAccessScope);
+
+        // static::deleting(function ($conversation) {
+        //     // Delete the associated messages
+        //     $conversation->messages()->delete();
+        // });
+    }
+}
