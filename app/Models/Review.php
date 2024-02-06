@@ -5,6 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Campaign;
+use App\Models\Scopes\DataAccessScope;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Review extends Model
 {
@@ -19,5 +22,17 @@ class Review extends Model
     public function campaign()
     {
         return $this->belongsTo(Campaign::class);
+    }
+
+    protected function createdAt(): Attribute
+    {
+        return Attribute::get(fn ($value) => Carbon::parse($value)->format('F j, Y, g:i A'));
+    }
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new DataAccessScope);
+
     }
 }

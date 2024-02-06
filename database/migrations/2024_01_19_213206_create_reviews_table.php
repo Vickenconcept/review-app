@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('reviews', function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->foreignId('site_id');
             $table->foreignId('campaign_id');
             $table->text('net_promote_ans')->nullable();
@@ -21,8 +22,6 @@ return new class extends Migration
             $table->text('review_platform_ans')->nullable();
             $table->text('video')->nullable();
             $table->json('contact_info_ans')->nullable();
-            // $table->text('video_review_ans')->nullable();
-            // $table->text('video_review_desc_ans')->nullable();
             $table->json('private_feed_back_ans')->nullable();
             $table->timestamps();
         });

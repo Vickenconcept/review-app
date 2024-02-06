@@ -8,7 +8,9 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
+use App\Mail\WelcomeMail;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Session;
 
 class AuthController extends Controller
@@ -19,18 +21,13 @@ class AuthController extends Controller
         $requestData = $request->validated();
         $requestData['is_admin'] = 1;
 
-        // dd($requestData);
         $user = User::create($requestData);
         $userId = $user->id;
 
-        // Auth::login($user); 
+        Mail::to($requestData['email'])->send(new WelcomeMail($requestData['password']));
 
         return view('auth.web-detail', compact('userId'));
 
-        // auth()->logout();
-        // return $request->wantsJson()
-        //     ? Response::api(['data' => $user])
-        //     : to_route('login');
 
     }
 

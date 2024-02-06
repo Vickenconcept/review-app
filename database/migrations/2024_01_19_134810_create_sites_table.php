@@ -15,8 +15,15 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->text('description')->nullable();
+            $table->text('address')->nullable();
             $table->text('url')->nullable();
+            $table->text('privacy_url')->nullable();
             $table->text('color')->nullable();
+            $table->text('theme_color')->nullable();
+            $table->text('theme_color_two')->nullable();
+            $table->text('logo')->nullable();
+            $table->text('review_type')->nullable();
+            $table->text('font')->nullable();
             $table->timestamps();
         });
     }

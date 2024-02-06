@@ -2,8 +2,8 @@
     <div class="   flex-grow flex justify-center">
         <div class="bg-gray-100   w-full px-5 h-screen flex items-center justify-center   ">
             {{-- 1 --}}
-            <div x-show="{{ $type == 'reviews' ? 'isOpen == 1' : 'isOpen == 0' }}" style="display: none"
-                class="bg-gray-50 rounded-lg shadow p-5 space-y-3 text-center select-none {{ $type == 'reviews' ? '' : 'hidden' }}">
+            <div x-show="{{ $campaignType == 'reviews' ? 'isOpen == 1' : 'isOpen == 0' }}" style="display: none"
+                class="bg-gray-50 rounded-lg shadow p-5 space-y-3 text-center select-none {{ $campaignType == 'reviews' ? '' : 'hidden' }}">
                 <h4 class="text-gray-700 font-bold text-sm">{{ $star_question }}</h4>
                 <div class="bg-white rounded-lg shadow  flex items-center justify-center space-x-5 py-3 px-16">
                     <div>
@@ -27,8 +27,8 @@
             </div>
             {{--  --}}
             {{-- 2 --}}
-            <div x-show="{{ $type == 'NPS' ? 'isOpen == 1' : 'isOpen == 0' }}" style="display: none"
-                class="bg-gray-50 rounded-lg shadow p-5 space-y-3 text-center {{ $type == 'NPS' ? '' : 'hidden' }}">
+            <div x-show="{{ $campaignType == 'NPS' ? 'isOpen == 1' : 'isOpen == 0' }}" style="display: none"
+                class="bg-gray-50 rounded-lg shadow p-5 space-y-3 text-center {{ $campaignType == 'NPS' ? '' : 'hidden' }}">
                 <h4 class="text-gray-700 font-bold text-xs">{{ $net_promote }}</h4>
                 <div class="bg-white rounded-lg shadow  flex items-center justify-center space-x-10 py-3 px-5">
                     <div class="space-y-3">
@@ -73,7 +73,7 @@
             {{--  --}}
 
             {{-- 3 --}}
-            <div x-show="{{ $type == 'NPS' ? 'isOpen == 2' : 'isOpen == 0' }}" style="display: none"
+            <div x-show="{{ $campaignType == 'NPS' ? 'isOpen == 2' : 'isOpen == 0' }}" style="display: none"
                 class="bg-gray-50 rounded-lg shadow p-5 w-full  md:w-[50%] space-y-3 select-none ">
                 <h4 class="text-gray-700 font-bold text-xs">{{ $nps_comment }}</h4>
                 <p class="text-gray-700  text-xs">{{ $nps_comment_desc }}</p>
@@ -88,7 +88,7 @@
             </div>
             {{--  --}}
             {{-- 4 --}}
-            <div x-show="{{ $type == 'reviews' ? 'isOpen == 2' : 'isOpen == 0' }}" style="display: none"
+            <div x-show="{{ $campaignType == 'reviews' ? 'isOpen == 2' : 'isOpen == 0' }}" style="display: none"
                 class="bg-gray-50 rounded-lg shadow p-5 w-full  md:w-[50%] space-y-3 text-center">
                 <h4 class="text-gray-700 font-bold text-xs">{{ $star_question }}</h4>
                 <p class="text-gray-700  text-xs">{{ $review_platform }}</p>

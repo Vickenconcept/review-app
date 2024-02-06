@@ -7,6 +7,7 @@ use App\Models\Folder;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 class CampaignController extends Controller
 {
@@ -15,7 +16,10 @@ class CampaignController extends Controller
      */
     public function index()
     {
+
         $campaigns = Campaign::latest()->paginate(7);
+        // $QRCode = QrCode::size(300)->generate($url);
+        
         return view('campaign.index', compact('campaigns'));
     }
 
@@ -75,7 +79,7 @@ class CampaignController extends Controller
     {
 
         $campaign = Campaign::where('slug', $slug)->with('reviews')->firstOrFail();
-        // dd($campaign->id);
+     
 
         return view('campaign.show' ,['campaign' => $campaign]);
     }

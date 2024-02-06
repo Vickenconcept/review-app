@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Folder;
 use App\Models\Campaign;
+use App\Models\Review;
 
 class Site extends Model
 {
     use HasFactory;
-    protected $guarded= [];
+    protected $guarded = [];
 
     public function users()
     {
@@ -21,7 +22,11 @@ class Site extends Model
     {
         return $this->hasMany(Folder::class);
     }
-    public function campaign()
+    // public function reviews()
+    // {
+    //     return $this->hasManyThrough(Review::class, Campaign::class);
+    // }
+    public function campaigns()
     {
         return $this->hasMany(Campaign::class);
     }

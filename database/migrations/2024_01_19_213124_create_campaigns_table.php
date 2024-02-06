@@ -19,9 +19,9 @@ return new class extends Migration
             $table->foreignId('folder_id')->nullable();
             $table->string('name');
             $table->enum('no_negative',[0,1]);
-            $table->enum('enable_text_review',[0,1]);
+            $table->enum('enable_text_review',[0,1])->default(1);
             $table->enum('enable_video_review',[0,1]);
-            $table->enum('type',['reviews','NPS'])->default('reviews');
+            $table->enum('campaignType',['reviews','NPS'])->default('reviews');
             $table->string('language');
             $table->string('net_promote')->default('How would you rate our service?');
             $table->string('nps_comment')->default('');

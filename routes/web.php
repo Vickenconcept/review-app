@@ -3,12 +3,15 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ReviewController;
+use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\VideoController;
 use App\Http\Requests\CreateUserRequest;
 use App\Livewire\ReviewComponent;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use shweshi\OpenGraph\OpenGraph;
+use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 // use OpenGraph;
 
@@ -47,20 +50,28 @@ Route::middleware('guest')->group(function () {
 Route::get('campaign/share/{uuid}', [CampaignController::class, 'share'])->name('campaign.share');
 Route::get('/record-video', [VideoController::class, 'showForm']);
 Route::post('/upload-video', [VideoController::class, 'upload'])->name('upload');
-// Route::post('/upload-video', [ReviewComponent::class, 'upload'])->name('upload');
+
 Route::middleware(['auth'])->group(function () {
     Route::post('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
     Route::get('home', [DashboardController::class, 'index'])->name('home');
     Route::resource('campaign', CampaignController::class);
-    // Route::view('detail', 'auth.web-detail')->name('detail');
+    Route::resource('review', ReviewController::class);
+
+    Route::controller(SettingsController::class)->prefix('setting')->name('settings.')->group( function (){
+        Route::get('/users', 'users')->name('users');
+        Route::post('/users/create', 'createUser')->name('createUser');
+        Route::delete('/users/delete/{id}', 'deleteUser')->name('deleteUser');
+        Route::get('/', 'setting')->name('setting');
+        Route::put('/setting/{id}', 'updateSetting')->name('updateSetting');
+        Route::get('/theme', 'theme')->name('theme');
+        Route::put('/setting/theme/{id}', 'updateTheme')->name('updateTheme');
+        Route::get('/email', 'email')->name('email');
+    });
 });
 
 Route::get('test', function () {
-    // $data = OpenGraph::fetch("https://unsplash.com/");
-    $openGraph = new shweshi\OpenGraph\OpenGraph;
-    $result = $openGraph->fetch("https://trustmary.com/", true);
+   
 
-    // dd($result['site_name']);
     Auth::logout();
-    // dd($result);
+ 
 });

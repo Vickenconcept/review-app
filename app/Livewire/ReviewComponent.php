@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\On;
+use Illuminate\Support\Str;
 
 class ReviewComponent extends Component
 {
@@ -19,7 +20,7 @@ class ReviewComponent extends Component
 
 
     public $campaign,
-        $type,
+        $campaignType,
         $campaign_name,
         $no_negative,
         $enable_text_review,
@@ -73,7 +74,7 @@ class ReviewComponent extends Component
     {
         $this->campaign = $campaign;
         $this->campaign_name = $campaign->name;
-        $this->type = $campaign->type;
+        $this->campaignType = $campaign->campaignType;
         $this->no_negative = $campaign->no_negative;
         $this->enable_text_review = $campaign->enable_text_review;
         $this->enable_video_review = $campaign->enable_video_review;
@@ -98,7 +99,7 @@ class ReviewComponent extends Component
 
     public function selectStar($starNum)
     {
-        $this->nps_comment_ans = $starNum;
+        $this->star_question_ans = $starNum;
         $this->next = 2;
     }
     public function selectNPSScore($NPSScore)
@@ -152,9 +153,11 @@ class ReviewComponent extends Component
 
         sleep(2);
 
+
         $data = [
             'site_id' => $this->campaign->site_id,
             'campaign_id' => $this->campaign->id,
+            'uuid' => Str::uuid()->toString(),
             'net_promote_ans' => $this->net_promote_ans,
             'nps_comment_ans' => $this->nps_comment_ans,
             'star_question_ans' => $this->star_question_ans,
@@ -164,7 +167,7 @@ class ReviewComponent extends Component
                 'email' => $this->email,
                 'location' => $this->location,
                 'organisation' => $this->organisation,
-                'image' => $imageUrl,
+                'image' => $imageUrl ?? null,
             ],
             // 'video_review_ans' => 'Some video review answer',
             // 'video_review_desc_ans' => 'Some video review description answer',
@@ -183,7 +186,7 @@ class ReviewComponent extends Component
     // public function upload(Request $request)
     // {
     //     $request->validate([
-    //         'video' => 'required|mimetypes:video/x-matroska,video/webm|max:10240',
+    //         'video' => 'required|mimecampaignTypes:video/x-matroska,video/webm|max:10240',
     //     ]);
 
     //     $video = $request->file('video');
@@ -191,7 +194,7 @@ class ReviewComponent extends Component
     //     // Inspect the content and details of the uploaded file
     //     info('Uploaded video details:', [
     //         'Original Name' => $video->getClientOriginalName(),
-    //         'MIME Type' => $video->getMimeType(),
+    //         'MIME campaignType' => $video->getMimecampaignType(),
     //         'Size' => $video->getSize(),
     //         // Add any other relevant information you want to log
     //     ]);
@@ -204,7 +207,7 @@ class ReviewComponent extends Component
 
     //     $cloudinary = new Cloudinary();
     //     $cloudinaryResponse = $cloudinary->uploadApi()->upload($video->getRealPath(), [
-    //         'resource_type' => 'video',
+    //         'resource_campaignType' => 'video',
     //     ]);
     //     // Obtain the Cloudinary URL
     //     $this->video = $cloudinaryResponse['secure_url'];

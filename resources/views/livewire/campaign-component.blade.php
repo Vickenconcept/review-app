@@ -7,7 +7,7 @@
                     class="border-none bg-transparent focus:outline-none outline-none focus:ring-transparent">
 
                 <div class="ml-5 flex w-[30%] items-center justify-between">
-                    <button wire:click="CampaignData">save</button>
+                    <button wire:click="CampaignData" class="px-4 py-2 rounded-lg bg-cyan-100 text-cyan-500 hover:bg-cyan-700 hover:text-cyan-100 transition-all duration-300 flex items-center "><i class="bx bx-save mr-1"></i>save</button>
                 </div>
             </div>
         </nav>
@@ -52,17 +52,17 @@
 
                     <div class="grid grid-cols-2 gap-3">
                         <label
-                            class=" {{ $type == 'reviews' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-500' }} p-5 rounded-lg text-center space-y-1  cursor-pointer">
+                            class=" {{ $campaignType == 'reviews' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-500' }} p-5 rounded-lg text-center space-y-1  cursor-pointer">
                             <p><i class="bx bxs-star text-5xl"></i></p>
                             <p class="font-semibold text-xs">Collect Reviews</p>
-                            <input checked type="radio" name="type" wire:model.live="type" value="reviews"
+                            <input checked type="radio" name="campaignType" wire:model.live="campaignType" value="reviews"
                                 class="hidden">
                         </label>
                         <label
-                            class=" {{ $type == 'NPS' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-500' }}  p-5 rounded-lg text-center space-y-2  cursor-pointer">
+                            class=" {{ $campaignType == 'NPS' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-500' }}  p-5 rounded-lg text-center space-y-2  cursor-pointer">
                             <p><i class="bx bxs-circle text-5xl"></i></p>
                             <p class="font-semibold text-xs">Measure NPS</p>
-                            <input type="radio" name="type" wire:model.live="type" value="NPS" class="hidden">
+                            <input type="radio" name="campaignType" wire:model.live="campaignType" value="NPS" class="hidden">
                         </label>
                     </div>
 
@@ -100,7 +100,7 @@
                     <section class=" space-y-3 ">
                         {{-- 1 --}}
                         {{-- @if ($type == 'reviews') --}}
-                        <div class=" shadow rounded-lg space-y-3 {{ $type == 'reviews' ? '' : 'hidden' }}">
+                        <div class=" shadow rounded-lg space-y-3 {{ $campaignType == 'reviews' ? '' : 'hidden' }}">
                             <div @click="isOpen !== '1'? isOpen = '1' :isOpen = null"
                                 class="flex justify-between bg-gray-50 items-center hover:bg-gray-100 rounded-lg p-3 cursor-pointer">
                                 <span class="font-bold"> <i class="bx bxs-star mx-2 text-cyan-500 text-xl"></i>Stars
@@ -127,7 +127,7 @@
                         {{--  --}}
                         {{-- 2 --}}
                         {{-- @if ($type == 'NPS') --}}
-                        <div class=" shadow rounded-lg space-y-3 {{ $type == 'NPS' ? '' : 'hidden' }}">
+                        <div class=" shadow rounded-lg space-y-3 {{ $campaignType == 'NPS' ? '' : 'hidden' }}">
                             <div @click="isOpen !== '2'? isOpen = '2' :isOpen = null"
                                 class="flex justify-between bg-gray-50 items-center hover:bg-gray-100 rounded-lg p-3 cursor-pointer">
                                 <span class="font-bold"> <i class='bx bxs-grid mx-2 text-cyan-500 text-xl'></i>Net
@@ -154,7 +154,7 @@
                         {{--  --}}
                         {{-- 3 --}}
                         {{-- @if ($type == 'NPS') --}}
-                        <div class=" shadow rounded-lg space-y-3 {{ $type == 'NPS' ? '' : 'hidden' }}">
+                        <div class=" shadow rounded-lg space-y-3 {{ $campaignType == 'NPS' ? '' : 'hidden' }}">
                             <div @click="isOpen !== '3'? isOpen = '3' :isOpen = null"
                                 class="flex justify-between bg-gray-50 items-center hover:bg-gray-100 rounded-lg p-3 cursor-pointer">
                                 <span class="font-bold"> <i class='bx bxs-grid mx-2 text-cyan-500 text-xl'></i>NPS
@@ -634,11 +634,12 @@
         </div>
 
         <div x-show="menu === 'response'" style="display: none">
-            response
+           
+            <livewire:response-component :campaign=$campaign />
         </div>
-
+        
         <div x-show=" menu === 'recipient'" style="display: none">
-            recipient
+            <livewire:recipient-component :campaign=$campaign />
         </div>
     </section>
 </div>

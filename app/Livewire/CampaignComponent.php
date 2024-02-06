@@ -9,8 +9,8 @@ class CampaignComponent extends Component
 {
 
     public $campaign,
-        $type ,
-        $name,
+        $campaignType ,
+        $name, 
         $no_negative,
         $enable_text_review,
         $enable_video_review,
@@ -36,7 +36,7 @@ class CampaignComponent extends Component
     {
         $this->campaign = $campaign;
         $this->name = $campaign->name;
-        $this->type = $campaign->type;
+        $this->campaignType = $campaign->campaignType;
         $this->no_negative = $campaign->no_negative ;
         $this->enable_text_review = $campaign->enable_text_review ;
         $this->enable_video_review = $campaign->enable_video_review ;
@@ -63,11 +63,11 @@ class CampaignComponent extends Component
 
     public function CampaignData()
     {
-        if ($this->type == 'NPS') {
-            $this->campaign->type = 'NPS';
+        if ($this->campaignType == 'NPS') {
+            $this->campaign->campaignType = 'NPS';
             $this->campaign->update();
-        }elseif($this->type == 'reviews') {
-            $this->campaign->type = 'reviews';
+        }elseif($this->campaignType == 'reviews') {
+            $this->campaign->campaignType = 'reviews';
             $this->campaign->update();
         }
         // $this->campaign ;
