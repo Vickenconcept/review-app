@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\On;
 use Illuminate\Support\Str;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ReviewComponent extends Component
 {
@@ -169,6 +170,7 @@ class ReviewComponent extends Component
                 'organisation' => $this->organisation,
                 'image' => $imageUrl ?? null,
             ],
+            
             // 'video_review_ans' => 'Some video review answer',
             // 'video_review_desc_ans' => 'Some video review description answer',
             'private_feed_back_ans' => [
@@ -178,6 +180,11 @@ class ReviewComponent extends Component
                 'message' => $this->message_h,
             ],
         ];
+
+        $existingReviewsCount = Review::all()->count();
+        if ($existingReviewsCount >= 100) {
+            throw new NotFoundHttpException('Maximum review limit reached for this resource.');
+        }
 
         $feedback = Review::create($data);
     }

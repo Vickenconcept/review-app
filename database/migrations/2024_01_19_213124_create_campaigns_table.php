@@ -16,6 +16,7 @@ return new class extends Migration
             $table->uuid();
             $table->string('slug')->unique();
             $table->foreignId('site_id');
+            $table->foreignId('widget_id');
             $table->foreignId('folder_id')->nullable();
             $table->string('name');
             $table->enum('no_negative',[0,1]);
@@ -39,6 +40,7 @@ return new class extends Migration
             $table->text('private_feed_back_desc')->nullable();
             $table->string('private_feed_back_Thanks')->nullable();
             $table->text('private_feed_back_Thanks_desc')->nullable();
+            $table->boolean('enabled')->default(true);
             $table->timestamps();
         });
     }

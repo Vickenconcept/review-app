@@ -14,12 +14,14 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     <script src="https://unpkg.com/cloudinary-video-player@2.5.0/dist/cld-video-player.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cloudinary-core/2.13.1/cloudinary-core-shrinkwrap.min.js"></script>
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     @livewireStyles
 
 </head>
@@ -144,13 +146,7 @@
 
         }
 
-
-        
     </script>
-     {{-- <script>
-        const player = new cloudinary.videoPlayer('my-video');
-    </script> --}}
-
 
     @livewireScripts
 

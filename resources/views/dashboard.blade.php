@@ -109,7 +109,7 @@
                         <img class="w-24 h-24 mb-3 rounded-full shadow-lg"
                             src="{{ $review->contact_info_ans['image'] ? $review->contact_info_ans['image'] : asset('images/image-thumb.png') }}"
                             alt="Bonnie image" />
-                        <h5 class="mb-1 text-sm whitespace-pre-wrap font-medium text-gray-900 dark:text-white">
+                        <h5 class="mb-1 text-sm  font-medium text-gray-900 dark:text-white">
                             {{ $review->contact_info_ans['email'] ?: $review->private_feed_back_ans['email'] }}</h5>
                         <span
                             class="text-sm text-gray-500 dark:text-gray-400">{{ $review->contact_info_ans['location'] ? $review->contact_info_ans['location'] : 'N/A' }}</span>

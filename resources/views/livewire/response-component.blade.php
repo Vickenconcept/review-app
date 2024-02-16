@@ -238,7 +238,7 @@
                                             @if ($review->private_feed_back_ans['email'] || $review->contact_info_ans['email'])
                                                 <label for="" class="text-xs font-bold">Email</label>
                                                 <input type="text"
-                                                    value="{{ $review->private_feed_back_ans['email'] ? $review->private_feed_back_ans['email'] : $review->contact_info_ans['email'] }}"
+                                                    value="{{ $review->private_feed_back_ans['email'] ? : $review->contact_info_ans['email'] }}"
                                                     class=" px-3 bg-white rounded text-xs  border-0 py-2 w-full"
                                                     disabled>
                                             @endif

@@ -44,7 +44,7 @@
                             class="flex flex-col md:flex-row text-center md:text-start items-center justify-between w-full ">
                             <a href="{{ route('campaign.show', ['campaign' => $campaign->slug]) }}"
                                 class=" w-full md:w-3/4 py-3">
-                                <p class="font-semibold">{{ $campaign->name }}</p>
+                                <p class="font-semibold capitalize">{{ $campaign->name }}</p>
                                 <div class="flex justify-center md:justify-start space-x-3 ">
                                     <p class="text-xs ">Contacts
                                         {{ $campaign->reviews->pluck('private_feed_back_ans')->count() }}</p>
@@ -53,7 +53,6 @@
                             </a>
                             <div
                                 class="w-full md:w-1/4 flex justify-center items-center md:justify-end space-x-3 py-3 ">
-
                                 <button @click="openModal = true , campaign =@js($campaign)"
                                     wire:click="setUrl('{{ $campaign->uuid }}')"
                                     class="bg-cyan-100 px-4 py-1.5 rounded-lg text-md font-semibold flex items-center text-cyan-700 hover:bg-cyan-700 hover:text-cyan-100 transition-all duration-300">
@@ -73,11 +72,16 @@
                                         </button>
                                     </x-slot>
                                     <x-slot name="content">
-
                                         <x-dropdown-link class="cursor-pointer">
                                             <button class="w-full text-left px-4 py-2"><i
                                                     class='bx bxs-folder-open text-xl mr-1'></i>Move To Folder</button>
 
+                                        </x-dropdown-link>
+                                        <x-dropdown-link class="cursor-pointer">
+                                           <a class="w-full text-left px-4 py-2" href="{{ route('selectWidget',['uuid' => $campaign->uuid]) }}">
+                                            <button >
+                                                <i class='bx bxs-widget text-xl mr-1'></i>Manage widget</button>
+                                           </a>
                                         </x-dropdown-link>
                                         <x-dropdown-link>
                                             <form class="w-full"

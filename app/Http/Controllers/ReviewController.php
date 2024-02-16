@@ -5,9 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Campaign;
 use App\Models\Review;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\CSRF;
+
 
 class ReviewController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth')->only('index','update', 'destroy');
+
+        // $this->middleware('csrf')->only('store','update', 'destroy');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -29,15 +40,53 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $campaignId = $request->input('campaignId');
+        $siteId = $request->input('siteId');
+        $email = $request->input('email');
+        $message = $request->input('message');
+
+        // if (!CSRF::tokenIsValid($request->header('X-CSRF-TOKEN'))) {
+        //     abort(419, 'CSRF token validation failed');
+        // }
+
+        $data = [
+            'site_id' => $siteId,
+            'campaign_id' => $campaignId,
+            'uuid' => Str::uuid()->toString(),
+            'private_feed_back_ans' => [
+                'name' =>'Client',
+            ],
+            'contact_info_ans' => [
+                'email' => $email,
+                'location' => null,
+                'organisation' => null,
+                'image' => null,
+            ],
+            'review_platform_ans' => $message,
+        ];
+
+        // dd($data);
+
+        $feedback = Review::create($data);
+        return back()->with('success', 'Your message was successfully submitted');
+        
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Review $review)
+    public function show( $uuid)
     {
-        //
+        $review = Review::where('uuid', $uuid)->firstOrFail();
+        
+        return view('review.show', compact('review'));
+    }
+    public function share( $uuid)
+    {
+        $review = Review::where('uuid', $uuid)->firstOrFail();
+        
+        return view('review.share', compact('review'));
     }
 
     /**
@@ -61,6 +110,7 @@ class ReviewController extends Controller
      */
     public function destroy(Review $review)
     {
-        //
+        $review->delete();
+         return back()->with('success', 'Delete sucessfully');
     }
 }

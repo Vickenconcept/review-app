@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Folder;
 use App\Models\Site;
+use App\Models\Widget;
 use App\Models\Scopes\DataAccessScope;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -43,6 +44,11 @@ class Campaign extends Model
     {
         return $this->hasMany(Review::class);
     }
+    public function widget()
+    {
+        // return $this->belongsTo(Widget::class);
+        return $this->belongsTo(Widget::class)->withDefault(['name' => 'Default Widget']);
+    }
 
     protected static function boot()
     {
@@ -50,9 +56,9 @@ class Campaign extends Model
 
         static::addGlobalScope(new DataAccessScope);
 
-        // static::deleting(function ($conversation) {
+        // static::deleting(function ($campaign) {
         //     // Delete the associated messages
-        //     $conversation->messages()->delete();
+        //     $campaign->reviews()->delete();
         // });
     }
 }

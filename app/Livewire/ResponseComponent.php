@@ -44,18 +44,6 @@ class ResponseComponent extends Component
             });
         }
 
-        
-        // if ($this->search) {
-        //     $query->where(function ($query) {
-        //         $searchTerm = $this->search;
-        
-        //         $query->where("private_feed_back_ans->name", 'LIKE', "%$searchTerm%")
-        //             ->orWhere("contact_info_ans->location", 'LIKE', "%$searchTerm%")
-        //             ->orWhere("private_feed_back_ans->email", 'LIKE', "%$searchTerm%")
-        //             ->orWhere("contact_info_ans->email", 'LIKE', "%$searchTerm%")
-        //             ->orWhere("contact_info_ans->organisation", 'LIKE', "%$searchTerm%");
-        //     });
-        // }
 
         if ($this->sortOption == 'latest') {
             $query->latest();

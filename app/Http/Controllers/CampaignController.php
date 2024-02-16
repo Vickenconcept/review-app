@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Campaign;
 use App\Models\Folder;
+use App\Models\Review;
+use App\Models\Widget;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -19,7 +21,7 @@ class CampaignController extends Controller
 
         $campaigns = Campaign::latest()->paginate(7);
         // $QRCode = QrCode::size(300)->generate($url);
-        
+
         return view('campaign.index', compact('campaigns'));
     }
 
@@ -46,6 +48,7 @@ class CampaignController extends Controller
         $campaign =  Campaign::create([
             'uuid' => Str::uuid()->toString(),
             'site_id' => $siteId,
+            'widget_id' => 1,
             'folder_id' => $folderId ?? null,
             'name' => 'Campaign Name',
             'no_negative' => 1,
@@ -79,17 +82,36 @@ class CampaignController extends Controller
     {
 
         $campaign = Campaign::where('slug', $slug)->with('reviews')->firstOrFail();
-     
 
-        return view('campaign.show' ,['campaign' => $campaign]);
+
+        return view('campaign.show', ['campaign' => $campaign]);
     }
     public function share($uuid)
     {
 
         $campaign = Campaign::where('uuid', $uuid)->firstOrFail();
         // dd($campaign);
-       
-        return view('campaign.share' ,['campaign' => $campaign]);
+
+        return view('campaign.share', ['campaign' => $campaign]);
+    }
+    public function component($uuid)
+    {
+        $campaign = Campaign::where('uuid', $uuid)->firstOrFail();
+
+        $reviews = Review::where('campaign_id', $campaign->id)
+            ->where('show', '1')
+            ->take(3)
+            ->get();
+
+        return view('campaign.component', ['campaign' => $campaign, 'reviews' => $reviews]);
+    }
+    public function selectWidget($uuid = null)
+    {
+        if ($uuid) {
+        //    dd($id);
+        }
+        $widgets = Widget::latest()->get();
+        return view('widget.index', ['widgets' => $widgets,'campaignId' => $uuid]);
     }
 
     /**
@@ -103,9 +125,16 @@ class CampaignController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Campaign $campaign)
+    public function update(Request $request,  $uuid)
     {
-        //
+     
+         $widgetId = $request->input('widget_id');
+        $campaign = Campaign::where('uuid', $uuid)->firstOrFail();
+        $campaign->widget_id =  $widgetId;
+        $campaign->update();
+
+        return back()->with('success', 'Widget ' . $widgetId. ', set successfully');
+        // dd($campaign->widget_id );
     }
 
     /**
@@ -114,6 +143,6 @@ class CampaignController extends Controller
     public function destroy(Campaign $campaign)
     {
         $campaign->delete();
-        return back()->with('success','Deleted Successfully');
+        return back()->with('success', 'Deleted Successfully');
     }
 }

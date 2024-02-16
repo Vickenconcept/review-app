@@ -28,7 +28,6 @@ class AuthController extends Controller
 
         return view('auth.web-detail', compact('userId'));
 
-
     }
 
     public function login(CreateUserRequest $request)

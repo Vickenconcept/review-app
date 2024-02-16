@@ -23,6 +23,10 @@ return new class extends Migration
             $table->text('video')->nullable();
             $table->json('contact_info_ans')->nullable();
             $table->json('private_feed_back_ans')->nullable();
+            $table->text('facebook')->nullable();
+            $table->text('google')->nullable();
+            $table->text('twitter')->nullable();
+            $table->enum('show',[0,1])->default(0);
             $table->timestamps();
         });
     }
