@@ -145,7 +145,7 @@
         <section class="grid md:grid-cols-3 gap-5  ">
             {{-- side --}}
             <div class="h-screen col-span-1 p-2 space-y-1 hidden md:block overflow-y-auto ">
-                <div class="space-y-2">
+                {{-- <div class="space-y-2">
                     <h2 class="font-semibold text-cyan-700 capitalize">Source</h2>
                     <label for="source-1"
                         class=" cursor-pointer  bg-gray-50 px-2 py-1 space-x-2 rounded-md flex items-center">
@@ -162,9 +162,9 @@
                         <input type="checkbox" class="" name="knowledge[]" id="source-3" value="">
                         <span> hhnn</span>
                     </label>
-                </div>
+                </div> --}}
 
-                <div class="space-y-2">
+                {{-- <div class="space-y-2">
                     <h2 class="font-semibold text-cyan-700 capitalize">Status</h2>
                     <label for="status-1"
                         class=" cursor-pointer  bg-gray-50 px-2 py-1 space-x-2 rounded-md flex items-center">
@@ -181,7 +181,7 @@
                         <input type="checkbox" class="" name="knowledge[]" id="status-3" value="">
                         <span> hhnn</span>
                     </label>
-                </div>
+                </div> --}}
 
                 <div class="space-y-2">
                     <h2 class="font-semibold text-cyan-700 capitalize">Star review</h2>

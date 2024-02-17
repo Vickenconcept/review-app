@@ -78,10 +78,26 @@
 
                                         </x-dropdown-link>
                                         <x-dropdown-link class="cursor-pointer">
-                                           <a class="w-full text-left px-4 py-2" href="{{ route('selectWidget',['uuid' => $campaign->uuid]) }}">
-                                            <button >
-                                                <i class='bx bxs-widget text-xl mr-1'></i>Manage widget</button>
-                                           </a>
+                                            <a class="w-full text-left px-4 py-2"
+                                                href="{{ route('selectWidget', ['uuid' => $campaign->uuid]) }}">
+                                                <button>
+                                                    <i class='bx bxs-widget text-xl mr-1'></i>Manage widget</button>
+                                            </a>
+                                        </x-dropdown-link>
+                                        <x-dropdown-link class="cursor-pointer">
+                                            @if ($campaign->enabled)
+                                                <button wire:click="showOrHide({{ $campaign->id }})"
+                                                    class=" px-4 py-2  text-cyan-900 text-sm font-semibold flex items-center ">
+
+                                                    <i class='bx bxs-hide text-lg mr-2'></i>Hide
+                                                    Component</button>
+                                            @else
+                                                <button wire:click="showOrHide({{ $campaign->id }})"
+                                                    class=" px-4 py-2  text-cyan-900 text-sm font-semibold flex items-center ">
+
+                                                    <i class='bx bxs-show text-lg mr-2'></i>Show
+                                                    Component</button>
+                                            @endif
                                         </x-dropdown-link>
                                         <x-dropdown-link>
                                             <form class="w-full"

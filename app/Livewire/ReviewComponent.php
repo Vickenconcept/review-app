@@ -112,11 +112,7 @@ class ReviewComponent extends Component
     {
         $this->next = $next;
     }
-    // public function imageUpload()
-    // {
-    //     // dd($imageUrl);
-
-    // }
+   
 
     public function saveData()
     {
@@ -149,10 +145,11 @@ class ReviewComponent extends Component
 
             $imageUrl = $cloudinaryResponse['secure_url'];
         }
+        // dd($imageUrl);
 
       
 
-        sleep(2);
+        // sleep(3);
 
 
         $data = [

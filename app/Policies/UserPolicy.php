@@ -16,10 +16,11 @@ class UserPolicy
     
     public function create(User $user)
     {
-        return $user->is_admin == 1; // Allow user creation only if is_admin is 1
+        return $user->is_admin == 1; 
     }
     public function delete(User $user)
     {
-        return $user->is_admin == 1; // Allow user creation only if is_admin is 1
+        // return $user->name; 
+        return $user->is_admin == 1; 
     }
 }

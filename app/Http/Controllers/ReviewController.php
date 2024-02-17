@@ -82,11 +82,17 @@ class ReviewController extends Controller
         
         return view('review.show', compact('review'));
     }
-    public function share( $uuid)
+    public function share( )
+    {
+        $reviews = Review::latest()->simplePaginate(3);
+        
+        return view('review.share', compact('reviews'));
+    }
+    public function shareOne( $uuid)
     {
         $review = Review::where('uuid', $uuid)->firstOrFail();
         
-        return view('review.share', compact('review'));
+        return view('review.social-share', compact('review'));
     }
 
     /**

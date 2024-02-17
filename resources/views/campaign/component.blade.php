@@ -4,13 +4,13 @@
         @if ($campaign->widget_id == 1)
             {{-- 6 --}}
             <section>
-                <div class="w-screen bg-gray-50">
+                <div class="w-screen  bg-gray-50">
                     <div class="my-10 mx-auto max-w-screen-md px-10 py-16">
                         <div class="flex w-full flex-col">
                             <div class="flex flex-col sm:flex-row">
                                 <h1 class="max-w-sm text-3xl font-bold text-blue-900">
                                     What people think <br />
-                                    about Us
+                                    about us
                                 </h1>
                                 <div class="my-4 rounded-xl bg-white py-2 px-4 shadow sm:my-0 sm:ml-auto">
                                     <div class="flex h-16 items-center text-2xl font-bold text-blue-900">
@@ -176,108 +176,50 @@
         @elseif ($campaign->widget_id == 3)
             {{-- 1 --}}
             <section class="w-full">
-                {{-- <div class="bg-gray-950 flex justify-center items-center min-h-screen p-10  w-full">
-                    <div class="md:w-3/5 w-3/4 px-10 flex flex-col gap-2 p-5 bg-gray-800 text-white">
-                        <h1 class="py-5 text-lg">Reviews</h1>
+                <section class="rounded-md p-6 text-center  md:p-12 md:text-left" 
 
-                        <div class="flex flex-col gap-3 mt-14">
-                            @foreach ($reviews as $review)
-                                <div class="flex flex-col gap-4 bg-gray-700 p-4">
-                                    <div class="flex justify justify-between">
-                                        <div class="flex gap-2">
-                                            <div class="w-7 h-7 text-center rounded-full bg-red-500">J</div>
-                                            <span>Jess Hopkins</span>
-                                        </div>
-                                        <div class="flex p-1 gap-1 text-orange-300">
-                                            <ion-icon name="star"></ion-icon>
-                                            <ion-icon name="star"></ion-icon>
-                                            <ion-icon name="star"></ion-icon>
-                                            <ion-icon name="star"></ion-icon>
-                                            <ion-icon name="star-half"></ion-icon>
-                                        </div>
-                                    </div>
+                {{-- style="background-image: url(https://tecdn.b-cdn.net/img/Photos/Others/background2.jpg)" --}}
+                >
+                    <div class="flex justify-center overflow-x-auto  pl-10">
 
-                                    <div>
-                                        Gorgeous design! Even more responsive than the previous version. A pleasure to
-                                        use!
-                                    </div>
-
-                                    <div class="flex justify-between">
-                                        <span>Feb 13, 2021</span>
-                                        <button
-                                            class="p-1 px-2 bg-gray-900 hover:bg-gray-950 border border-gray-950 bg-opacity-60">
-                                            <ion-icon name="share-outline"></ion-icon> Share</button>
-                                    </div>
-                                </div>
-                            @endforeach
-
-                            <div class="flex flex-col gap-4 bg-gray-700 p-4">
-                                <div class="flex justify justify-between">
-                                    <div class="flex gap-2">
-                                        <div class="w-7 h-7 text-center rounded-full bg-yellow-500">A</div>
-                                        <span>Alice Banks</span>
-                                    </div>
-                                    <div class="flex p-1 gap-1 text-orange-300">
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star"></ion-icon>
-                                        <ion-icon name="star"></ion-icon>
-
-                                    </div>
-                                </div>
-
-                                <div>
-                                    The device has a clean design and the metal housing feels sturdy in my hands.
-                                    Soft
-                                    rounded corners make it a pleasure to look at.
-                                </div>
-
-                                <div class="flex justify-between">
-                                    <span>Feb 13, 2021</span>
-                                    <button
-                                        class="p-1 px-2 bg-gray-900 hover:bg-gray-950 border border-gray-950 bg-opacity-60">
-                                        <ion-icon name="share-outline"></ion-icon> Share</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div> --}}
-                <!-- TW Elements is free under AGPL, with commercial license required for specific uses. See more details: https://tw-elements.com/license/ and contact us for queries at tailwind@mdbootstrap.com -->
-                <!--Background-->
-                <section class="rounded-md p-6 text-center  md:p-12 md:text-left"
-                    {{-- style="background-image: url(https://tecdn.b-cdn.net/img/Photos/Others/background2.jpg)" --}}
-                    >
-                    <div class="flex justify-center overflow-x-auto ">
-                       
-                       @foreach ($reviews as  $review)
-                       <div class="max-w-3xl space-x-7 ">
-                        <div
-                            class="m-4 block rounded-lg bg-white p-6 shadow-lg dark:bg-neutral-800 dark:shadow-black/20">
-                            <!--Testimonial-->
-                            <div class="md:flex md:flex-row">
+                        @foreach ($reviews as $review)
+                            <div class="max-w-3xl space-x-5">
                                 <div
-                                    class="mx-auto mb-6 flex w-36 items-center justify-center md:mx-0 md:w-96 lg:mb-0">
-                                    <img src="{{ $review->contact_info_ans['image'] ? $review->contact_info_ans['image'] : asset('images/image-thumb.png') }}"
-                                        class="rounded-full shadow-md dark:shadow-black/30" alt="woman avatar" />
-                                </div>
-                                <div class="md:ml-6">
-                                    <p class="mb-6 font-light text-neutral-500 dark:text-neutral-300">
-                                        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Id
-                                        quam sapiente molestiae numquam quas, voluptates omnis nulla
-                                        ea odio quia similique corrupti magnam.
-                                    </p>
-                                    <p class="mb-2 text-xl font-semibold text-neutral-800 dark:text-neutral-200">
-                                        {{ $review->private_feed_back_ans['name'] ?: 'Client'}}
-                                    </p>
-                                    <p class="mb-0 font-semibold text-neutral-500 dark:text-neutral-400">
-                                        {{ $review->contact_info_ans['email']?:$review->private_feed_back_ans['email'] }}
-                                    </p>
+                                    class="m-4 block rounded-lg bg-white p-6 shadow-lg dark:bg-neutral-800 dark:shadow-black/20">
+                                    <!--Testimonial-->
+                                    <div class="md:flex md:flex-row">
+                                        <div
+                                            class="mx-auto mb-6 flex w-36 items-center justify-center md:mx-0 md:w-96 lg:mb-0">
+                                            <img src="{{ $review->contact_info_ans['image'] ? $review->contact_info_ans['image'] : asset('images/image-thumb.png') }}"
+                                                class="rounded-full shadow-md dark:shadow-black/30"
+                                                alt="woman avatar" />
+                                        </div>
+                                        <div class="md:ml-2 ">
+                                            <p class="mb-6 font-light text-neutral-500 dark:text-neutral-300 ">
+                                                {{ $review->private_feed_back_ans['message'] ?: $review->review_platform_ans }}
+                                            </p>
+                                            </p>
+                                            <p
+                                                class="mb-2 text-xl font-semibold text-neutral-800 dark:text-neutral-200">
+                                                {{ $review->private_feed_back_ans['name'] ?: 'Client' }}
+                                            </p>
+                                            <p class="mb-0 font-semibold text-neutral-500 dark:text-neutral-400">
+                                                {{ $review->contact_info_ans['email'] ?: $review->private_feed_back_ans['email'] }}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        @endforeach
+
                     </div>
-                       @endforeach
+                    <div class="text-center py-5">
+                        <a href="{{ route('campaign.share', ['uuid' => $campaign->uuid]) }}" target="_blank">
+                            <button
+                                class="w-36 rounded-full bg-blue-900 py-3 text-white font-medium hover:shadow-lg">Write
+                                a
+                                review</button>
+                        </a>
                     </div>
                 </section>
 
@@ -285,44 +227,38 @@
             {{--  --}}
         @elseif ($campaign->widget_id == 4)
             {{-- 8 --}}
-            <section>
-                <section class="px-4">
-                    <div class="mx-auto max-w-3xl text-center">
-                        <h3 class="mb-6 text-3xl font-bold">Testimonials</h3>
-                        <p class="mb-6 pb-2 text-neutral-500 dark:text-neutral-300 md:mb-12">
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit,
-                            error amet numquam iure provident voluptate esse quasi, veritatis
-                            totam voluptas nostrum quisquam eum porro a pariatur veniam.
-                        </p>
-                    </div>
 
-                    <div class="grid gap-12 text-center md:grid-cols-2">
+            <section class="px-4">
+                <div class="mx-auto max-w-3xl text-center">
+                    <h3 class="mb-6 text-3xl font-bold">Testimonials</h3>
+                    <p class="mb-6 pb-2 text-neutral-500 dark:text-neutral-300 md:mb-12">
+                        "Discover what others are saying. Explore the voices that shape our community and share your own experience with us."
+                    </p>
+                </div>
+
+                <div class="grid gap-12 text-center md:grid-cols-2">
+                    @foreach ($reviews as $review)
                         <div class="mb-6 md:mb-0">
                             <div class="mb-6 flex justify-center">
-                                <img src="https://tecdn.b-cdn.net/img/Photos/Avatars/img%20(22).jpg"
+                                <img src="{{ $review->contact_info_ans['image'] ? $review->contact_info_ans['image'] : asset('images/image-thumb.png') }}"
                                     class="w-24 rounded-full shadow-lg dark:shadow-black/30" />
                             </div>
                             <p class="my-4 text-xl text-neutral-500 dark:text-neutral-300">
-                                "Lorem ipsum dolor sit amet eos adipisci, consectetur adipisicing
-                                elit sed ut perspiciatis unde omnis."
+                                {{ $review->private_feed_back_ans['message'] ?: $review->review_platform_ans }}
                             </p>
-                            <p class="italic">- Anna Morian</p>
+                            <p class="italic">- {{ $review->private_feed_back_ans['name'] ?: 'Client' }}</p>
                         </div>
-
-                        <div class="mb-0">
-                            <div class="mb-6 flex justify-center">
-                                <img src="https://tecdn.b-cdn.net/img/Photos/Avatars/img%20(19).jpg"
-                                    class="w-24 rounded-full shadow-lg dark:shadow-black/30" />
-                            </div>
-                            <p class="my-4 text-xl text-neutral-500 dark:text-neutral-300">
-                                "Neque cupiditate assumenda in maiores repudiandae mollitia
-                                architecto elit sed adipiscing elit."
-                            </p>
-                            <p class="italic">- Teresa May</p>
-                        </div>
-                    </div>
-                </section>
+                    @endforeach
+                </div>
+                <div class="text-center py-5">
+                    <a href="{{ route('campaign.share', ['uuid' => $campaign->uuid]) }}" target="_blank">
+                        <button class="w-36 rounded-full bg-blue-900 py-3 text-white font-medium hover:shadow-lg">Write
+                            a
+                            review</button>
+                    </a>
+                </div>
             </section>
+
             {{--  --}}
         @elseif ($campaign->widget_id == 5)
             {{-- 11 --}}

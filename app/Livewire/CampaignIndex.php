@@ -13,14 +13,15 @@ class CampaignIndex extends Component
     public $currentUUID = 'QRValue';
     public $search;
     public $sortOrder = 'latest';
-    public $textEmail ;
+    public $textEmail;
     public $email = '',
         $url,
         $name = '';
 
-        public function mount(){
-            $this->textEmail = auth()->user()->email;
-        }
+    public function mount()
+    {
+        $this->textEmail = auth()->user()->email;
+    }
 
 
     public function setUrl($uuid)
@@ -34,12 +35,11 @@ class CampaignIndex extends Component
     public function invitUser()
     {
         Mail::to($this->email)->send(new InviteMail($this->url, $this->name));
-        
+
         $this->name = '';
         $this->email = '';
         session()->flash('success', 'Invitation email sent successfully!');
         $this->dispatch('email-sent');
-
     }
     public function testInvite()
     {
@@ -47,7 +47,18 @@ class CampaignIndex extends Component
 
         session()->flash('success', 'Invitation email sent successfully!');
         $this->dispatch('email-sent');
+    }
+    public function showOrHide($id)
+    {
+        $campaign = Campaign::find($id);
 
+        if ($campaign->enabled) {
+            $campaign->enabled = false;
+        } else {
+            $campaign->enabled = true;
+        }
+
+        $campaign->update();
     }
     public function render()
     {

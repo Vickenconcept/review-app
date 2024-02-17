@@ -62,6 +62,8 @@ class SettingsController extends Controller
     {
 
         $this->authorize('delete', User::class);
+
+
         $userToDelete = User::find($userId);
 
         if ($userToDelete) {
