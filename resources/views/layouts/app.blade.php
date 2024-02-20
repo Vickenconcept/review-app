@@ -23,27 +23,41 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @livewireStyles
+    <style>
+        #htmltoimage {
+            width: 65%;
+            margin: auto;
+        }
+    </style>
 
 </head>
 
 <body class="h-full">
+
     <div id="ap" class="h-full bg-gray- text-gray-700" x-data="{ openHelp: false }">
         <x-sidebar />
         <div class=" h-full sm:ml-64">
-
-            {{-- <form action="" method="post" enctype="multipart/form-data">
-                @csrf
-                <video id="video" name="video" width="640" height="480" autoplay></video>
-                <button type="button" id="start" onclick="startRecording()">Start Recording</button>
-                <button type="button" id="stop" onclick="stopRecording()" disabled>Stop Recording</button>
-                <button type="submit" disabled>Upload Video</button>
-            </form>
-
-            <video id="my-video" controls width="640" height="360" class="cld-video-player">
-                <source src="https://res.cloudinary.com/dp0bpzh9b/video/upload/v1706198244/rk1x8gx8f3oposre4aqb.mkv" type="video/mp4">
-            </video> --}}
-            
             {{ $slot }}
+
+            {{-- <div id="htmltoimage">
+                <div class="imgbg bg-red-400" id="imgbg">
+                   
+                    <img id="imageToCapture"
+                        src="https://res.cloudinary.com/dp0bpzh9b/image/upload/v1708091369/szwbghwu6ng9trmqdbuk.png" alt=""
+                        srcset="">
+                </div>
+                <h1>Demo page to show example of "How to Create and Download Image of HTML content in webpage Using
+                    html2canvas library". Find tutorial page here <a
+                        href="http://www.freakyjolly.com/convert-html-document-into-image-jpg-png-from-canvas/"
+                        target="_blank">Here</a></h1>
+                <p>Just click on button below to download Image of this HTML content which is wrapped in an ID named
+                    "htmltoimage".</p>
+                <button onclick="PrintDiv(document.getElementById('htmltoimage'))" class="clickbtn">Click To Download
+                    Image</button>
+            </div> --}}
+
+
+
             <x-footer />
         </div>
     </div>
@@ -58,8 +72,8 @@
 
         function startRecording() {
             navigator.mediaDevices.getUserMedia({
-                audio: true,
-                video: true
+                    audio: true,
+                    video: true
                 })
                 .then((stream) => {
                     video.srcObject = stream;
@@ -145,8 +159,45 @@
 
 
         }
-
     </script>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+
+    <script>
+        function PrintDiv(div) {
+
+            var img = new Image();
+
+            img.src = document.getElementById('imageToCapture').src;
+
+            img.onload = function() {
+                html2canvas(div, {
+                    logging: true,
+                    letterRendering: 1,
+                    allowTaint: false,
+                    useCORS: true,
+                    onrendered: function(canvas) {
+                        var myImage = canvas.toDataURL();
+                        downloadURI(myImage, "my-review.jpg");
+                    }
+                });
+            };
+        }
+
+        function downloadURI(uri, name) {
+            var link = document.createElement("a");
+
+            link.download = name;
+            link.href = uri;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+    </script>
+
+
 
     @livewireScripts
 

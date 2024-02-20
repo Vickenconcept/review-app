@@ -44,7 +44,7 @@
                     </div>
                 </a>
             @empty
-                <div class="text-center font-bold text-cyan-400 bg-cyan-100 p-3">empty data</div>
+                <div class="text-center font-bold text-cyan-400 bg-cyan-100 p-3 md:col-span-3 ">empty data</div>
             @endforelse
 
         </section>

@@ -27,6 +27,10 @@ return new class extends Migration
             $table->text('google')->nullable();
             $table->text('twitter')->nullable();
             $table->enum('show',[0,1])->default(0);
+            $table->enum('show_Thumbnail',[0,1])->default(0);
+            $table->enum('show_star_review',[0,1])->default(0);
+            $table->text('logo')->nullable();
+            $table->text('background')->nullable();
             $table->timestamps();
         });
     }

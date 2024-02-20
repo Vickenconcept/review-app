@@ -381,9 +381,11 @@
                                         </div>
                                         <div class="flex justify-between pb-4">
                                             <div class="flex space-x-4">
-                                                <button
-                                                    class=" rounded-lg px-3 py-0.5 bg-cyan-900 text-cyan-50 text-xs flex items-center hover:shadow-md"><i
-                                                        class="bx bxs-share-alt text-lg mr-2"></i> Share</button>
+                                                <a href="{{ route('review.shareOne', ['uuid' => $review->uuid]) }}">
+                                                    <button
+                                                        class=" rounded-lg px-3 py-0.5 border border-cyan-900 bg-cyan-900 text-cyan-50 text-xs flex items-center hover:shadow-md"><i
+                                                            class="bx bxs-share-alt text-lg mr-2"></i> Share</button>
+                                                </a>
                                                 @if ($review->show)
                                                     <a href="{{ route('review.show', ['review' => $review->uuid]) }}" target="_blank">
                                                         <button

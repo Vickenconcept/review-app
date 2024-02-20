@@ -17,6 +17,7 @@ class Review extends Model
     protected $casts = [
         'contact_info_ans' => 'array',
         'private_feed_back_ans' => 'array',
+        'image_size' => 'array',
     ];
 
     public function campaign()

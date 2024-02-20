@@ -24,7 +24,9 @@ class AuthController extends Controller
         $user = User::create($requestData);
         $userId = $user->id;
 
-        Mail::to($requestData['email'])->send(new WelcomeMail($requestData['password']));
+        // Mail::to($requestData['email'])->send(new WelcomeMail($requestData['password']));
+
+        session()->put('userId', $userId);
 
         return view('auth.web-detail', compact('userId'));
 

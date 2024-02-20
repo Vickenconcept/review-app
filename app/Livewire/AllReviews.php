@@ -37,7 +37,6 @@ class AllReviews extends Component
                 'show' => '0', // Set the value to 1 (or any other value as needed)
             ]);
         } else {
-            // dd($id);
 
             $review->update([
                 'show' => '1', // Set the value to 1 (or any other value as needed)

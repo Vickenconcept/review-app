@@ -9,7 +9,7 @@
         <div class="px-3 md:px-10 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-5 ">
 
             <div
-                class="max-w-sm p-6 bg-gray-50 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                class="p-6 bg-gray-50 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <p>
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                     @foreach ($data as $site)
@@ -25,7 +25,7 @@
             </div>
             {{--  --}}
             <div
-                class="max-w-sm p-6 bg-gray-50 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                class="p-6 bg-gray-50 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <p>
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">12</h5>
                 </p>
@@ -37,7 +37,7 @@
             </div>
             {{--  --}}
             <div
-                class="max-w-sm p-6 bg-gray-50 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                class="p-6 bg-gray-50 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <p>
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                     @foreach ($data as $site)
@@ -52,7 +52,7 @@
             </div>
             {{--  --}}
             <div
-                class="max-w-sm p-6 bg-gray-50 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                class="p-6 bg-gray-50 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <p>
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
                     @foreach ($data as $site)
@@ -68,7 +68,7 @@
             </div>
             {{--  --}}
             <div
-                class="max-w-sm p-6 bg-gray-50 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                class="p-6 bg-gray-50 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <p>
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">12</h5>
                 </p>
@@ -80,7 +80,7 @@
             </div>
             {{--  --}}
             <div
-                class="max-w-sm p-6 bg-gray-50 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                class="p-6 bg-gray-50 border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <p>
                 <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">12</h5>
                 </p>
@@ -101,11 +101,11 @@
 
             @forelse ($reviews as $review)
                 <div
-                    class="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+                    class="w-full  bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                     <div class="flex justify-end px-4 pt-4">
 
                     </div>
-                    <div class="flex flex-col items-center pb-10">
+                    <div class="flex flex-col items-center pb-5">
                         <img class="w-24 h-24 mb-3 rounded-full shadow-lg"
                             src="{{ $review->contact_info_ans['image'] ? $review->contact_info_ans['image'] : asset('images/image-thumb.png') }}"
                             alt="Bonnie image" />
@@ -113,21 +113,26 @@
                             {{ $review->contact_info_ans['email'] ?: $review->private_feed_back_ans['email'] }}</h5>
                         <span
                             class="text-sm text-gray-500 dark:text-gray-400">{{ $review->contact_info_ans['location'] ? $review->contact_info_ans['location'] : 'N/A' }}</span>
-                        <div class="flex mt-4 md:mt-6">
-                            <a href="#"
-                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Add
-                                friend</a>
-                            <a href="#"
-                                class="inline-flex items-center px-4 py-2 text-sm font-medium text-center text-gray-900 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-gray-200 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-700 dark:focus:ring-gray-700 ms-3">Message</a>
+                        <div class="flex mt-10 md:mt-14 space-x-2">
+                            <a href="{{ route('review.shareOne', ['uuid' => $review->uuid]) }}">
+                                <button
+                                    class=" rounded-lg px-3 py-0.5 border border-cyan-900 bg-cyan-900 text-cyan-50 text-xs flex items-center hover:shadow-md"><i
+                                        class="bx bxs-share-alt text-lg mr-1"></i> Share</button>
+                            </a>
+                            <a href="{{ route('review.show', ['review' => $review->uuid]) }}" target="_blank">
+                                <button
+                                    class=" rounded-lg px-3 py-0.5 border border-cyan-900 text-cyan-900 text-xs font-semibold flex items-center hover:shadow-md">
+
+                                    <i class='bx bxs-show text-lg mr-1'></i>View
+                                    review</button>
+                            </a>
+
                         </div>
                     </div>
                 </div>
             @empty
                 no dta yet
             @endforelse
-
-
-
         </section>
     </div>
 

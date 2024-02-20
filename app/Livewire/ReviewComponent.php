@@ -145,8 +145,6 @@ class ReviewComponent extends Component
 
             $imageUrl = $cloudinaryResponse['secure_url'];
         }
-        // dd($imageUrl);
-
       
 
         // sleep(3);

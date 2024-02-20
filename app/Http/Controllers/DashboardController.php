@@ -20,14 +20,24 @@ class DashboardController extends Controller
         $user = auth()->user();
 
         $site = $user->sites()->first();
-        $data = Site::withCount(['users', 'campaigns'])
-        ->with(['campaigns' => function ($query) {
-            $query->withCount('reviews');
-        }])
-        ->where('id', $site->id)
-        ->get();
+        if ($site) {
+            $data = Site::withCount(['users', 'campaigns'])
+            ->with(['campaigns' => function ($query) {
+                $query->withCount('reviews');
+            }])
+            ->where('id', $site->id)
+            ->get();
+            # code...
+            return view('dashboard', compact('reviews', 'data'));
+        }else {
+
+            $userId = session()->get('userId');
+
+            return view('auth.web-detail', compact('userId'));
+        }
 
 
-        return view('dashboard', compact('reviews', 'data'));
+
+
     }
 }
