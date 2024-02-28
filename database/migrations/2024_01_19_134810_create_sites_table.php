@@ -24,6 +24,7 @@ return new class extends Migration
             $table->text('logo')->nullable();
             $table->text('review_type')->nullable();
             $table->text('font')->nullable();
+            $table->text('email_number')->nullable();
             $table->timestamps();
         });
     }

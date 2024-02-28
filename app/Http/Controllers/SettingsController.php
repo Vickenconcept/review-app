@@ -61,23 +61,33 @@ class SettingsController extends Controller
     public function deleteUser($userId)
     {
 
-        $this->authorize('delete', User::class);
+        // $this->authorize('delete', User::class);
+        $user = auth()->user();
 
 
         $userToDelete = User::find($userId);
 
-        if ($userToDelete) {
-            // Remove site association
-            $userToDelete->sites()->detach();
+        if ($user->is_admin === '1') {
+            if ($userToDelete) {
+                // Remove site association
+                $userToDelete->sites()->detach();
+    
+    
+                // Delete the user
+                $userToDelete->delete();
+    
+                return back()->with('success', 'User deleted successfully.');
+            } else {
+                return back()->withErrors(['message' => 'User not found.']);
+            }
+        }else{
+            abort(403);
 
 
-            // Delete the user
-            $userToDelete->delete();
-
-            return back()->with('success', 'User deleted successfully.');
         }
+      
 
-        return back()->withErrors(['message' => 'User not found.']);
+        
     }
     public function email()
     {

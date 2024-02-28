@@ -4,7 +4,10 @@
 
     <div>
         <div class="py-5 border-b px-3 md:px-10 flex space-x-5 items-center">
-            <div>
+            <a href="{{ route('home') }}">
+                <i class='bx bxs-chevron-left text-2xl' ></i>
+            </a>
+            <div class="">
                 <h3 class=" font-bold">Share reviews</h3>
             </div>
             <span class="text-xs">select to share</span>
@@ -17,32 +20,43 @@
     </div>
 
     <div class="h-full  bg-gray-50 space-y-10 pt-10">
-        <section class=" grid grid-cols-1 md:grid-cols-3 gap-8 md:w-[80%] mx-auto px-3">
+        <section class=" grid grid-cols-1 md:grid-cols-3 gap-5 md:w-[80%] mx-auto px-3">
 
             @forelse ($reviews as $review)
-                <a href="{{ route('review.shareOne', ['uuid' => $review->uuid]) }}">
-                    <div class="flex flex-col items-center p-4 shadow-md hover:shadow-lg rounded-lg bg-white">
-                        <p class="max-w-full  whitespace-normal break-all text-md font-medium text-center">
-                            "{{ $review->review_platform_ans }}"
-                        </p>
+                <div
+                    class="  flex flex-col items-center py-4 px-8 shadow-md hover:shadow-lg rounded-lg bg-white bg-opacity-95 w-[90%] mx-auto">
+                   <div class="flex justify-end w-full">
+                    <a href="{{ route('review.shareOne', ['uuid' => $review->uuid]) }}" class="">
+                        <button
+                            class=" rounded-lg px-3 py-0.5 border border-cyan-900 bg-cyan-900 text-cyan-50 text-xs flex items-center hover:shadow-md">
+                            Select</button>
+                    </a>
+                   </div>
+                    <footer class="flex justify-start gap-3  mt-5 mb-5">
+                        <img id="imageToCapture" class="flex-shrink-0 w-16 h-16 border rounded-full border-black/10"
+                            src="{{ $review->contact_info_ans['image'] ? $review->contact_info_ans['image'] : asset('images/image-thumb.png') }}"
+                            alt="Sebastiaan Kloos" loading="lazy">
 
-                        <div class="my-8 text-left">
-                            @for ($i = 1; $i <= $review->star_question_ans; $i++)
-                                <i class="bx bxs-star text-yellow-400 text-xl"></i>
-                            @endfor
-                        </div>
-                        <footer class="flex items-center gap-3 ">
-                            <img class="flex-shrink-0 w-12 h-12 border rounded-full border-black/10"
-                                src="{{ $review->contact_info_ans['image'] ? $review->contact_info_ans['image'] : asset('images/image-thumb.png') }}"
-                                alt="Sebastiaan Kloos" loading="lazy">
-                            <div class="inline-block font-bold tracking-tight text-sm">
-                                <p>{{ $review->contact_info_ans['location'] }}</p>
-                                <p class="font-medium text-black/60">{{ $review->contact_info_ans['organisation'] }}
-                                </p>
+                        <div class="inline-block font-bold tracking-tight text-sm break-all">
+                            <p>{{ $review->contact_info_ans['location'] }}</p>
+                            <p class="font-medium text-black/60">
+                                {{ $review->contact_info_ans['organisation'] }}
+                            </p>
+                            <div class="mb-5 text-left">
+                                @for ($i = 1; $i <= $review->star_question_ans; $i++)
+                                    <i class="bx bxs-star text-yellow-400 text-md"></i>
+                                @endfor
                             </div>
-                        </footer>
-                    </div>
-                </a>
+                        </div>
+                    </footer>
+
+                    <p
+                        class="max-w-full  whitespace-normal break-all text-md font-medium italic text-center mb-8 first-letter:uppercase text-gray-700">
+                        "{{ $review->review_platform_ans }}"
+                    </p>
+
+
+                </div>
             @empty
                 <div class="text-center font-bold text-cyan-400 bg-cyan-100 p-3 md:col-span-3 ">empty data</div>
             @endforelse

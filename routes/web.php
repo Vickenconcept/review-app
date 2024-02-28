@@ -4,7 +4,10 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CampaignController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FacebookController;
+use App\Http\Controllers\FolderController;
 use App\Http\Controllers\LinkedInController;
+use App\Http\Controllers\PlatformController;
+use App\Http\Controllers\ResellerController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SettingsController;
 use App\Http\Controllers\VideoController;
@@ -68,6 +71,10 @@ Route::middleware(['auth'])->group(function () {
     Route::get('campaign/widget/{uuid?}', [CampaignController::class, 'selectWidget'])->name('selectWidget');
     Route::resource('campaign', CampaignController::class);
     Route::resource('widget', WidgetController::class);
+    Route::resource('reseller', ResellerController::class);
+    Route::resource('platform', PlatformController::class);
+    Route::post('addToFolder', [FolderController::class, 'addToFolder'])->name('addToFolder');
+    Route::resource('folder', FolderController::class);
 
     Route::controller(SettingsController::class)->prefix('setting')->name('settings.')->group(function () {
         Route::get('/users', 'users')->name('users');

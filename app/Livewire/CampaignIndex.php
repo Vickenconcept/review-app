@@ -4,6 +4,8 @@ namespace App\Livewire;
 
 use App\Mail\InviteMail;
 use App\Models\Campaign;
+use App\Models\Folder;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -39,6 +41,15 @@ class CampaignIndex extends Component
         $this->name = '';
         $this->email = '';
         session()->flash('success', 'Invitation email sent successfully!');
+
+        $user = Auth::user();
+
+        $site = $user->sites()->first();
+
+        $emailNumber = $site->email_number + 1;
+
+        $site->update(['email_number' => $emailNumber]);
+
         $this->dispatch('email-sent');
     }
     public function testInvite()
@@ -46,8 +57,10 @@ class CampaignIndex extends Component
         Mail::to($this->textEmail)->send(new InviteMail($this->url, $this->name));
 
         session()->flash('success', 'Invitation email sent successfully!');
+
         $this->dispatch('email-sent');
     }
+
     public function showOrHide($id)
     {
         $campaign = Campaign::find($id);
@@ -76,6 +89,8 @@ class CampaignIndex extends Component
 
         $campaigns = $campaigns->paginate(7);
 
-        return view('livewire.campaign-index', compact('campaigns'));
+        $folders = Folder::latest()->get();
+
+        return view('livewire.campaign-index', compact('campaigns', 'folders'));
     }
 }

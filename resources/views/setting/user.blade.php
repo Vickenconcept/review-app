@@ -1,4 +1,5 @@
 <x-app-layout>
+    <x-notification />
     <div class="h-full space-y-8" x-data="{ link: null }">
         <div class="py-5 border-b px-3 md:px-10 flex space-x-5 items-center">
             <div>

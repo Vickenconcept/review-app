@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use App\Models\Site;
+use App\Models\Reseller;
 
 class User extends Authenticatable
 {
@@ -52,5 +54,10 @@ class User extends Authenticatable
     public function sites()
     {
         return $this->belongsToMany(Site::class);
+    }
+
+    public function resellers()
+    {
+        return $this->hasMany(Reseller::class);
     }
 }

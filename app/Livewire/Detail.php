@@ -24,6 +24,10 @@ class Detail extends Component
 
     public function collectWebData()
     {
+        $this->validate([
+            'siteUrl' => 'required|url',
+        ]);
+        
         $data = OpenGraph::fetch($this->siteUrl, true);
 
         $this->color = $data['theme-color'] ?? null;

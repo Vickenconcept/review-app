@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Campaign;
 use App\Models\Folder;
 use Illuminate\Http\Request;
 
@@ -28,15 +29,38 @@ class FolderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $user = auth()->user();
+        $siteId =  $user->sites()->first();
+
+        $valaidatedData = $request->validate([
+            "site_id" =>  'sometimes',
+            "name" => "required",
+        ]);
+        $valaidatedData['site_id'] =  $siteId->id;
+        // dd($valaidatedData['name'] );
+
+        $folder = Folder::create($valaidatedData);
+
+        return redirect()->back()->with("success", "Folder Created Successfully");
     }
 
     /**
      * Display the specified resource.
      */
+    public function addToFolder(Request $request)
+    {
+        $campaignId = $request->input('campaignId');
+        $folderId = $request->input('folderId');
+
+        $campaign = Campaign::find($campaignId);
+        $campaign->folder_id = $folderId;
+        $campaign->save();
+        return back()->with('success','Added to folder');
+    }
     public function show(Folder $folder)
     {
-        //
+        return view('folder', compact('folder'));
     }
 
     /**

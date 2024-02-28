@@ -1,19 +1,31 @@
 <div class="" x-data="{ menu: 'editor', isOpen: null }">
+    <x-notification />
     <div class="sticky top-0 bg-white">
         <nav
-            class="relative  z-50 flex w-full flex-wrap items-center justify-between bg-white  py-2 text-neutral-500 shadow-lg border border-b hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-600 lg:py-4">
+            class="relative  z-50 flex w-full flex-wrap items-center justify-between bg-white  py-2 text-neutral-500 shadow-lg border border-b hover:text-neutral-700 lg:py-4">
             <div class="flex w-full flex-wrap items-center justify-between px-3">
+                <div> 
+                    <a href="{{ route('home') }}">
+                    <button class="flex items-center">
+                            <i class='bx bxs-chevron-left text-2xl'></i> Back
+                        </button>
+                    </a>
+                </div>
                 <input type="text" wire:model="name"
                     class="border-none bg-transparent focus:outline-none outline-none focus:ring-transparent">
 
-                <div class="ml-5 flex w-[30%] items-center justify-between">
-                    <button wire:click="CampaignData" class="px-4 py-2 rounded-lg bg-cyan-100 text-cyan-500 hover:bg-cyan-700 hover:text-cyan-100 transition-all duration-300 flex items-center "><i class="bx bx-save mr-1"></i>save</button>
+                <div class="ml-5 flex  items-center justify-end space-x-3 ">
+                    <button wire:click="CampaignData"
+                        class="px-4 py-2 rounded-lg bg-cyan-100 text-cyan-500 hover:bg-cyan-700 hover:text-cyan-100 transition-all duration-300 flex items-center "><i
+                            class="bx bx-save mr-1"></i>save</button>
+
+                    <x-main-button>Share</x-main-button>
                 </div>
             </div>
         </nav>
 
         <!-- Main navigation container -->
-        <nav class="relative z-40 flex w-full flex-nowrap items-center justify-between bg-white py-2 text-neutral-500 shadow-sm hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-600 lg:flex-wrap lg:justify-start lg:py-4"
+        <nav class="relative z-40 flex w-full flex-nowrap items-center justify-between bg-white py-2 text-neutral-500 shadow-sm hover:text-neutral-700 lg:flex-wrap lg:justify-start lg:py-4"
             data-te-navbar-ref>
             <div class="flex w-full flex-wrap items-center justify-between px-3">
                 <div class="!visible mt-2  flex-grow basis-[100%] items-center justify-center lg:mt-0 lg:!flex lg:basis-auto"
@@ -55,14 +67,15 @@
                             class=" {{ $campaignType == 'reviews' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-500' }} p-5 rounded-lg text-center space-y-1  cursor-pointer">
                             <p><i class="bx bxs-star text-5xl"></i></p>
                             <p class="font-semibold text-xs">Collect Reviews</p>
-                            <input checked type="radio" name="campaignType" wire:model.live="campaignType" value="reviews"
-                                class="hidden">
+                            <input checked type="radio" name="campaignType" wire:model.live="campaignType"
+                                value="reviews" class="hidden">
                         </label>
                         <label
                             class=" {{ $campaignType == 'NPS' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-500' }}  p-5 rounded-lg text-center space-y-2  cursor-pointer">
                             <p><i class="bx bxs-circle text-5xl"></i></p>
                             <p class="font-semibold text-xs">Measure NPS</p>
-                            <input type="radio" name="campaignType" wire:model.live="campaignType" value="NPS" class="hidden">
+                            <input type="radio" name="campaignType" wire:model.live="campaignType" value="NPS"
+                                class="hidden">
                         </label>
                     </div>
 
@@ -634,10 +647,10 @@
         </div>
 
         <div x-show="menu === 'response'" style="display: none">
-           
+
             <livewire:response-component :campaign=$campaign />
         </div>
-        
+
         <div x-show=" menu === 'recipient'" style="display: none">
             <livewire:recipient-component :campaign=$campaign />
         </div>

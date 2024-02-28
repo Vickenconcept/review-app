@@ -1,4 +1,5 @@
-    <div class="h-full  space-y-8" x-data="{ openModal: false, link: 'Send', campaign: '' }">
+    <div class="h-full  space-y-8" x-data="{ openModal: false, link: 'Send', campaign: '', folder: false, createFolder: false }">
+        <x-notification />
         <div class="py-5 border-b px-3 md:px-10 flex justify-between items-center">
             <div>
                 <h3 class=" font-bold">Campaign</h3>
@@ -10,16 +11,36 @@
         </div>
         <div class="flex flex-col md:flex-row px-3 md:px-10 space-y-5 md:space-y-0 md:space-x-6">
             <select id="countries1" wire:model.live="sortOrder"
-                class="md:bg-gray-50 border-0 md:border border-gray-300 text-gray-900 text-sm rounded-lg md:focus:ring-blue-500 md:focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white md:dark:focus:ring-blue-500 md:dark:focus:border-blue-500">
+                class="md:bg-gray-50 border-0 md:border border-gray-300 text-gray-900 text-sm rounded-lg md:focus:ring-blue-500 md:focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white md:dark:focus:ring-blue-500 ">
                 <option value="latest">Latest</option>
                 <option value="oldest">Oldest</option>
             </select>
-            <select id="countries1" wire:model="language"
-                class="md:bg-gray-50 border-0 md:border border-gray-300 text-gray-900 text-sm rounded-lg md:focus:ring-blue-500 md:focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white md:dark:focus:ring-blue-500 md:dark:focus:border-blue-500">
-                <option selected>Choose a country</option>
-                <option value="EN">English</option>
-                <option value="FR">French</option>
-            </select>
+
+
+
+            <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"
+                class="md:bg-gray-50 border-0 md:border border-gray-300 text-gray-900 text-sm rounded-lg md:focus:ring-blue-500 md:focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white md:dark:focus:ring-blue-500 "
+                type="button">Your Folder <i class='bx bxs-chevron-down ml-1 text-gray-500 text-md '></i>
+            </button>
+
+            <!-- Dropdown menu -->
+            <div id="dropdown"
+                class="z-10 hidden bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700">
+                <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
+                    @forelse ($folders as $folder)
+                        <li>
+                            <a href="{{ route('folder.show',['folder' => $folder]) }}"
+                                class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $folder->name }}</a>
+                        </li>
+                    @empty
+                        <p class="bg-cyan-100 text-cyan-500 py-2 text-center rounded">No folder.</p>
+                    @endforelse
+                </ul>
+            </div>
+
+
+
+
             <div class="relative">
                 <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
@@ -32,6 +53,9 @@
                     class="block w-full p-3 ps-10 text-sm text-gray-900 border-0 md:border border-gray-300 rounded-lg md:bg-gray-50 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     placeholder="Search">
             </div>
+
+            <button @click="createFolder = true" class="bg-cyan-950 hover:bg-cyan-800 hover:shadow px-4 py-1 font-semibold text-blue-50 rounded-md "> Create folder</button>
+
         </div>
 
         <section class="px-3 md:px-10 ">
@@ -73,7 +97,8 @@
                                     </x-slot>
                                     <x-slot name="content">
                                         <x-dropdown-link class="cursor-pointer">
-                                            <button class="w-full text-left px-4 py-2"><i
+                                            <button class="w-full text-left px-4 py-2"
+                                                @click="folder = true; campaign = @js($campaign->id)"><i
                                                     class='bx bxs-folder-open text-xl mr-1'></i>Move To Folder</button>
 
                                         </x-dropdown-link>
@@ -144,8 +169,8 @@
             <div @click.away="openModal = false"
                 class="bg-white w-[90%] h-[33rem] shadow-inner  border rounded-2xl overflow-auto  pb-6 px-8 transition-all relative duration-700">
                 <div class=" h-full ">
-                    <div class="flex justify-between sticky top-0  py-6">
-                        <h1 class="text-xl font-semibold">Share Cmapaign</h1>
+                    <div class="flex justify-between sticky top-0  py-6 bg-white">
+                        <h1 class="text-xl font-semibold">Share Campaign</h1>
                         <button @click="openModal = false"><i class="bx bx-x text-3xl text-gray-500"></i></button>
                     </div>
                     <div class=" ">
@@ -158,10 +183,12 @@
                                 class="cursor-pointer text-cyan-700 flex items-center font-semibold text-sm pb-1"
                                 :class="{ 'border-b-2 border-cyan-700': link === 'Url' }"><i
                                     class='bx bx-link text-xl mr-2'></i>Url address</li>
-                            {{-- <li @click="link = 'signature'"
+                            <li @click="link = 'embed'"
                                 class="cursor-pointer text-cyan-700 flex items-center font-semibold text-sm pb-1"
-                                :class="{ 'border-b-2 border-cyan-700': link === 'signature' }"><i
-                                    class='bx bxl-deviantart text-xl mr-2'></i>Email signature</li> --}}
+                                :class="{ 'border-b-2 border-cyan-700': link === 'embed' }">
+                                    <i class='bx bx-code-alt text-xl mr-2'></i>
+                                    
+                                    Embed Code</li>
                             <li @click="link = 'QR'"
                                 class="cursor-pointer text-cyan-700 flex items-center font-semibold text-sm pb-1"
                                 :class="{ 'border-b-2 border-cyan-700': link === 'QR' }"><i
@@ -252,9 +279,25 @@
 
                             </div>
                         </div>
-                        {{--  --}}
-                        <div x-show="link == 'signature'" style="display: none" class="mt-5">
-                            signature
+                        {{-- embed --}}
+                        <div x-show="link == 'embed'" style="display: none" class="mt-5">
+                            <div class="grid grid-cols-1 md:grid-cols-3">
+                                <div class="space-y-5 col-span-2">
+                                    <p class="font-semibold text-sm">Send this link to the recipients via email, share
+                                        in social media or add it to your website.</p>
+                                    <div class="rounded-lg border flex justify-between p-5">
+                                        <p x-bind:id="'component-id-' + campaign.id"
+                                            class="w-full text-sm font-semibold  flex items-center ">
+                                            {{ route('campaign.component', ['uuid' => '' . '/']) }}/<span
+                                                x-text="campaign.uuid"></span> </p>
+                                        <button class="btn2"
+                                            @click="toCopy(document.getElementById('component-id-' + campaign.id))">
+                                            <i class="bx bx-copy text-xl"></i>Copy
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
                         </div>
                         {{--  --}}
                         <div x-show="link == 'QR'" style="display: none" class="mt-5 space-y-3">
@@ -269,6 +312,63 @@
                             {{ $QRCode }}
                         </div>
                     </div>
+
+                </div>
+            </div>
+        </div>
+
+        {{-- modal --}}
+        <div class="fixed items-center justify-center  flex -top-10 left-0 mx-auto w-full h-full bg-gray-600 bg-opacity-30 z-50 transition duration-1000 ease-in-out"
+            x-show="folder" style="display: none;">
+            <div @click.away="folder = false"
+                class="bg-white w-[60%] h-[25rem] shadow-inner  border rounded-2xl overflow-auto  py-6 px-8 transition-all relative duration-700">
+                <div class=" h-full ">
+
+                    <div class="font-bold text-xl"><i class="bx bx-folder text-3xl mr-2"></i> Select folder</div>
+                    <ul class="h-[70%] w-full px-10 pt-5 space-y-2">
+
+                        @forelse ($folders as $folder)
+                            <li>
+                                <form action="{{ route('addToFolder') }}" method="post">
+                                    @csrf
+                                    <input type="text" name="campaignId" x-model="campaign" class="hidden">
+                                    <input type="text" name="folderId" value="{{ $folder->id }}"
+                                        class="hidden">
+                                    <button><i
+                                            class="bx bxs-folder text-3xl mr-2 text-blue-500"></i>{{ $folder->name }}</button>
+                                </form>
+                            </li>
+                        @empty
+
+                            <div>No folder yet</div>
+                        @endforelse
+                    </ul>
+                </div>
+            </div>
+        </div>
+        {{-- createFolder modal --}}
+        <div class="fixed items-center justify-center  flex -top-10 left-0 mx-auto w-full h-full bg-gray-600 bg-opacity-30 z-50 transition duration-1000 ease-in-out"
+            x-show="createFolder" style="display: none;">
+            <div @click.away="createFolder = false"
+                class="bg-white w-[40%]  shadow-inner  border rounded-2xl overflow-auto  py-6 px-8 transition-all relative duration-700">
+                <div class=" h-full ">
+
+                    <div class="font-bold text-xl">Creat Folder</div>
+                    <form action="{{ route('folder.store') }}" method="post" class="my-10 space-y-3">
+                        @csrf
+
+                        <div>
+                            <input class="form-control" id="folder_name" type="text" name="name"
+                                placeholder="my folder">
+                        </div>
+
+                        <button
+                            class="bg-cyan-950 hover:bg-cyan-800 hover:shadow px-4 py-1.5 font-semibold text-blue-50 rounded-md  w-full"
+                            type="submit">
+                            <span>Create</span>
+
+                        </button>
+                    </form>
 
                 </div>
             </div>

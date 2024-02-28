@@ -40,15 +40,11 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-
         $campaignId = $request->input('campaignId');
         $siteId = $request->input('siteId');
         $email = $request->input('email');
         $message = $request->input('message');
 
-        // if (!CSRF::tokenIsValid($request->header('X-CSRF-TOKEN'))) {
-        //     abort(419, 'CSRF token validation failed');
-        // }
 
         $data = [
             'site_id' => $siteId,
@@ -82,12 +78,14 @@ class ReviewController extends Controller
         
         return view('review.show', compact('review'));
     }
+
     public function share( )
     {
         $reviews = Review::latest()->simplePaginate(3);
         
         return view('review.share', compact('reviews'));
     }
+
     public function shareOne( $uuid)
     {
         $review = Review::where('uuid', $uuid)->firstOrFail();

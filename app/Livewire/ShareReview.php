@@ -13,7 +13,9 @@ class ShareReview extends Component
     public $review,
         $thumbnail,
         $backgroundImage,
+        $logo,
         $campaignType,
+        $addOrRemoveImage = 'addImage',
         $star;
 
     public function mount($review)
@@ -37,11 +39,10 @@ class ShareReview extends Component
     {
         if ($this->star == '1') {
             $this->review->show_star_review = '0';
-            // dd('true');
             $this->review->update();
         } elseif ($this->star == '0') {
             $this->review->show_star_review = '1';
-            // dd('false');
+
             $this->review->update();
         }
 
@@ -53,11 +54,9 @@ class ShareReview extends Component
         
     }
     public function setBackgroundImage(){
-
         $this->validate([
             'backgroundImage' => 'required|image|mimes:png,jpg,jpeg,webp'
         ]);
-        // dd($this->backgroundImage);
 
         if ($this->backgroundImage) {
             # code...
@@ -69,10 +68,40 @@ class ShareReview extends Component
 
         $this->review->background = $imageUrl;
         $this->review->save();
+        
+        $this->dispatch('background-image-updated');
 
-
-        // dd($this->campaignType);
     }
+    public function setLogo(){
+
+        $this->validate([
+            'logo' => 'required|image|mimes:png,jpg,jpeg,webp'
+        ]);
+
+        // dd('here');
+
+        if ($this->logo) {
+            # code...
+            $cloudinary = new Cloudinary();
+            $cloudinaryResponse = $cloudinary->uploadApi()->upload($this->logo->getRealPath());
+
+            $imageUrl = $cloudinaryResponse['secure_url'];
+        }
+
+        $this->review->logo = $imageUrl;
+        $this->review->save();
+
+        $this->dispatch('background-image-updated');
+
+    }
+    public function useImage($param)
+    {
+        // dd($param);
+
+        $this->addOrRemoveImage = $param;
+    }
+
+
     public function render()
     {
         return view('livewire.share-review');
