@@ -6,6 +6,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FacebookController;
 use App\Http\Controllers\FolderController;
 use App\Http\Controllers\LinkedInController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\PlatformController;
 use App\Http\Controllers\ResellerController;
 use App\Http\Controllers\ReviewController;
@@ -52,6 +53,14 @@ Route::middleware('guest')->group(function () {
         Route::post('/register', 'register')->name('register');
         Route::post('/login', 'login')->name('login');
     });
+    Route::controller(PasswordResetController::class)->group(function () {
+        Route::get('forgot-password', 'index')->name('password.request');
+        Route::post('forgot-password', 'store')->name('password.email');
+        Route::get('/reset-password/{token}', 'reset')->name('password.reset');
+        Route::post('/reset-password', 'update')->name('password.update');
+    });
+
+
 });
 
 
@@ -66,7 +75,7 @@ Route::resource('review', ReviewController::class);
 
 
 Route::middleware(['auth'])->group(function () {
-    Route::post('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
+    Route::get('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
     Route::get('home', [DashboardController::class, 'index'])->name('home');
     Route::get('campaign/widget/{uuid?}', [CampaignController::class, 'selectWidget'])->name('selectWidget');
     Route::resource('campaign', CampaignController::class);

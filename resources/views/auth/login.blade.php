@@ -189,9 +189,12 @@
                         <div class="flex -mx-3">
                             <div class="w-full px-3 mb-5">
                                 <button
-                                    class="block w-full max-w-xs mx-auto bg-cyan-500 hover:bg-cyan-700 focus:bg-cyan-700 text-white rounded-lg px-3 py-3 font-semibold">
-                                    LOGIN</button>
+                                class="block w-full  mx-auto bg-cyan-500 hover:bg-cyan-700 focus:bg-cyan-700 text-white rounded-lg px-3 py-3 font-semibold">
+                                LOGIN</button>
                             </div>
+                        </div>
+                        <div class="text-right text-cyan-500 font-semibold hover:underline text-sm">
+                            <a href="{{ route('password.request') }}">Forgot Password</a>
                         </div>
                     </div>
                 </form>

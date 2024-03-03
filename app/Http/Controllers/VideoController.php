@@ -23,6 +23,7 @@ class VideoController extends Controller
         ]);
 
         $video = $request->file('video');
+        // dd($video);
 
         // Inspect the content and details of the uploaded file
         info('Uploaded video details:', [

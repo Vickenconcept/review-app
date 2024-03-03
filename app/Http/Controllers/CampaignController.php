@@ -47,7 +47,7 @@ class CampaignController extends Controller
 
         $user = auth()->user();
         $siteId = $user->sites->first()->id;
-        $folderId = Folder::find(1);
+        // $folderId = Folder::find(1);
 
         // dd($siteId);
         // $campaignId =  DB::table('campaigns')->insertGetId([
@@ -55,7 +55,7 @@ class CampaignController extends Controller
             'uuid' => Str::uuid()->toString(),
             'site_id' => $siteId,
             'widget_id' => 1,
-            'folder_id' => $folderId ?? null,
+            'folder_id' => null,
             'name' => 'Campaign Name',
             'no_negative' => 1,
             'language' => 'English',

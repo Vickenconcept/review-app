@@ -20,13 +20,20 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-a2228c5e.css') }}">
+
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
     @livewireStyles
     <style>
         #htmltoimage {
             width: 65%;
             margin: auto;
+        }
+
+        #hiddenText {
+            display: none;
         }
     </style>
 
@@ -38,25 +45,6 @@
         <x-sidebar />
         <div class=" h-full sm:ml-64">
             {{ $slot }}
-
-            {{-- <div id="htmltoimage">
-                <div class="imgbg bg-red-400" id="imgbg">
-                   
-                    <img id="imageToCapture"
-                        src="https://res.cloudinary.com/dp0bpzh9b/image/upload/v1708091369/szwbghwu6ng9trmqdbuk.png" alt=""
-                        srcset="">
-                </div>
-                <h1>Demo page to show example of "How to Create and Download Image of HTML content in webpage Using
-                    html2canvas library". Find tutorial page here <a
-                        href="http://www.freakyjolly.com/convert-html-document-into-image-jpg-png-from-canvas/"
-                        target="_blank">Here</a></h1>
-                <p>Just click on button below to download Image of this HTML content which is wrapped in an ID named
-                    "htmltoimage".</p>
-                <button onclick="PrintDiv(document.getElementById('htmltoimage'))" class="clickbtn">Click To Download
-                    Image</button>
-            </div> --}}
-
-
 
             <x-footer />
         </div>
@@ -200,6 +188,7 @@
 
 
     @livewireScripts
+    <script type="module" src="{{ asset('build/assets/app-9be79099.js') }}"></script>
 
 </body>
 

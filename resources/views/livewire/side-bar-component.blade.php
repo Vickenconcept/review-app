@@ -97,6 +97,13 @@
                     <span class="text-sm font-semibold">Resell</span>
                 </a>
             </li>
+            <li>
+                <a href="{{ route('auth.logout') }}"
+                    class="flex items-center px-2 py-1 text-cyan-500 transition duration-75 rounded-lg  group {{ request()->routeIs('review.share') ?'bg-cyan-500 bg-opacity-25': ''}}">
+                    <i class='bx bx-log-out text-xl mr-5'></i>
+                    <span class="text-sm font-semibold">Logout</span>
+                </a>
+            </li>
         </ul>
     </div>
 </aside>

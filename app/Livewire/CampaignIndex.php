@@ -36,19 +36,25 @@ class CampaignIndex extends Component
 
     public function invitUser()
     {
-        Mail::to($this->email)->send(new InviteMail($this->url, $this->name));
-
-        $this->name = '';
-        $this->email = '';
-        session()->flash('success', 'Invitation email sent successfully!');
-
         $user = Auth::user();
 
         $site = $user->sites()->first();
 
-        $emailNumber = $site->email_number + 1;
+        if ($site->email_number <= 15) {
+            # code...
+            Mail::to($this->email)->send(new InviteMail($this->url, $this->name));
 
-        $site->update(['email_number' => $emailNumber]);
+            $this->name = '';
+            $this->email = '';
+            
+            session()->flash('success', 'Invitation email sent successfully!');
+
+
+
+            $emailNumber = $site->email_number + 1;
+
+            $site->update(['email_number' => $emailNumber]);
+        }
 
         $this->dispatch('email-sent');
     }

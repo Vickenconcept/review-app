@@ -262,7 +262,7 @@
             {{--  --}}
         @elseif ($campaign->widget_id == 5)
             {{-- 11 --}}
-            <section>
+            <section class="w-full">
                 <div id="default-carousel" class="relative w-full bg-gray-500" data-carousel="slide">
                     <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
                         <div class="hidden duration-700 ease-in-out" data-carousel-item>
@@ -335,7 +335,7 @@
             {{--  --}}
         @elseif ($campaign->widget_id == 6)
             {{-- 9 --}}
-            <section>
+            <section class="w-full">
                 <div id="indicators-carousel" class="relative w-full bg-gray-500" data-carousel="static">
                     <!-- Carousel wrapper -->
                     <div class="relative h-56 overflow-hidden rounded-lg md:h-96">

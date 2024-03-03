@@ -29,7 +29,7 @@
                 <ul class="py-2 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="dropdownDefaultButton">
                     @forelse ($folders as $folder)
                         <li>
-                            <a href="{{ route('folder.show',['folder' => $folder]) }}"
+                            <a href="{{ route('folder.show', ['folder' => $folder]) }}"
                                 class="block px-4 py-2 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">{{ $folder->name }}</a>
                         </li>
                     @empty
@@ -54,7 +54,9 @@
                     placeholder="Search">
             </div>
 
-            <button @click="createFolder = true" class="bg-cyan-950 hover:bg-cyan-800 hover:shadow px-4 py-1 font-semibold text-blue-50 rounded-md "> Create folder</button>
+            <button @click="createFolder = true"
+                class="bg-cyan-950 hover:bg-cyan-800 hover:shadow px-4 py-1 font-semibold text-blue-50 rounded-md ">
+                Create folder</button>
 
         </div>
 
@@ -186,9 +188,10 @@
                             <li @click="link = 'embed'"
                                 class="cursor-pointer text-cyan-700 flex items-center font-semibold text-sm pb-1"
                                 :class="{ 'border-b-2 border-cyan-700': link === 'embed' }">
-                                    <i class='bx bx-code-alt text-xl mr-2'></i>
-                                    
-                                    Embed Code</li>
+                                <i class='bx bx-code-alt text-xl mr-2'></i>
+
+                                Embed Code
+                            </li>
                             <li @click="link = 'QR'"
                                 class="cursor-pointer text-cyan-700 flex items-center font-semibold text-sm pb-1"
                                 :class="{ 'border-b-2 border-cyan-700': link === 'QR' }"><i
@@ -245,16 +248,24 @@
                                     <div class="text-yellow-500 text-md my-4">⭐</div>
 
                                     <p class="text-gray-800 my-4">
-                                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod
-                                        tempor incididunt ut labore et dolore magna aliqua."
+                                        Your review lights up our day! Thank you for sharing your thoughts and experiences with us. Your five-star rating reflects the dedication and commitment we pour into our service.
                                     </p>
-
-                                    <p class="text-gray-600">If you have any further feedback or questions,
-                                        feel free to reach out to us.</p>
-
-                                    <a href="#"
-                                        class="inline-block bg-blue-500 text-white px-4 py-2 rounded-md mt-4 hover:bg-blue-600">Write
-                                        Another Review</a>
+                                    <p class="text-gray-800 my-4">
+                                        But wait, we're not stopping there! We're constantly striving to elevate your experience even further. Your feedback is like a guiding star, illuminating our path towards perfection.
+                                    </p>
+                                    <p class="text-gray-800 my-4">
+                                        Got more to say? We're all ears! Whether it's a suggestion, a question, or just a friendly chat, don't hesitate to reach out to us. Your voice matters, and we're here to listen.
+                                    </p>
+                                    <p class="text-gray-800 my-4">
+                                        Looking forward to hearing from you soon!
+                                    </p>
+                                    <p class="text-gray-800 my-4">
+                                        Warm regards,
+                                    </p>
+                                    <p>If you have any further feedback or questions, feel free to reach out to us.</p>
+                                    <p>from: <span class="text-blue-500" >{{ env('MspanIL_FROM_ADDRESS') }}</a></p>
+                                    
+                                    <p>P.S. Ready to embark on another journey of sharing your experiences?  <span class="text-blue-500">Click here</span> to write another review!</p>
                                 </div>
 
                             </div>
@@ -262,15 +273,21 @@
                         {{--  --}}
                         <div x-show="link == 'Url'" style="display: none" class="mt-5">
                             <div class="grid grid-cols-1 md:grid-cols-3">
-                                <div class="space-y-5 col-span-2">
+                                <div class="space-y-5 md:col-span-2">
                                     <p class="font-semibold text-sm">Send this link to the recipients via email, share
                                         in social media or add it to your website.</p>
                                     <div class="rounded-lg border flex justify-between p-5">
-                                        <p x-bind:id="'dynamic-id-' + campaign.id"
-                                            class="w-full text-sm font-semibold  flex items-center ">
+                                        <p x-bind:id="'dynamic-id-' + campaign.id" class=" text-sm font-semibold    ">
                                             {{ route('campaign.share', ['uuid' => '' . '/']) }}/<span
-                                                x-text="campaign.uuid"></span> </p>
-                                        <button class="btn2"
+                                                x-text="campaign.uuid"></span> 
+                                                <button
+                                                    class=" sm:hidden"
+                                                    @click="toCopy(document.getElementById('dynamic-id-' + campaign.id))">
+                                                    <i class="bx bx-copy text-xl"></i>
+                                                </button>
+                                            </p>
+                                        <button
+                                            class=" hidden  md:flex items-center bg-cyan-100 text-cyan-700 hover:bg-cyan-700 hover:text-cyan-100 transition-all duration-300 font-semibold rounded-md whitespace-nowrap  px-4 py-2 ml-4"
                                             @click="toCopy(document.getElementById('dynamic-id-' + campaign.id))">
                                             <i class="bx bx-copy text-xl"></i>Copy
                                         </button>
@@ -321,7 +338,7 @@
         <div class="fixed items-center justify-center  flex -top-10 left-0 mx-auto w-full h-full bg-gray-600 bg-opacity-30 z-50 transition duration-1000 ease-in-out"
             x-show="folder" style="display: none;">
             <div @click.away="folder = false"
-                class="bg-white w-[60%] h-[25rem] shadow-inner  border rounded-2xl overflow-auto  py-6 px-8 transition-all relative duration-700">
+                class="bg-white w-[90%] md:w-[60%] h-[25rem] shadow-inner  border rounded-2xl overflow-auto  py-6 px-8 transition-all relative duration-700">
                 <div class=" h-full ">
 
                     <div class="font-bold text-xl"><i class="bx bx-folder text-3xl mr-2"></i> Select folder</div>
@@ -350,7 +367,7 @@
         <div class="fixed items-center justify-center  flex -top-10 left-0 mx-auto w-full h-full bg-gray-600 bg-opacity-30 z-50 transition duration-1000 ease-in-out"
             x-show="createFolder" style="display: none;">
             <div @click.away="createFolder = false"
-                class="bg-white w-[40%]  shadow-inner  border rounded-2xl overflow-auto  py-6 px-8 transition-all relative duration-700">
+                class="bg-white w-[90%] md:w-[40%]  shadow-inner  border rounded-2xl overflow-auto  py-6 px-8 transition-all relative duration-700">
                 <div class=" h-full ">
 
                     <div class="font-bold text-xl">Creat Folder</div>

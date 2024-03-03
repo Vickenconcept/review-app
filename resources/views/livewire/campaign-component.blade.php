@@ -1,12 +1,12 @@
 <div class="" x-data="{ menu: 'editor', isOpen: null }">
     <x-notification />
-    <div class="sticky top-0 bg-white">
+    <div class="sticky top-0 bg-white" x-data="{ openModal: false, link: 'Send'}">
         <nav
             class="relative  z-50 flex w-full flex-wrap items-center justify-between bg-white  py-2 text-neutral-500 shadow-lg border border-b hover:text-neutral-700 lg:py-4">
             <div class="flex w-full flex-wrap items-center justify-between px-3">
-                <div> 
+                <div>
                     <a href="{{ route('home') }}">
-                    <button class="flex items-center">
+                        <button class="flex items-center">
                             <i class='bx bxs-chevron-left text-2xl'></i> Back
                         </button>
                     </a>
@@ -19,10 +19,180 @@
                         class="px-4 py-2 rounded-lg bg-cyan-100 text-cyan-500 hover:bg-cyan-700 hover:text-cyan-100 transition-all duration-300 flex items-center "><i
                             class="bx bx-save mr-1"></i>save</button>
 
-                    <x-main-button>Share</x-main-button>
+                    <button class="bg-cyan-950 hover:bg-cyan-800 hover:shadow px-4 py-1.5 font-semibold text-blue-50 rounded-md " @click="openModal = true">Share</button>
                 </div>
             </div>
         </nav>
+
+
+        {{-- modal --}}
+        <div class="fixed items-center justify-center  flex top-0 left-0 mx-auto  w-full h-full bg-gray-600 bg-opacity-30 z-50 transition duration-1000 ease-in-out"
+            x-show="openModal" style="display: none;">
+            <div @click.away="openModal = false"
+                class="bg-white w-[90%] h-[33rem] shadow-inner  border rounded-2xl overflow-auto  pb-6 px-8 transition-all relative duration-700">
+                <div class=" h-full ">
+                    <div class="flex justify-between sticky top-0  py-6 bg-white">
+                        <h1 class="text-xl font-semibold">Share Campaign</h1>
+                        <button @click="openModal = false"><i class="bx bx-x text-3xl text-gray-500"></i></button>
+                    </div>
+                    <div class=" ">
+                        <ul class=" flex flex-col md:flex-row gap-6">
+                            <li @click="link = 'Send'"
+                                class="cursor-pointer text-cyan-700 flex items-center font-semibold text-sm pb-1 "
+                                :class="{ 'border-b-2 border-cyan-700': link === 'Send' }"><i
+                                    class='bx bxs-envelope text-xl mr-2'></i>Send via email</li>
+                            <li @click="link = 'Url'"
+                                class="cursor-pointer text-cyan-700 flex items-center font-semibold text-sm pb-1"
+                                :class="{ 'border-b-2 border-cyan-700': link === 'Url' }"><i
+                                    class='bx bx-link text-xl mr-2'></i>Url address</li>
+                            <li @click="link = 'embed'"
+                                class="cursor-pointer text-cyan-700 flex items-center font-semibold text-sm pb-1"
+                                :class="{ 'border-b-2 border-cyan-700': link === 'embed' }">
+                                <i class='bx bx-code-alt text-xl mr-2'></i>
+
+                                Embed Code
+                            </li>
+                            <li @click="link = 'QR'"
+                                class="cursor-pointer text-cyan-700 flex items-center font-semibold text-sm pb-1"
+                                :class="{ 'border-b-2 border-cyan-700': link === 'QR' }"><i
+                                    class='bx bx-qr-scan text-xl mr-2'></i>QR code</li>
+                        </ul>
+
+                        <div x-show="link == 'Send'" style="display: none" class="mt-5">
+                            <div class="grid grid-cols-1 md:grid-cols-2">
+                                <div class="space-y-5">
+                                    @if (session()->has('success'))
+                                        <div class="bg-green-100 text-green-400 p-3">
+                                            {{ session('success') }}
+                                        </div>
+                                    @endif
+                                    <div class="flex items-center">
+                                        <input type="text" value="{{ auth()->user()->email }}"
+                                            class="text-gray-400 form-control text-md w-56" disabled>
+                                        <button type="button" wire:click="testInvite"
+                                            class="flex items-center bg-cyan-100 text-cyan-700 hover:bg-cyan-700 hover:text-cyan-100 transition-all duration-300 font-semibold rounded-md whitespace-nowrap  px-4 py-2 ml-4">
+                                            <i class='bx bxs-send mr-1'></i>
+                                            <span wire:loading.remove>Send test</span>
+                                            <span wire:loading>Loading ...</span>
+                                        </button>
+                                    </div>
+                                    <hr>
+                                    <p class="text-gray-500">Invite people to leave you a review and they will receive
+                                        a link to your review form.</p>
+                                    <form action="" class="space-y-3">
+                                        <input type="text" name="name" placeholder="Name" wire:model="username"
+                                            class="text-gray-400 form-control text-md w-full">
+                                        <input type="email" name="email" placeholder="Email*"
+                                            wire:model.live="email" class="text-gray-400 form-control text-md w-full">
+                                        <button type="button" @if ($email == '') disabled @endif
+                                            class="btn " wire:click="invitUser">
+                                            <span wire:loading.remove>send</span>
+                                            <span wire:loading>Loading ...</span>
+                                        </button>
+                                    </form>
+
+                                </div>
+                                <!-- ---------- -->
+
+                                <div class="max-w-2xl mx-auto bg-white p-8 rounded-lg ">
+
+                                    <h1 class="text-2xl font-bold text-gray-800 mb-4">Thank You for Your
+                                        Review!</h1>
+
+                                    <p class="text-gray-600">Your feedback is valuable to us.</p>
+
+                                    <div class="text-yellow-500 text-md my-4">⭐⭐⭐⭐⭐</div>
+                                    <div class="text-yellow-500 text-md my-4">⭐⭐⭐⭐</div>
+                                    <div class="text-yellow-500 text-md my-4">⭐⭐⭐</div>
+                                    <div class="text-yellow-500 text-md my-4">⭐⭐</div>
+                                    <div class="text-yellow-500 text-md my-4">⭐</div>
+
+                                  
+                                    <p class="text-gray-800 my-4">
+                                        Your review lights up our day! Thank you for sharing your thoughts and experiences with us. Your five-star rating reflects the dedication and commitment we pour into our service.
+                                    </p>
+                                    <p class="text-gray-800 my-4">
+                                        But wait, we're not stopping there! We're constantly striving to elevate your experience even further. Your feedback is like a guiding star, illuminating our path towards perfection.
+                                    </p>
+                                    <p class="text-gray-800 my-4">
+                                        Got more to say? We're all ears! Whether it's a suggestion, a question, or just a friendly chat, don't hesitate to reach out to us. Your voice matters, and we're here to listen.
+                                    </p>
+                                    <p class="text-gray-800 my-4">
+                                        Looking forward to hearing from you soon!
+                                    </p>
+                                    <p class="text-gray-800 my-4">
+                                        Warm regards,
+                                    </p>
+                                    <p>If you have any further feedback or questions, feel free to reach out to us.</p>
+                                    <p>from: <span class="text-blue-500" >{{ env('MspanIL_FROM_ADDRESS') }}</a></p>
+                                    
+                                    <p>P.S. Ready to embark on another journey of sharing your experiences?  <span class="text-blue-500">Click here</span> to write another review!</p>
+                                </div>
+
+                            </div>
+                        </div>
+                        {{--  --}}
+                        <div x-show="link == 'Url'" style="display: none" class="mt-5">
+                            <div class="grid grid-cols-1 md:grid-cols-3">
+                                <div class="space-y-5 md:col-span-2">
+                                    <p class="font-semibold text-sm">Send this link to the recipients via email, share
+                                        in social media or add it to your website.</p>
+                                    <div class="rounded-lg border flex justify-between p-5">
+                                        <p id="copyUrl" class=" text-sm font-semibold    ">
+                                            {{ route('campaign.share', ['uuid' => $campaign->uuid]) }}
+                                            <button class=" sm:hidden"
+                                                @click="toCopy(document.getElementById('copyUrl'))">
+                                                <i class="bx bx-copy text-xl"></i>
+                                            </button>
+                                        </p>
+                                        <button
+                                            class=" hidden  md:flex items-center bg-cyan-100 text-cyan-700 hover:bg-cyan-700 hover:text-cyan-100 transition-all duration-300 font-semibold rounded-md whitespace-nowrap  px-4 py-2 ml-4"
+                                            @click="toCopy(document.getElementById('copyUrl'))">
+                                            <i class="bx bx-copy text-xl"></i>Copy
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        {{-- embed --}}
+                        <div x-show="link == 'embed'" style="display: none" class="mt-5">
+                            <div class="grid grid-cols-1 md:grid-cols-3">
+                                <div class="space-y-5 col-span-2">
+                                    <p class="font-semibold text-sm">Send this link to the recipients via email, share
+                                        in social media or add it to your website.</p>
+                                    <div class="rounded-lg border flex justify-between p-5">
+                                        <p x-bind:id="'component-id-' + campaign.id"
+                                            class="w-full text-sm font-semibold  flex items-center ">
+                                            {{ route('campaign.component', ['uuid' => '' . '/']) }}/<span
+                                                x-text="campaign.uuid"></span> </p>
+                                        <button class="btn2"
+                                            @click="toCopy(document.getElementById('component-id-' + campaign.id))">
+                                            <i class="bx bx-copy text-xl"></i>Copy
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        {{--  --}}
+                        <div x-show="link == 'QR'" style="display: none" class="mt-5 space-y-3">
+
+                            <p class="text-sm font-semibold text-cyan-700">Scan QR code to connect </p>
+                            @php
+
+                                $QRCode = QrCode::size(200)
+                                    ->color(0, 139, 139) // Cyan (dark)
+                                    ->generate($campaign->uuid);
+                            @endphp
+                            {{ $QRCode }}
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+        {{-- ----------- --}}
 
         <!-- Main navigation container -->
         <nav class="relative z-40 flex w-full flex-nowrap items-center justify-between bg-white py-2 text-neutral-500 shadow-sm hover:text-neutral-700 lg:flex-wrap lg:justify-start lg:py-4"
@@ -655,4 +825,16 @@
             <livewire:recipient-component :campaign=$campaign />
         </div>
     </section>
+
+    <script>
+         document.addEventListener('livewire:initialized', () => {
+                @this.on('email-sent', (event) => {
+                    console.log(event);
+                    setTimeout(function() {
+                        location.reload();
+                    }, 3000);
+
+                });
+            });
+    </script>
 </div>

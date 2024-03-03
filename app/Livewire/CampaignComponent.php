@@ -2,11 +2,16 @@
 
 namespace App\Livewire;
 
+use App\Mail\InviteMail;
 use App\Models\Campaign;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Livewire\Component;
 
 class CampaignComponent extends Component
 {
+
+    public $email, $username;
 
     public $campaign,
         $campaignType ,
@@ -59,6 +64,41 @@ class CampaignComponent extends Component
         $this->private_feed_back_Thanks_desc = $campaign->private_feed_back_Thanks_desc;
 
         
+    }
+    public function invitUser()
+    {
+        $user = Auth::user();
+
+        $site = $user->sites()->first();
+        $url = route('campaign.share', ['uuid' => $this->campaign->uuid]);
+
+        if ($site->email_number <= 15) {
+            # code...
+            Mail::to($this->email)->send(new InviteMail($url, $this->username));
+
+            $this->username = '';
+            $this->email = '';
+            
+            session()->flash('success', 'Invitation email sent successfully!');
+
+
+
+            $emailNumber = $site->email_number + 1;
+
+            $site->update(['email_number' => $emailNumber]);
+        }
+
+        $this->dispatch('email-sent');
+    }
+
+    public function testInvite()
+    {
+        $url = route('campaign.share', ['uuid' => $this->campaign->uuid]);
+        Mail::to(auth()->user()->email)->send(new InviteMail($url, $this->username));
+
+        session()->flash('success', 'Invitation email sent successfully!');
+
+        $this->dispatch('email-sent');
     }
 
     public function CampaignData()

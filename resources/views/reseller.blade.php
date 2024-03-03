@@ -33,7 +33,7 @@
                     <form class="space-y-3" action="{{ route('reseller.store') }}" method="POST">
                         @csrf
                         <div>
-                            <label for="name" class="input-label text-gray-600">Name</label>
+                            <label for="name" class="input-label text-slate-300">Name</label>
                             <div class="mt-2">
                                 <input id="name" name="name" value="{{ old('name') }}" type="text"
                                     autocomplete="name"
@@ -47,7 +47,7 @@
 
 
                         <div>
-                            <label for="email" class="input-label text-gray-600">Email Address</label>
+                            <label for="email" class="input-label text-slate-300">Email Address</label>
                             <div class="mt-2">
                                 <input id="email" name="email" value="{{ old('email') }}" type="email"
                                     autocomplete="email"
@@ -60,7 +60,7 @@
                         </div>
 
                         <div>
-                            <label for="url" class="input-label text-gray-600">Url</label>
+                            <label for="url" class="input-label text-slate-300">Url</label>
                             <div class="mt-2">
                                 <input id="url" name="url" value="{{ old('url') }}" type="text"
                                     autocomplete="url"
@@ -74,7 +74,7 @@
 
                         <div>
                             <div class="flex items-center justify-between">
-                                <label for="password" class="input-label text-gray-600">Password</label>
+                                <label for="password" class="input-label text-slate-300">Password</label>
                             </div>
                             <div class="mt-2">
                                 <input id="password" name="password" type="password" autocomplete="current-password"
@@ -89,7 +89,7 @@
 
                         <div>
                             <div class="flex items-center justify-between">
-                                <label for="password_confirmation" class="input-label text-gray-600">Password
+                                <label for="password_confirmation" class="input-label text-slate-300">Password
                                     Confirmation</label>
                             </div>
                             <div class="mt-2">

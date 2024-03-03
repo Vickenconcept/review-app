@@ -14,10 +14,10 @@
 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    {{-- <link rel="stylesheet" href="{{ asset('build/assets/app-171b3f1e.css') }}">
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
     <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
-    <script src="{{ asset('build/assets/app-11155cd2.js') }}"></script> --}}
+    <link rel="stylesheet" href="{{ asset('build/assets/app-a2228c5e.css') }}">
+    
 
     @livewireStyles
 </head>
@@ -106,5 +106,6 @@
 </script>
 
 @livewireScripts
+<script type="module" src="{{ asset('build/assets/app-9be79099.js') }}"></script>
 
 </html>

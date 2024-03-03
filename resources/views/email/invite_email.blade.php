@@ -55,9 +55,8 @@
 
 <body>
     <div class="container">
-        <h1>Hello {{ $name ?: auth()->user()->name}}</h1>
-        <p>Thank You for Your Review!</p>
-        <p>Your feedback is valuable to us.</p>
+        <h1>Dear {{ $name ?: auth()->user()->name}}</h1>
+        <p>Your feedback fuels our passion for excellence!</p>
 
         <a href="{{ $link }}" style="text-decoration: none">
             <div class="rating">⭐⭐⭐⭐⭐</div>
@@ -67,16 +66,28 @@
             <div class="rating">⭐   </div>
         </a>
 
-        {{-- <p class="review-content">
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et
-            dolore magna aliqua."
-        </p> --}}
+        <p class="review-content">
+            Your review lights up our day! Thank you for sharing your thoughts and experiences with us. Your five-star rating reflects the dedication and commitment we pour into our service.
+        </p>
+        <p class="review-content">
+            But wait, we're not stopping there! We're constantly striving to elevate your experience even further. Your feedback is like a guiding star, illuminating our path towards perfection.
+        </p>
+        <p class="review-content">
+            Got more to say? We're all ears! Whether it's a suggestion, a question, or just a friendly chat, don't hesitate to reach out to us. Your voice matters, and we're here to listen.
+        </p>
+        <p class="review-content">
+            Looking forward to hearing from you soon!
+        </p>
+        <p class="review-content">
+            Warm regards,
+        </p>
 
         <p>If you have any further feedback or questions, feel free to reach out to us.</p>
         <p>from: <a href="mailto:{{ env('MAIL_FROM_ADDRESS') }}">{{ env('MAIL_FROM_ADDRESS') }}</a></p>
+        
+        <p>P.S. Ready to embark on another journey of sharing your experiences?  <a href="{{ $link }}" class="">Click here</a> to write another review!</p>
 
-
-        <a href="{{ $link }}" class="cta-button">Write Another Review</a>
+        {{-- <a href="{{ $link }}" class="cta-button">Write Another Review</a> --}}
     </div>
 </body>
 
