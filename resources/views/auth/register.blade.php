@@ -163,8 +163,11 @@
                         <div class="flex -mx-3">
                             <div class="w-full px-3 mb-5">
                                 <button
-                                    class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">REGISTER
-                                    NOW</button>
+                                    class="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">
+                                    <span id="hiddenText" class="hidden"> <i
+                                            class='bx bx-loader-alt animate-spin'></i></span>
+                                    <span>REGISTER NOW</span>
+                                </button>
                             </div>
                         </div>
                     </div>

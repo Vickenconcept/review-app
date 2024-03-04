@@ -1,6 +1,4 @@
 <x-app-layout>
-    <x-notification />
-
     <div x-data="{ openModal: false }" class="  space-y-10 pb-50  h-full">
         <div class="py-5 border-b px-3 md:px-10 flex space-x-5 items-center">
             <div>

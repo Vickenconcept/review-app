@@ -1,6 +1,5 @@
     <div class="h-full  space-y-8" x-data="{ openModal: false, link: 'Send', campaign: '', folder: false, createFolder: false }">
-        <x-notification />
-        <div class="py-5 border-b px-3 md:px-10 flex justify-between items-center">
+        <div class="py-5 border-b px-3 md:px-10 flex justify-between items-center ">
             <div>
                 <h3 class=" font-bold">Campaign</h3>
             </div>
@@ -75,6 +74,13 @@
                                     <p class="text-xs ">Contacts
                                         {{ $campaign->reviews->pluck('private_feed_back_ans')->count() }}</p>
                                     <p class="text-xs ">Response {{ $campaign->reviews->count() }}</p>
+                                    <p class="text-xs ">
+                                        @if ($campaign->folder)
+                                            Folder:
+                                            <span
+                                                class="rounded-full py-0.5 px-2 bg-cyan-300 ">{{ $campaign->folder->name }}</span>
+                                        @endif
+                                    </p>
                                 </div>
                             </a>
                             <div
@@ -248,13 +254,19 @@
                                     <div class="text-yellow-500 text-md my-4">⭐</div>
 
                                     <p class="text-gray-800 my-4">
-                                        Your review lights up our day! Thank you for sharing your thoughts and experiences with us. Your five-star rating reflects the dedication and commitment we pour into our service.
+                                        Your review lights up our day! Thank you for sharing your thoughts and
+                                        experiences with us. Your five-star rating reflects the dedication and
+                                        commitment we pour into our service.
                                     </p>
                                     <p class="text-gray-800 my-4">
-                                        But wait, we're not stopping there! We're constantly striving to elevate your experience even further. Your feedback is like a guiding star, illuminating our path towards perfection.
+                                        But wait, we're not stopping there! We're constantly striving to elevate your
+                                        experience even further. Your feedback is like a guiding star, illuminating our
+                                        path towards perfection.
                                     </p>
                                     <p class="text-gray-800 my-4">
-                                        Got more to say? We're all ears! Whether it's a suggestion, a question, or just a friendly chat, don't hesitate to reach out to us. Your voice matters, and we're here to listen.
+                                        Got more to say? We're all ears! Whether it's a suggestion, a question, or just
+                                        a friendly chat, don't hesitate to reach out to us. Your voice matters, and
+                                        we're here to listen.
                                     </p>
                                     <p class="text-gray-800 my-4">
                                         Looking forward to hearing from you soon!
@@ -263,9 +275,10 @@
                                         Warm regards,
                                     </p>
                                     <p>If you have any further feedback or questions, feel free to reach out to us.</p>
-                                    <p>from: <span class="text-blue-500" >{{ env('MspanIL_FROM_ADDRESS') }}</a></p>
-                                    
-                                    <p>P.S. Ready to embark on another journey of sharing your experiences?  <span class="text-blue-500">Click here</span> to write another review!</p>
+                                    <p>from: <span class="text-blue-500">{{ env('MspanIL_FROM_ADDRESS') }}</a></p>
+
+                                    <p>P.S. Ready to embark on another journey of sharing your experiences? <span
+                                            class="text-blue-500">Click here</span> to write another review!</p>
                                 </div>
 
                             </div>
@@ -279,13 +292,12 @@
                                     <div class="rounded-lg border flex justify-between p-5">
                                         <p x-bind:id="'dynamic-id-' + campaign.id" class=" text-sm font-semibold    ">
                                             {{ route('campaign.share', ['uuid' => '' . '/']) }}/<span
-                                                x-text="campaign.uuid"></span> 
-                                                <button
-                                                    class=" sm:hidden"
-                                                    @click="toCopy(document.getElementById('dynamic-id-' + campaign.id))">
-                                                    <i class="bx bx-copy text-xl"></i>
-                                                </button>
-                                            </p>
+                                                x-text="campaign.uuid"></span>
+                                            <button class=" sm:hidden"
+                                                @click="toCopy(document.getElementById('dynamic-id-' + campaign.id))">
+                                                <i class="bx bx-copy text-xl"></i>
+                                            </button>
+                                        </p>
                                         <button
                                             class=" hidden  md:flex items-center bg-cyan-100 text-cyan-700 hover:bg-cyan-700 hover:text-cyan-100 transition-all duration-300 font-semibold rounded-md whitespace-nowrap  px-4 py-2 ml-4"
                                             @click="toCopy(document.getElementById('dynamic-id-' + campaign.id))">
@@ -302,15 +314,29 @@
                                 <div class="space-y-5 col-span-2">
                                     <p class="font-semibold text-sm">Send this link to the recipients via email, share
                                         in social media or add it to your website.</p>
-                                    <div class="rounded-lg border flex justify-between p-5">
-                                        <p x-bind:id="'component-id-' + campaign.id"
-                                            class="w-full text-sm font-semibold  flex items-center ">
-                                            {{ route('campaign.component', ['uuid' => '' . '/']) }}/<span
-                                                x-text="campaign.uuid"></span> </p>
-                                        <button class="btn2"
-                                            @click="toCopy(document.getElementById('component-id-' + campaign.id))">
-                                            <i class="bx bx-copy text-xl"></i>Copy
-                                        </button>
+                                    <div class="rounded-lg border  p-2">
+
+                                            <button class="btn2 text-xs font-semibold text-right"
+                                                @click="toCopy(document.getElementById('component-id-' + campaign.id))">
+                                                <i class="bx bx-copy text-xl"></i>Copy
+                                            </button>
+                                        <p x-bind:id="'component-id-' + campaign.id"id="para1"
+                                            class="bg-gray-800 text-gray-50 p-5 rounded shadow-inner ">
+
+                                            &lt;iframe id="myIframe"
+                                            src="{{ route('campaign.component', ['uuid' => '' . '/']) }}/<span
+                                        x-text="campaign.uuid"></span>
+                                            "
+                                            <br>
+                                            style=" position: relative;
+                                            <br>
+                                            "width="100%"
+                                            height="600" &gt;
+                                            <br>
+                                            &lt;/iframe&gt;
+                                            <br>
+
+                                        </p>
                                     </div>
                                 </div>
 
@@ -341,7 +367,10 @@
                 class="bg-white w-[90%] md:w-[60%] h-[25rem] shadow-inner  border rounded-2xl overflow-auto  py-6 px-8 transition-all relative duration-700">
                 <div class=" h-full ">
 
-                    <div class="font-bold text-xl"><i class="bx bx-folder text-3xl mr-2"></i> Select folder</div>
+                    <div class="font-bold text-xl flex items-center">
+                        <i class='bx bxs-folder-open text-4xl mr-2 text-cyan-950'></i>
+                        Select folder
+                    </div>
                     <ul class="h-[70%] w-full px-10 pt-5 space-y-2">
 
                         @forelse ($folders as $folder)
@@ -351,8 +380,16 @@
                                     <input type="text" name="campaignId" x-model="campaign" class="hidden">
                                     <input type="text" name="folderId" value="{{ $folder->id }}"
                                         class="hidden">
-                                    <button><i
-                                            class="bx bxs-folder text-3xl mr-2 text-blue-500"></i>{{ $folder->name }}</button>
+                                    <button
+                                        class="w-full text-start bg-slate-100 rounded-lg hover:bg-cyan-50 hover:shadow p-2 flex items-center"><i
+                                            class="bx bxs-folder text-3xl mr-2 text-cyan-600"></i>
+
+                                        <span>{{ $folder->name }}</span>
+                                        <span id="hiddenText" class="hidden">
+                                            <i class='bx bx-loader-alt animate-spin ml-5'></i>
+                                        </span>
+
+                                    </button>
                                 </form>
                             </li>
                         @empty

@@ -138,8 +138,7 @@
                             transform="translate(-227.576 -76.46149)" fill="#2f2e41" />
                     </svg>
                 </div>
-                <form action="{{ route('auth.login') }}" method="post"
-                    class="w-full md:w-1/2 py-10 px-5 md:px-10">
+                <form action="{{ route('auth.login') }}" method="post" class="w-full md:w-1/2 py-10 px-5 md:px-10">
 
                     @csrf
 
@@ -156,6 +155,8 @@
                             </ul>
                         </div>
                     @endif
+
+                    
                     <div>
                         <div class="flex -mx-3">
                             <div class="w-full px-3 mb-5">
@@ -185,12 +186,15 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <div class="flex -mx-3">
                             <div class="w-full px-3 mb-5">
                                 <button
-                                class="block w-full  mx-auto bg-cyan-500 hover:bg-cyan-700 focus:bg-cyan-700 text-white rounded-lg px-3 py-3 font-semibold">
-                                LOGIN</button>
+                                    class="block w-full  mx-auto bg-cyan-500 hover:bg-cyan-700 focus:bg-cyan-700 text-white rounded-lg px-3 py-3 font-semibold">
+                                    <span id="hiddenText" class="hidden"> <i
+                                            class='bx bx-loader-alt animate-spin'></i></span>
+                                    <span>LOGIN</span>
+                                </button>
                             </div>
                         </div>
                         <div class="text-right text-cyan-500 font-semibold hover:underline text-sm">

@@ -1,5 +1,4 @@
 <div class=" space-y-8" x-data="{ link: null }">
-    <x-notification />
     <div class="py-5 border-b px-3 md:px-10 flex space-x-5 items-center">
         <div>
             <h3 class=" font-bold">Reviews</h3>

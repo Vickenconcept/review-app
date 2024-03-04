@@ -53,6 +53,11 @@
                 <h1 class="text-cyan-700 font-bold text-xl">Preview widget</h1>
             @endif
 
+            @php
+
+                $campaign = App\Models\Campaign::where('uuid', $campaignId)->first();
+            @endphp
+
             <ul class="w-full divide-y divide-gray-200 dark:divide-gray-700">
                 @foreach ($widgets as $widget)
                     <li class="pb-3 sm:pb-4">
@@ -66,7 +71,7 @@
                                     {{ $widget->name }}
                                 </p>
                                 <p class="text-sm text-gray-500 truncate dark:text-gray-400">
-                                    email@flowbite.com
+                                    {{ $widget->display }}
                                 </p>
                             </div>
                             <div
@@ -79,6 +84,8 @@
                                         Preview
                                     </button>
                                 </form>
+
+
                                 @if (isset($campaignId))
                                     @if ($campaignId)
                                         <form action="{{ route('campaign.update', ['campaign' => $campaignId]) }}"
@@ -87,8 +94,12 @@
                                             @csrf
                                             <input type="hidden" name="widget_id" value="{{ $widget->id }}">
                                             <button
-                                                class="bg-cyan-100 px-4 py-1.5 rounded-lg text-md font-semibold flex items-center text-cyan-700 hover:bg-cyan-700 hover:text-cyan-100 transition-all duration-300">
-                                                <i class='bx bx-check text-2xl '></i>
+                                                class=" px-4 py-1.5 rounded-lg text-md font-semibold flex items-center {{ $campaign->widget_id == $widget->id ? 'bg-red-200 text-red-700' : 'bg-cyan-100 text-cyan-700' }}  hover:bg-cyan-700 hover:text-cyan-100 transition-all duration-300">
+                                                @if ($campaign->widget_id == $widget->id)
+                                                    <i class='bx bx-check-double text-2xl'></i>
+                                                @else
+                                                    <i class='bx bx-check text-2xl '></i>
+                                                @endif
                                                 Select
                                             </button>
                                         </form>

@@ -21,7 +21,7 @@
 
 
     <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/assets/app-a2228c5e.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-7fb7214e.css') }}">
 
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
@@ -32,15 +32,13 @@
             margin: auto;
         }
 
-        #hiddenText {
-            display: none;
-        }
+  
     </style>
 
 </head>
 
 <body class="h-full">
-
+    <x-notification />
     <div id="ap" class="h-full bg-gray- text-gray-700" x-data="{ openHelp: false }">
         <x-sidebar />
         <div class=" h-full sm:ml-64">
@@ -49,6 +47,13 @@
             <x-footer />
         </div>
     </div>
+
+    <script>
+        window.addEventListener('beforeunload', function(event) {
+            var hiddenText = document.getElementById('hiddenText');
+            hiddenText.classList.remove('hidden');
+        });
+    </script>
 
     <script>
         const video = document.getElementById('video');
@@ -188,7 +193,7 @@
 
 
     @livewireScripts
-    <script type="module" src="{{ asset('build/assets/app-9be79099.js') }}"></script>
+    <script type="module" src="{{ asset('build/assets/app-abe98564.js') }}"></script>
 
 </body>
 

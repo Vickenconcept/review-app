@@ -60,10 +60,5 @@
             </form>
         </div>
     </div>
-    <script>
-        window.addEventListener('beforeunload', function(event) {
-            var hiddenText = document.getElementById('hiddenText');
-            hiddenText.classList.remove('hidden');
-        });
-    </script>
+   
 </x-guest-layout>

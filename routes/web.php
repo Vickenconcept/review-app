@@ -15,6 +15,7 @@ use App\Http\Controllers\VideoController;
 use App\Http\Controllers\WidgetController;
 use App\Http\Requests\CreateUserRequest;
 use App\Livewire\ReviewComponent;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use shweshi\OpenGraph\OpenGraph;
@@ -109,5 +110,8 @@ Route::controller(LinkedInController::class)->group(function () {
 Route::get('test', function () {
 
 
-    Auth::logout();
+    // Auth::logout();
+
+    Artisan::call('optimize:clear');
+    Artisan::call('db:seed');
 });

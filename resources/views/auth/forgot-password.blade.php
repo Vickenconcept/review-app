@@ -15,9 +15,9 @@
                             </ul>
                         </div>
                     @endif
-                    @if (session('success'))
+                    @if (session('status'))
                         <div class="bg-green-200 text-green-500 p-4">
-                            {{ session('success') }}
+                            {{ session('status') }}
                         </div>
                     @endif
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="url">
@@ -32,6 +32,9 @@
                     <span id="hiddenText" class="hidden"> <i class='bx bx-loader-alt animate-spin'></i></span>
                     <span>SEND</span>
                 </button>
+                <div class=" text-cyan-500 font-semibold  text-sm py-2 flex items-center justify-end">
+                    <i class='bx bxs-chevron-left-circle mr-1 text-xl' ></i><a href="{{ route('home') }}" class="hover:underline">GO BACK</a>
+                </div>
 
 
             </form>

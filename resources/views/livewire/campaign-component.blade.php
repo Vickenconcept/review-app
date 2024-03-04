@@ -1,11 +1,10 @@
 <div class="" x-data="{ menu: 'editor', isOpen: null }">
-    <x-notification />
     <div class="sticky top-0 bg-white" x-data="{ openModal: false, link: 'Send'}">
         <nav
             class="relative  z-50 flex w-full flex-wrap items-center justify-between bg-white  py-2 text-neutral-500 shadow-lg border border-b hover:text-neutral-700 lg:py-4">
             <div class="flex w-full flex-wrap items-center justify-between px-3">
                 <div>
-                    <a href="{{ route('home') }}">
+                    <a href="{{ route('campaign.index') }}">
                         <button class="flex items-center">
                             <i class='bx bxs-chevron-left text-2xl'></i> Back
                         </button>

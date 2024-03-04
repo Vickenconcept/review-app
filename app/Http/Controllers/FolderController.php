@@ -56,7 +56,7 @@ class FolderController extends Controller
         $campaign = Campaign::find($campaignId);
         $campaign->folder_id = $folderId;
         $campaign->save();
-        return back()->with('success','Added to folder');
+        return back()->with('success', 'Added to folder');
     }
     public function show(Folder $folder)
     {
@@ -84,6 +84,18 @@ class FolderController extends Controller
      */
     public function destroy(Folder $folder)
     {
-        //
+        // Get all campaigns belonging to the folder
+        $campaigns = $folder->campaigns;
+
+        // Update folder_id of each campaign to null
+        foreach ($campaigns as $campaign) {
+            $campaign->update(['folder_id' => null]);
+        }
+
+        // Delete the folder
+        $folder->delete();
+
+        // Optionally, you can return a response or redirect back with a message
+        return redirect()->to('campaign')->with('success', 'Folder deleted successfully.');
     }
 }

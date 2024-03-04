@@ -1,7 +1,7 @@
 export default () => ({
-    sayHi() {
-        console.log("hello");
-    },
+    // sayHi() {
+    //     console.log("hello");
+    // },
 
     notify(message) {
         Toastify({

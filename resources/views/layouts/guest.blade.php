@@ -16,7 +16,7 @@
 
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
     <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/assets/app-a2228c5e.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-7fb7214e.css') }}">
     
 
     @livewireStyles
@@ -65,6 +65,13 @@
 </script> --}}
 
 <script>
+    window.addEventListener('beforeunload', function(event) {
+        var hiddenText = document.getElementById('hiddenText');
+        hiddenText.classList.remove('hidden');
+    });
+</script>
+
+<script>
     function PrintDiv(div) {
         var img = new Image();
         img.src = document.getElementById('imageToCapture').src;
@@ -106,6 +113,6 @@
 </script>
 
 @livewireScripts
-<script type="module" src="{{ asset('build/assets/app-9be79099.js') }}"></script>
+<script type="module" src="{{ asset('build/assets/app-abe98564.js') }}"></script>
 
 </html>
