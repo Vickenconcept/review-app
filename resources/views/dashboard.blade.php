@@ -25,7 +25,7 @@
                 <i class="bx bxs-user text-2xl text-slate-400"></i>
             </div>
             {{--  --}}
-            {{-- <div class="p-6 bg-gray-50 border border-gray-200 rounded-lg shadow flex justify-between">
+            <div class="p-6 bg-gray-50 border border-gray-200 rounded-lg shadow flex justify-between">
                 <div>
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">0</h5>
                     <p class="mb-3 text-gray-600  font-bold">Platforms</p>
@@ -35,7 +35,7 @@
                     </a>
                 </div>
                 <i class="bx bxs-plug text-2xl text-slate-400 "></i>
-            </div> --}}
+            </div>
             {{--  --}}
             <div class="p-6 bg-gray-50 border border-gray-200 rounded-lg shadow flex justify-between">
                 <div>
@@ -86,7 +86,7 @@
                 <div>
                     <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">6</h5>
                     <p class="mb-3 text-gray-600  font-bold">widgets</p>
-                    <a href="{{ route('widget.index') }}">
+                    <a href="{{ route('selectWidget') }}">
                         <x-main-button>  <i class='bx bxs-widget mr-1'></i>View widget</x-main-button>
 
                     </a>

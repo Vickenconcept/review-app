@@ -349,7 +349,7 @@
                             @php
 
                                 $QRCode = QrCode::size(200)
-                                    ->color(0, 139, 139) // Cyan (dark)
+                                    ->color(0, 139, 139) 
                                     ->generate($currentUUID);
                             @endphp
                             {{ $QRCode }}

@@ -8,6 +8,7 @@ use App\Http\Controllers\FolderController;
 use App\Http\Controllers\LinkedInController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\PlatformController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResellerController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SettingsController;
@@ -17,6 +18,7 @@ use App\Http\Requests\CreateUserRequest;
 use App\Livewire\ReviewComponent;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use shweshi\OpenGraph\OpenGraph;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
@@ -36,7 +38,8 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 Route::get('/', function () {
     // return view('welcome');
-    echo phpinfo();
+
+    // echo phpinfo();
 });
 
 // Route::get('home', function () {
@@ -60,8 +63,6 @@ Route::middleware('guest')->group(function () {
         Route::get('/reset-password/{token}', 'reset')->name('password.reset');
         Route::post('/reset-password', 'update')->name('password.update');
     });
-
-
 });
 
 
@@ -80,11 +81,14 @@ Route::middleware(['auth'])->group(function () {
     Route::get('home', [DashboardController::class, 'index'])->name('home');
     Route::get('campaign/widget/{uuid?}', [CampaignController::class, 'selectWidget'])->name('selectWidget');
     Route::resource('campaign', CampaignController::class);
-    Route::resource('widget', WidgetController::class);
+    // Route::resource('widget', WidgetController::class);
     Route::resource('reseller', ResellerController::class);
     Route::resource('platform', PlatformController::class);
     Route::post('addToFolder', [FolderController::class, 'addToFolder'])->name('addToFolder');
     Route::resource('folder', FolderController::class);
+    Route::view('profile', 'profile')->name('profile');
+    Route::post('profile/name', [ProfileController::class, 'changeName'])->name('changeName');
+    Route::post('profile/password', [ProfileController::class, 'changePassword'])->name('changePassword');
 
     Route::controller(SettingsController::class)->prefix('setting')->name('settings.')->group(function () {
         Route::get('/users', 'users')->name('users');
@@ -112,6 +116,37 @@ Route::get('test', function () {
 
     // Auth::logout();
 
-    Artisan::call('optimize:clear');
-    Artisan::call('db:seed');
+    // Artisan::call('optimize:clear');
+    // Artisan::call('db:seed');
+
+
+        // $apiKey = env('YELP_API');
+        // $url = 'https://api.yelp.com/v3/businesses/88kri8FhXy8b3DQ_QjSMmQ/reviews'; // Endpoint for retrieving reviews
+    
+        // $businessId = '88kri8FhXy8b3DQ_QjSMmQ'; // Replace with your business ID
+    
+        // $response = Http::withHeaders([
+        //     'Authorization' => 'Bearer ' . $apiKey,
+        // ])->get($url, [
+        //     'business_id' => $businessId,
+        // ]);
+    
+        // return $response->json();
+
+
+        $apiKey = env('YELP_API');
+        $url = 'https://api.yelp.com/v3/businesses/search'; // Endpoint for searching businesses
+    
+        $term = 'restaurants'; // Search term (e.g., "restaurants")
+        $location = 'Los Angeles'; // Location to search for businesses
+    
+        $response = Http::withHeaders([
+            'Authorization' => 'Bearer ' . $apiKey,
+        ])->get($url, [
+            'term' => $term,
+            'location' => $location,
+        ]);
+    
+        return $response->json()['businesses'];
 });
+

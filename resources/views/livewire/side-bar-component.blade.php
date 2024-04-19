@@ -56,12 +56,12 @@
                     <span class="text-sm font-semibold">Users</span>
                 </a>
             </li>
-            {{-- <li>
+            <li>
                 <a href="{{ route('platform.index') }}" class="flex items-center px-2 py-1 text-cyan-500 transition duration-75 rounded-lg  group {{ request()->routeIs('platform.index') ?'bg-cyan-500 bg-opacity-25': ''}}">
                     <i class='bx bxs-plug text-xl mr-5' ></i>
                     <span class="text-sm font-semibold">Platforms</span>
                 </a>
-            </li> --}}
+            </li>
             <li>
                 <a href="{{ route('campaign.index') }}"
                     class="flex items-center px-2 py-1 text-cyan-500 transition duration-75 rounded-lg  group {{ request()->routeIs('campaign.index') ?'bg-cyan-500 bg-opacity-25': ''}}">
@@ -95,6 +95,13 @@
                     class="flex items-center px-2 py-1 text-cyan-500 transition duration-75 rounded-lg  group {{ request()->routeIs('review.share') ?'bg-cyan-500 bg-opacity-25': ''}}">
                     <i class='bx bx-recycle text-xl mr-5' ></i>
                     <span class="text-sm font-semibold">Resell</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('profile') }}"
+                    class="flex items-center px-2 py-1 text-cyan-500 transition duration-75 rounded-lg  group {{ request()->routeIs('review.share') ?'bg-cyan-500 bg-opacity-25': ''}}">
+                    <i class='bx bx-user text-xl mr-5' ></i>
+                    <span class="text-sm font-semibold">Profile</span>
                 </a>
             </li>
             <li>
