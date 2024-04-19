@@ -18,6 +18,7 @@ return new class extends Migration
             $table->foreignId('site_id');
             $table->foreignId('widget_id');
             $table->foreignId('folder_id')->nullable();
+            $table->foreignId('platform_id')->nullable();
             $table->string('name');
             $table->enum('no_negative',[0,1]);
             $table->enum('enable_text_review',[0,1])->default(1);

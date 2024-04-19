@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\Folder;
 use App\Models\Site;
 use App\Models\Widget;
+use App\Models\Platform;
 use App\Models\Scopes\DataAccessScope;
 use Spatie\Sluggable\HasSlug;
 use Spatie\Sluggable\SlugOptions;
@@ -35,6 +36,10 @@ class Campaign extends Model
     public function folder()
     {
         return $this->belongsTo(Folder::class);
+    }
+    public function platform()
+    {
+        return $this->belongsTo(Platform::class);
     }
     public function site()
     {

@@ -1,23 +1,24 @@
 <x-app-layout>
-    <div class="h-full  space-y-8" >
+    <div class="h-full  space-y-8">
 
         <div class="py-5 border-b px-3 md:px-10 flex justify-between items-center">
             <div class="flex items-center space-x-5">
                 <h3 class=" font-bold">Folder</h3> <span class="text-xs">Manage and group campaigns in folders </span>
             </div>
-          <div class="flex items-center space-x-4">
-            <form action="{{ route('campaign.store') }}" method="post">
-                @csrf
-                <x-main-button type="submit"><i class="bx bx-plus mr-2"></i>Create Campaign</x-main-button>
-            </form>
-            <form action="{{ route('folder.destroy',['folder' => $folder]) }}" method="post">
-                @csrf
-                @method('DELETE')
-                <button type="submit" class="bg-red-700 hover:bg-red-800 hover:shadow px-4 py-1.5 font-semibold text-blue-50 rounded-md ">
-                    <i class='bx bxs-trash  mr-2' ></i>
-                    Delete Folder</button>
-            </form>
-          </div>
+            <div class="flex items-center space-x-4">
+                <form action="{{ route('campaign.store') }}" method="post">
+                    @csrf
+                    <x-main-button type="submit"><i class="bx bx-plus mr-2"></i>Create Campaign</x-main-button>
+                </form>
+                <form action="{{ route('folder.destroy', ['folder' => $folder]) }}" method="post">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit"
+                        class="bg-red-700 hover:bg-red-800 hover:shadow px-4 py-1.5 font-semibold text-blue-50 rounded-md ">
+                        <i class='bx bxs-trash  mr-2'></i>
+                        Delete Folder</button>
+                </form>
+            </div>
         </div>
 
         <div class="px-3 md:px-10">
@@ -44,7 +45,7 @@
                             </a>
                             <div
                                 class="w-full md:w-1/4 flex justify-center items-center md:justify-end space-x-3 py-3 ">
-                                
+
                                 <a href="{{ route('campaign.show', ['campaign' => $campaign->slug]) }}">
                                     <button
                                         class="bg-cyan-100 px-4 py-1.5 rounded-lg text-md font-semibold flex items-center text-cyan-700 hover:bg-cyan-700 hover:text-cyan-100 transition-all duration-300">
@@ -59,7 +60,7 @@
                                         </button>
                                     </x-slot>
                                     <x-slot name="content">
-                                       
+
                                         <x-dropdown-link class="cursor-pointer">
                                             <a class="w-full text-left px-4 py-2"
                                                 href="{{ route('selectWidget', ['uuid' => $campaign->uuid]) }}">
@@ -85,9 +86,21 @@
 
                                                     {{ __('Delete') }}
                                                 </button>
-
-
+                                                
+                                                
                                             </form>
+                                            {{-- <button type="button" data-item-id="{{ $campaign->id }}"
+                                                class=" delete-btn w-full text-left px-4 py-2 flex items-center text-red-500">
+                                                <svg xmlns="http://www.w3.org/2000/svg" fill="none"
+                                                    viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
+                                                    class="w-5 h-5 mr-1">
+                                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                                        d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
+                                                </svg>
+
+
+                                                {{ __('Delete') }}
+                                            </button> --}}
                                         </x-dropdown-link>
 
                                     </x-slot>
@@ -105,5 +118,57 @@
             </ul>
             <!-- End List Group -->
         </section>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let deleteButtons = document.querySelectorAll('.delete-btn');
+
+                deleteButtons.forEach(function(button) {
+                    button.addEventListener('click', function() {
+                        let itemId = button.getAttribute('data-item-id');
+
+                        Swal.fire({
+                            title: "Are you sure?",
+                            text: "You won't be able to revert this!",
+                            icon: "warning",
+                            showCancelButton: true,
+                            confirmButtonColor: "#3085d6",
+                            cancelButtonColor: "#d33",
+                            confirmButtonText: "Yes, delete it!"
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                var deleteRoute =
+                                    "{{ route('campaign.destroy', ['campaign' => ':itemId']) }}";
+                                deleteRoute = deleteRoute.replace(':itemId', itemId);
+
+                                fetch(deleteRoute, {
+                                        method: 'DELETE',
+                                        headers: {
+                                            'Content-Type': 'application/json',
+                                            'X-CSRF-TOKEN': '{{ csrf_token() }}' // Include the CSRF token in the headers using Blade syntax
+                                        }
+                                    })
+                                    .then(response => {
+                                        Swal.fire({
+                                            title: "Deleted!",
+                                            text: "Your item has been deleted.",
+                                            icon: "success"
+                                        }).then(() => {
+                                            location
+                                                .reload();
+                                        });
+                                    })
+                                    .catch(error => {
+                                        Swal.fire("Error", "Failed to delete the item",
+                                            "error");
+                                    });
+                            }
+                        });
+                    });
+                });
+            });
+        </script>
     </div>
 </x-app-layout>

@@ -1,4 +1,4 @@
-<div class="space-y-10 h-full" x-data="{ openModal: false }">
+<div class="space-y-10 h-full" x-data="{ openModal: false, platform: null }">
     <div class="py-5 border-b px-3 md:px-10 flex space-x-5 items-center">
         <div>
             <h3 class=" font-bold">Settings {{ $platform }}</h3>
@@ -11,7 +11,7 @@
     <section class="px-3 md:px-10 ">
         <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
             <div class=" w-full">
-                <button @click="openModal = true;" wire:click="updatePlatform('g2')"
+                <button @click="openModal = true; platform ='g2'" wire:click="updatePlatform('g2')"
                     class=" {{ $platform == 'g2' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-50 text-gray-700' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
                     <p><i class="bx bxs-star text-5xl"></i></p>
@@ -20,7 +20,7 @@
                 </button>
             </div>
             <div class=" w-full">
-                <button @click="openModal = true;" wire:click="updatePlatform('google')"
+                <button @click="openModal = true; platform ='google'" wire:click="updatePlatform('google')"
                     class=" {{ $platform == 'google' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-50 text-gray-700' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
                     <p><i class="bx bxs-star text-5xl"></i></p>
@@ -29,7 +29,7 @@
                 </button>
             </div>
             <div class=" w-full">
-                <button @click="openModal = true;" wire:click="updatePlatform('facebook')"
+                <button @click="openModal = true; platform ='facebook'" wire:click="updatePlatform('facebook')"
                     class=" {{ $platform == 'facebook' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-50 text-gray-700' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
                     <p><i class="bx bxs-star text-5xl"></i></p>
@@ -38,7 +38,7 @@
                 </button>
             </div>
             <div class=" w-full">
-                <button @click="openModal = true;" wire:click="updatePlatform('capterra')"
+                <button @click="openModal = true; platform ='capterra'" wire:click="updatePlatform('capterra')"
                     class=" {{ $platform == 'capterra' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-50 text-gray-700' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
                     <p><i class="bx bxs-star text-5xl"></i></p>
@@ -47,7 +47,7 @@
                 </button>
             </div>
             <div class=" w-full">
-                <button @click="openModal = true;" wire:click="updatePlatform('yelp')"
+                <button @click="openModal = true; platform ='yelp'" wire:click="updatePlatform('yelp')"
                     class=" {{ $platform == 'yelp' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-50 text-gray-700' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
                     <p><i class="bx bxs-star text-5xl"></i></p>
@@ -56,7 +56,7 @@
                 </button>
             </div>
             <div class=" w-full">
-                <button @click="openModal = true;" wire:click="updatePlatform('google_play')"
+                <button @click="openModal = true; platform ='google_play'" wire:click="updatePlatform('google_play')"
                     class=" {{ $platform == 'google_play' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-50 text-gray-700' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
                     <p><i class="bx bxs-star text-5xl"></i></p>
@@ -65,8 +65,8 @@
                 </button>
             </div>
             <div class=" w-full">
-                <button @click="openModal = true;" wire:click="updatePlatform('tripAdvisor')"
-                    class=" {{ $platform == 'tripAdvisor' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-50 text-gray-700' }}
+                <button @click="openModal = true; platform ='tripadvisor'" wire:click="updatePlatform('tripadvisor')"
+                    class=" {{ $platform == 'tripadvisor' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-50 text-gray-700' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
                     <p><i class="bx bxs-star text-5xl"></i></p>
                     <p class="font-semibold text-xs">Tripadvisor</p>
@@ -74,7 +74,7 @@
                 </button>
             </div>
             <div class=" w-full">
-                <button @click="openModal = true;" wire:click="updatePlatform('manually')"
+                <button @click="openModal = true; platform ='manually'" wire:click="updatePlatform('manually')"
                     class=" {{ $platform == 'manually' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-50 text-gray-700' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
                     <p>
@@ -212,28 +212,56 @@
             class="bg-white w-[90%] h-[33rem] shadow-inner  border rounded-2xl overflow-auto  pb-6 px-8 transition-all relative duration-700">
             <div class=" h-full " wire:poll>
 
-               this is it <input type="text"  wire:model.live="platform">
+                this is it <input type="text" wire:model.live="platform">
+                {{ $platform == 'g2' ? 'ss' : 'hidden' }}
+
+                <div style="display: none" x-show="platform == 'g2'">
+                    g2
+                </div>
+                <div style="display: none" x-show="platform == 'google'">
+                    google
+                </div>
+                <div style="display: none" x-show="platform == 'yelp'">
+                    yelp
+                </div>
+                <div style="display: none" x-show="platform == 'facebook'">
+                    facebook
+                </div>
+                <div style="display: none" x-show="platform == 'google_play'">
+                    google_play
+                </div>
+                <div style="display: none" x-show="platform == 'tripadvisor'">
+                    tripadvisor
+                </div>
+                <div style="display: none" x-show="platform == 'capterra'">
+                    capterra
+                </div>
+                <div style="display: none" x-show="platform == 'manually'">
+                    manully
+                </div>
+
                 {{-- @if ($platform === 'g2')
                     <div>
                         {{ $platform }}
                     </div>
-                @elseif ($platform == 'google')
+                @elseif ($platform === 'google')
                     <div>
                         {{ $platform }}
                     </div>
-                @elseif ($platform == 'yelp')
+                @elseif ($platform === 'yelp')
+                    <div>
+                        i am on help
+                        {{ $platform }}
+                    </div>
+                @elseif ($platform === 'google_play')
                     <div>
                         {{ $platform }}
                     </div>
-                @elseif ($platform == 'google_play')
+                @elseif ($platform === 'tripadvisor')
                     <div>
                         {{ $platform }}
                     </div>
-                @elseif ($platform == 'tripadvisor')
-                    <div>
-                        {{ $platform }}
-                    </div>
-                @elseif ($platform == 'capterra')
+                @elseif ($platform === 'capterra')
                     <div>
                         {{ $platform }}
                     </div>
@@ -241,7 +269,7 @@
                     <div>
                         {{ $platform }}
                     </div>
-                @endif  --}}
+                @endif --}}
 
 
             </div>

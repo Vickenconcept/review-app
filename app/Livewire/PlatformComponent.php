@@ -11,9 +11,11 @@ class PlatformComponent extends Component
         $auto_publish_reviews;
 
 
-    public function updatePlatform($platform = 'hello')
+    public function updatePlatform($platform)
     {
         return $this->$platform = $platform;
+        // dd($this->$platform );
+
     }
     public function toggleAutoPublishReviews()
     {
