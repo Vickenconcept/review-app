@@ -134,7 +134,7 @@ class ReviewComponent extends Component
         // $this->contact_info_ans;
         // $this->video_review_ans;
         // $this->video_review_desc_ans;
-        $this->private_feed_back_ans;
+        // $this->private_feed_back_ans;
         // dd($this->email);
 
         $imageUrl = '';
@@ -145,10 +145,7 @@ class ReviewComponent extends Component
 
             $imageUrl = $cloudinaryResponse['secure_url'];
         }
-      
-
         // sleep(3);
-
 
         $data = [
             'site_id' => $this->campaign->site_id,

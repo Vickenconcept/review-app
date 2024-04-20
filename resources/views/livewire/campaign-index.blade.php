@@ -1,4 +1,4 @@
-    <div class="h-full  space-y-8" x-data="{ openModal: false, link: 'Send', campaign: '', folder: false, createFolder: false }">
+    <div class="h-full  space-y-8" x-data="{ openModal: false, link: 'Send', campaign: {}, folder: false, createFolder: false, editCampaign: false }">
         <div class="py-5 border-b px-3 md:px-10 flex justify-between items-center ">
             <div>
                 <h3 class=" font-bold">Campaign</h3>
@@ -77,9 +77,16 @@
                                         @if ($campaign->folder)
                                             Folder:
                                             <span
-                                                class="rounded-full py-0.5 px-2 bg-cyan-300 ">{{ $campaign->folder->name }}</span>
+                                                class="rounded-full pt-0.5 pb-1 px-2 bg-cyan-300 ">{{ $campaign->folder->name }}</span>
                                         @endif
                                     </p>
+                                    <p class="text-xs ">
+                                        @if ($campaign->platform_id)
+                                            <span
+                                                class="rounded-full pt-0.5 pb-1 px-2 bg-cyan-800  text-gray-50">{{ $campaign->platform->name }}</span>
+                                        @endif
+                                    </p>
+                                    
                                 </div>
                             </a>
                             <div
@@ -104,15 +111,21 @@
                                     </x-slot>
                                     <x-slot name="content">
                                         <x-dropdown-link class="cursor-pointer">
-                                            <button class="w-full text-left px-4 py-2"
-                                                @click="folder = true; campaign = @js($campaign->id)"><i
+                                            <button class="w-full text-left px-4 py-2 flex items-center"
+                                                @click="folder = true; campaign = @js($campaign)"><i
                                                     class='bx bxs-folder-open text-xl mr-1'></i>Move To Folder</button>
 
                                         </x-dropdown-link>
                                         <x-dropdown-link class="cursor-pointer">
-                                            <a class="w-full text-left px-4 py-2"
+                                            <button class="w-full text-left px-4 py-2 flex items-center"
+                                                @click="editCampaign = true; campaign = @js($campaign)"><i
+                                                    class='bx bxs-edit text-xl mr-1'></i>Edit</button>
+
+                                        </x-dropdown-link>
+                                        <x-dropdown-link class="cursor-pointer">
+                                            <a class="w-full text-left px-4 py-2 flex items-center hover:bg-cyan-100  text-cyan-900 font-semibold"
                                                 href="{{ route('selectWidget', ['uuid' => $campaign->uuid]) }}">
-                                                <button>
+                                                <button class="">
                                                     <i class='bx bxs-widget text-xl mr-1'></i>Manage widget</button>
                                             </a>
                                         </x-dropdown-link>
@@ -132,27 +145,6 @@
                                             @endif
                                         </x-dropdown-link>
                                         <x-dropdown-link>
-                                            {{-- <form class="w-full"
-                                                action="{{ route('campaign.destroy', ['campaign' => $campaign]) }}"
-                                                method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit"
-                                                    class="w-full text-left px-4 py-2 flex items-center text-red-500">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none"
-                                                        viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
-                                                        class="w-5 h-5 mr-1">
-                                                        <path stroke-linecap="round" stroke-linejoin="round"
-                                                            d="m14.74 9-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 0 1-2.244 2.077H8.084a2.25 2.25 0 0 1-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 0 0-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 0 1 3.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 0 0-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 0 0-7.5 0" />
-                                                    </svg>
-
-
-                                                    {{ __('Delete') }}
-                                                </button>
-                                                
-                                                
-                                            </form> --}}
-
                                             <button type="button" data-item-id="{{ $campaign->id }}"
                                                 class="delete-btn w-full text-left px-4 py-2 flex items-center text-red-500">
                                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none"
@@ -387,7 +379,7 @@
                             <li>
                                 <form action="{{ route('addToFolder') }}" method="post">
                                     @csrf
-                                    <input type="text" name="campaignId" x-model="campaign" class="hidden">
+                                    <input type="text" name="campaignId" x-model="campaign.id" class="hidden">
                                     <input type="text" name="folderId" value="{{ $folder->id }}"
                                         class="hidden">
                                     <button
@@ -410,6 +402,33 @@
                 </div>
             </div>
         </div>
+        {{-- edit campaign --}}
+        <div class="fixed items-center justify-center  flex -top-10 left-0 mx-auto w-full h-full bg-gray-600 bg-opacity-30 z-50 transition duration-1000 ease-in-out"
+            x-show="editCampaign" style="display: none;">
+            <div @click.away="editCampaign = false"
+                class="bg-white w-[90%] md:w-[60%]  shadow-inner  border rounded-2xl overflow-auto  py-6 px-8 transition-all relative duration-700">
+                <div class=" h-full ">
+
+                    <div class="font-bold text-xl">Change Campaign Name</div>
+                    <form action="{{ route('changeCampaignName') }}" method="post" class="my-10 space-y-3">
+                        @csrf
+
+                        <div>
+                            <input class="form-control" id="" type="text" name="campaign_name" x-model="campaign.name"
+                                placeholder="campaign name">
+                            <input class="form-control " id="" type="hidden" name="id" x-model="campaign.id"
+                                placeholder="">
+                        </div>
+
+                        <button
+                            class="bg-cyan-950 hover:bg-cyan-800 hover:shadow px-4 py-1.5 font-semibold text-blue-50 rounded-md  w-full"
+                            type="submit">
+                            <span>Edit</span>
+
+                        </button>
+                </div>
+            </div>
+        </div>
         {{-- createFolder modal --}}
         <div class="fixed items-center justify-center  flex -top-10 left-0 mx-auto w-full h-full bg-gray-600 bg-opacity-30 z-50 transition duration-1000 ease-in-out"
             x-show="createFolder" style="display: none;">
@@ -417,7 +436,7 @@
                 class="bg-white w-[90%] md:w-[40%]  shadow-inner  border rounded-2xl overflow-auto  py-6 px-8 transition-all relative duration-700">
                 <div class=" h-full ">
 
-                    <div class="font-bold text-xl">Creat Folder</div>
+                    <div class="font-bold text-xl">Create Folder</div>
                     <form action="{{ route('folder.store') }}" method="post" class="my-10 space-y-3">
                         @csrf
 

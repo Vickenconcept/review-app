@@ -47,10 +47,7 @@ class CampaignController extends Controller
 
         $user = auth()->user();
         $siteId = $user->sites->first()->id;
-        // $folderId = Folder::find(1);
 
-        // dd($siteId);
-        // $campaignId =  DB::table('campaigns')->insertGetId([
         $campaign =  Campaign::create([
             'uuid' => Str::uuid()->toString(),
             'site_id' => $siteId,
@@ -141,6 +138,21 @@ class CampaignController extends Controller
 
         return back()->with('success', 'Widget ' . $widgetId. ', set successfully');
         // dd($campaign->widget_id );
+    }
+
+    public function changeName(Request $request){
+
+        $request->validate([
+            'campaign_name'=> 'required|string',
+        ]);
+        
+        $id = $request->input('id');
+        $name = $request->input('campaign_name');
+        $campaign = Campaign::where('id', $id)->firstOrFail();
+        $campaign->name = $name;
+        $campaign->update();
+
+        return back()->with('success', 'Updated successfully');
     }
 
     /**

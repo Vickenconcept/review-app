@@ -80,6 +80,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
     Route::get('home', [DashboardController::class, 'index'])->name('home');
     Route::get('campaign/widget/{uuid?}', [CampaignController::class, 'selectWidget'])->name('selectWidget');
+    Route::post('campaign/update-name', [CampaignController::class, 'changeName'])->name('changeCampaignName');
     Route::resource('campaign', CampaignController::class);
     // Route::resource('widget', WidgetController::class);
     Route::resource('reseller', ResellerController::class);
@@ -138,7 +139,7 @@ Route::get('test', function () {
         $url = 'https://api.yelp.com/v3/businesses/search'; // Endpoint for searching businesses
     
         $term = 'restaurants'; // Search term (e.g., "restaurants")
-        $location = 'Los Angeles'; // Location to search for businesses
+        $location = 'GB'; // Location to search for businesses
     
         $response = Http::withHeaders([
             'Authorization' => 'Bearer ' . $apiKey,
@@ -147,6 +148,6 @@ Route::get('test', function () {
             'location' => $location,
         ]);
     
-        return $response->json()['businesses'];
+        return $response->json();
 });
 
