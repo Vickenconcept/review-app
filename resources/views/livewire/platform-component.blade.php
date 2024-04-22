@@ -12,73 +12,77 @@
         <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
             <div class=" w-full">
                 <button @click="openModal = true; platform ='g2'" wire:click="updatePlatform('g2')"
-                    class=" {{ $platform == 'g2' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-50 text-gray-700' }}
+                    class=" {{ $platform == 'g2' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
-                    <p><i class="bx bxs-star text-5xl"></i></p>
+                    <p><i class="bx bxs-star text-3xl"></i></p>
                     <p class="font-semibold text-xs">G2</p>
 
                 </button>
             </div>
             <div class=" w-full">
                 <button @click="openModal = true; platform ='google'" wire:click="updatePlatform('google')"
-                    class=" {{ $platform == 'google' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-50 text-gray-700' }}
+                    class=" {{ $platform == 'google' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
-                    <p><i class="bx bxs-star text-5xl"></i></p>
+                    <p><i class="bx bxs-star text-3xl"></i></p>
                     <p class="font-semibold text-xs">Google</p>
 
                 </button>
             </div>
             <div class=" w-full">
                 <button @click="openModal = true; platform ='facebook'" wire:click="updatePlatform('facebook')"
-                    class=" {{ $platform == 'facebook' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-50 text-gray-700' }}
+                    class=" {{ $platform == 'facebook' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
-                    <p><i class="bx bxs-star text-5xl"></i></p>
+                    <p><i class="bx bxs-star text-3xl"></i></p>
                     <p class="font-semibold text-xs">Facebook</p>
 
                 </button>
             </div>
             <div class=" w-full">
                 <button @click="openModal = true; platform ='capterra'" wire:click="updatePlatform('capterra')"
-                    class=" {{ $platform == 'capterra' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-50 text-gray-700' }}
+                    class=" {{ $platform == 'capterra' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
-                    <p><i class="bx bxs-star text-5xl"></i></p>
+                    <p><i class="bx bxs-star text-3xl"></i></p>
                     <p class="font-semibold text-xs">Capterra</p>
 
                 </button>
             </div>
             <div class=" w-full">
                 <button @click="openModal = true; platform ='yelp'" wire:click="updatePlatform('yelp')"
-                    class=" {{ $platform == 'yelp' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-50 text-gray-700' }}
+                    class=" {{ $platform == 'yelp' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
-                    <p><i class="bx bxs-star text-5xl"></i></p>
+                    <p>
+                        <i class='bx bxl-yelp text-red-500 text-3xl'></i>
+                    </p>
                     <p class="font-semibold text-xs">Yelp</p>
 
                 </button>
             </div>
             <div class=" w-full">
                 <button @click="openModal = true; platform ='google_play'" wire:click="updatePlatform('google_play')"
-                    class=" {{ $platform == 'google_play' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-50 text-gray-700' }}
+                    class=" {{ $platform == 'google_play' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
-                    <p><i class="bx bxs-star text-5xl"></i></p>
+                    <p>
+                        <i class='bx bxl-play-store text-3xl'></i>
+                    </p>
                     <p class="font-semibold text-xs">Google Play</p>
 
                 </button>
             </div>
             <div class=" w-full">
                 <button @click="openModal = true; platform ='tripadvisor'" wire:click="updatePlatform('tripadvisor')"
-                    class=" {{ $platform == 'tripadvisor' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-50 text-gray-700' }}
+                    class=" {{ $platform == 'tripadvisor' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
-                    <p><i class="bx bxs-star text-5xl"></i></p>
+                    <p><i class="bx bxs-star text-3xl"></i></p>
                     <p class="font-semibold text-xs">Tripadvisor</p>
 
                 </button>
             </div>
             <div class=" w-full">
                 <button @click="openModal = true; platform ='manually'" wire:click="updatePlatform('manually')"
-                    class=" {{ $platform == 'manually' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-50 text-gray-700' }}
+                    class=" {{ $platform == 'manually' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
                     <p>
-                        <i class='bx bxs-file-import text-2xl'></i>
+                        <i class='bx bxs-file-import text-3xl'></i>
                     </p>
                     <p class="font-semibold text-xs">Import Manually</p>
 
@@ -132,11 +136,12 @@
                     </div>
                 </div>
 
-                
+
                 <div class="flex space-x-10  pt-10">
 
                     <div class=" space-y-2">
-                        <h2 class="font-bold text-sm ">Imported from <span class="capitalize">{{ $name }}</span> </h2>
+                        <h2 class="font-bold text-sm ">Imported from <span
+                                class="capitalize">{{ $name }}</span> </h2>
                         <p class="text-xs text-gray-400"> {{ count($platforms) }}/{{ count($platforms) }}</p>
 
                     </div>
@@ -235,7 +240,7 @@
                     facebook
                 </div>
                 <div style="display: none" x-show="platform == 'google_play'" class=" h-full w-full p-5">
-                    google_play
+                    <livewire:google-play-component />
                 </div>
                 <div style="display: none" x-show="platform == 'tripadvisor'" class=" h-full w-full p-5">
                     tripadvisor

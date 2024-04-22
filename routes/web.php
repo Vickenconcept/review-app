@@ -121,33 +121,59 @@ Route::get('test', function () {
     // Artisan::call('db:seed');
 
 
-        // $apiKey = env('YELP_API');
-        // $url = 'https://api.yelp.com/v3/businesses/88kri8FhXy8b3DQ_QjSMmQ/reviews'; // Endpoint for retrieving reviews
-    
-        // $businessId = '88kri8FhXy8b3DQ_QjSMmQ'; // Replace with your business ID
-    
-        // $response = Http::withHeaders([
-        //     'Authorization' => 'Bearer ' . $apiKey,
-        // ])->get($url, [
-        //     'business_id' => $businessId,
-        // ]);
-    
-        // return $response->json();
+    // $apiKey = env('YELP_API');
+    // $endpoint = 'https://api.tripadvisor.com/data/1.0/location/123456789/reviews';
+    // $params = [
+    //     'api_key' => $apiKey,
+    //     // Add other required parameters as needed
+    // ];
+
+    // $response = Http::get($endpoint, $params);
+
+    // if ($response->successful()) {
+    //     $data = $response->json();
+    // } else {
+    //     $statusCode = $response->status();
+    //     $errorMessage = $response->body();
+    // }
 
 
-        $apiKey = env('YELP_API');
-        $url = 'https://api.yelp.com/v3/businesses/search'; // Endpoint for searching businesses
+
+    // $response = Http::withHeaders([
+    //     'Authorization' => 'Bearer 827e17fbbe531f5c030693ac5abb732586873089f7fd7ebecee99332fadc9040',
+    //     // Add other required headers
+    // ])->get('https://www.googleapis.com/androidpublisher/v3/applications/your.package.name/reviews');
+
+    // if ($response->successful()) {
+    //     $data = $response->json();
+    //     // Process the response data
+    // } else {
+    //     $statusCode = $response->status();
+    //     $errorMessage = $response->body();
+    //     // Handle the error
+    // }
+
     
-        $term = 'restaurants'; // Search term (e.g., "restaurants")
-        $location = 'GB'; // Location to search for businesses
-    
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $apiKey,
-        ])->get($url, [
-            'term' => $term,
-            'location' => $location,
-        ]);
-    
-        return $response->json();
+
+
+   $response = Http::get('https://serpapi.com/search.json?engine=google_play_product&store=apps&product_id=com.duolingo&all_reviews=true&platform=phone&sort_by=1&num=40&api_key=' . env('SERP_API_KEY'));
+    // $response = Http::get('https://serpapi.com/search.json?q=games&engine=google_play&api_key=' . env('SERP_API_KEY'));
+
+    return $response->json()['reviews'];
+
+
+    // $apiKey = env('YELP_API');
+    // $url = 'https://api.yelp.com/v3/businesses/search'; // Endpoint for searching businesses
+
+    // $term = 'restaurants'; // Search term (e.g., "restaurants")
+    // $location = 'GB'; // Location to search for businesses
+
+    // $response = Http::withHeaders([
+    //     'Authorization' => 'Bearer ' . $apiKey,
+    // ])->get($url, [
+    //     'term' => $term,
+    //     'location' => $location,
+    // ]);
+
+    // return $response->json();
 });
-

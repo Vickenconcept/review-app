@@ -1,4 +1,4 @@
-@props(['search_term', 'location'])
+{{-- @props(['search_term', 'location']) --}}
 <section class="h-full w-full bg-gray-50 flex flex-col-reverse sm:flex-row min-h-0 min-w-0 overflow-hidden">
     <main class="sm:h-full flex-1 flex flex-col min-h-0 min-w-0 overflow-auto">
         <nav class="border-b bg-white px-6 py-2 flex items-center min-w-0 h-14">

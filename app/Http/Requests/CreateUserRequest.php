@@ -26,7 +26,7 @@ class CreateUserRequest extends FormRequest
 
         return [
             'name' => Rule::requiredIf($isRegisterRoute),
-            'email' => 'required|email',
+            'email' => ['required', 'email', Rule::when($isRegisterRoute, 'unique:users')],
             'password' => ['required', Rule::when($isRegisterRoute, 'confirmed')],
             'is_admin' => 'sometimes',
         ];

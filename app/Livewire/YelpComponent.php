@@ -37,7 +37,6 @@ class YelpComponent extends Component
                 session()->forget('yelp_result');
                 session()->forget('yelp_result_expires_at');
                 $this->result = []; 
-                // dd('done');
             } else {
                 $this->result = session()->get('yelp_result');
             }
@@ -122,7 +121,7 @@ class YelpComponent extends Component
                 'video' => Cache::get('cloudinary_video_url') ?? null,
                 'contact_info_ans' => [
                     'email' => null,
-                    'location' =>  $address = $data['location']['address1'] . " " . $data['location']['city'],
+                    'location' => $data['location']['address1'] . " " . $data['location']['city'],
                     'organisation' => null,
                     'image' => $data['image_url'] ?? null,
                 ],
