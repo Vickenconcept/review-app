@@ -24,7 +24,9 @@
                 <button @click="openModal = true; platform ='google'" wire:click="updatePlatform('google')"
                     class=" {{ $platform == 'google' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
-                    <p><i class="bx bxs-star text-3xl"></i></p>
+                    <p>
+                        <i class='bx bxl-google text-3xl'></i>
+                    </p>
                     <p class="font-semibold text-xs">Google</p>
 
                 </button>
@@ -230,7 +232,7 @@
                     g2
                 </div>
                 <div style="display: none" x-show="platform == 'google'" class=" h-full w-full p-5">
-                    google
+                    <livewire:google-component />
                 </div>
                 <!-- ended -->
                 <div style="display: none" x-show="platform == 'yelp'" class=" h-full w-full ">

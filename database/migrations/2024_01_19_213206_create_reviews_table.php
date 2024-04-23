@@ -32,6 +32,7 @@ return new class extends Migration
             $table->text('logo')->nullable();
             $table->text('background')->nullable();
             $table->text('likes')->nullable();
+            $table->text('date')->nullable();
             $table->timestamps();
         });
     }

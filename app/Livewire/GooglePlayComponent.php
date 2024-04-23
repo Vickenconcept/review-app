@@ -26,12 +26,16 @@ class GooglePlayComponent extends Component
 
     public $platformCount = 7;
     public $serp_api_key;
+    public $site;
 
 
     public function mount()
     {
+        $user = auth()->user();
+        $this->site = $user->sites()->first();
 
-        $this->api_key =  env('SERP_API_KEY');
+        $this->api_key = $this->site->serp_api_key ??  env('SERP_API_KEY');
+
         $this->platforms = Platform::all();
 
         if (session()->has('google_play_result')) {
@@ -53,12 +57,9 @@ class GooglePlayComponent extends Component
     }
     public function searchData()
     {
-
-
         $this->validate([
             'search_term' => 'required|string',
         ]);
-
 
         $response = Http::get('https://serpapi.com/search.json?q=' . $this->search_term . '&engine=google_play&api_key=' . $this->api_key);
         $this->search_response = $response->json()['organic_results'][0]['items'];
@@ -79,14 +80,24 @@ class GooglePlayComponent extends Component
 
     public function getReviews()
     {
+        $this->validate([
+            'productName' => 'required',
+        ]);
         $limit = $this->limit ?? 10;
         $response = Http::get('https://serpapi.com/search.json?engine=google_play_product&store=apps&product_id=' . $this->product_id . '&all_reviews=true&platform=phone&sort_by=1&num=' . $limit . '&api_key=' . $this->api_key);
 
-        $expirationTime = Carbon::now()->addMinutes(5);
-        session()->put('google_play_result', $response->json()['reviews']);
-        session()->put('google_play_result_expires_at', $expirationTime);
 
-        return  $this->result = session()->get('google_play_result');
+        if (isset($response->json()['error'])) {
+            $this->result = []; 
+            session()->flash('error', $response->json()['error']);
+            return ;
+        } else {
+            $expirationTime = Carbon::now()->addMinutes(5);
+            session()->put('google_play_result', $response->json()['reviews']);
+            session()->put('google_play_result_expires_at', $expirationTime);
+    
+            return  $this->result = session()->get('google_play_result');
+        }
 
     }
     public function saveDataToDatabase(){
@@ -154,6 +165,7 @@ class GooglePlayComponent extends Component
                     'phonenumber' =>  null,
                     'message' => $data['snippet'] ?? null,
                 ],
+                'date'=> $data['date'] 
             ];
     
             $existingReviewsCount = Review::all()->count();
@@ -163,8 +175,8 @@ class GooglePlayComponent extends Component
     
             $feedback = Review::create($data);
 
-            if (session()->has('yelp_result')) {
-                session()->forget('yelp_result');
+            if (session()->has('google_play_result')) {
+                session()->forget('google_play_result');
             }
 
             session()->flash('success', 'imported successfully');

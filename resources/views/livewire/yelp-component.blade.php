@@ -13,6 +13,16 @@
                         </ul>
                     </div>
                 @endif
+                @if (session('error'))
+                    <div class="bg-red-200 text-red-500 p-4">
+                        {{ session('error') }}
+                    </div>
+                @endif
+                @if (session('success'))
+                    <div class="bg-green-200 text-green-500 p-4">
+                        {{ session('success') }}
+                    </div>
+                @endif
             </span>
             <span class="mr-3 text-sm text-slate-600">
                 <span class="font-semibold">Total import: </span> {{ $platforms->count() }}/{{ $platformCount }}
@@ -30,13 +40,14 @@
         <section class="flex-1 pt-3 md:p-6 lg:mb-0 lg:min-h-0 lg:min-w-0">
             <div class="flex flex-col lg:flex-row h-full w-full">
 
-                <div class=" pb-2 lg:pb-0 w-full lg:max-w-sm px-3 flex flex-row lg:flex-col flex-wrap lg:flex-nowrap mb-10 lg:mb-0">
+                <div
+                    class=" pb-2 lg:pb-0 w-full lg:max-w-sm px-3 flex flex-row lg:flex-col flex-wrap lg:flex-nowrap mb-10 lg:mb-0">
                     <!-- control content left -->
                     <div class="w-full h-24 min-h-0 min-w-0 mb-4 space-y-4">
                         <h1 class="font-bold text-xl capitalize">Add Your Yelp API Key</h1>
                         <form wire:submit="saveAPIKey">
-                            <input type="text" name="api_key" wire:model="api_key" class="form-control shadow"
-                                placeholder="o6yLhuE4_********">
+                            <input type="text" name="yelp_api_key" wire:model="yelp_api_key"
+                                class="form-control shadow" placeholder="o6yLhuE4_********">
 
                             <div class="mt-3">
                                 <button
@@ -46,6 +57,16 @@
                                 </button>
                             </div>
                         </form>
+
+                        @php
+                            $firstThree = substr($site->yelp_api_key, 0, 3);
+                            $lastThree = substr($site->yelp_api_key, -3);
+
+                        @endphp
+                        @if ($site->yelp_api_key)
+                            <p class="font-semibold text-sm bg-blue-100 p-2 rounded-md text-center"> API Key:
+                                {{ $firstThree }}***********{{ $lastThree }}</p>
+                        @endif
                     </div>
 
                 </div>

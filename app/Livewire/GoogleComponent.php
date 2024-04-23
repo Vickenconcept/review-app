@@ -6,31 +6,27 @@ use App\Models\Campaign;
 use App\Models\Platform;
 use App\Models\Review;
 use Carbon\Carbon;
-use Cloudinary\Cloudinary;
-use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Livewire\Component;
-use Livewire\WithPagination;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class YelpComponent extends Component
+class GoogleComponent extends Component
 {
 
-    use WithPagination;
-
-    public $search_term,
-        $location,
-        $limit,
-        $result = [],
-        $platformCount = 7,
+    public $result = [],
         $platforms,
-        $yelp_api_key;
+        $search_term,
+        $search_response = [],
+        $limit,
+        $product_id,
+        $api_key,
+        $productName;
 
-        public $api_key;
-        public $site;
-
+    public $platformCount = 7;
+    public $serp_api_key;
+    public $site;
 
 
     public function mount()
@@ -38,48 +34,76 @@ class YelpComponent extends Component
         $user = auth()->user();
         $this->site = $user->sites()->first();
 
-        $this->api_key = $this->site->yelp_api_key ??  env('YELP_API_key');
-        if (session()->has('yelp_result')) {
-            if (session()->has('yelp_result_expires_at') && Carbon::now()->gt(session()->get('yelp_result_expires_at'))) {
-                session()->forget('yelp_result');
-                session()->forget('yelp_result_expires_at');
-                $this->result = []; 
+        $this->api_key = $this->site->serp_api_key ??  env('SERP_API_KEY');
+
+        $this->platforms = Platform::all();
+
+        if (session()->has('google_result')) {
+            if (session()->has('google_result_expires_at') && Carbon::now()->gt(session()->get('google_result_expires_at'))) {
+                session()->forget('google_result');
+                session()->forget('google_result_expires_at');
+                session()->forget('G_productName');
+                session()->forget('product_id');
+                $this->result = [];
             } else {
-                $this->result = session()->get('yelp_result');
+                $this->result = session()->get('google_result');
             }
         }
-        $this->platforms = Platform::all();
+
+        if (session()->has('G_productName')) {
+            $this->productName = session()->get('G_productName');
+            $this->product_id = session()->get('product_id');
+        }
     }
     public function searchData()
     {
         $this->validate([
             'search_term' => 'required|string',
-            'location' => 'required',
         ]);
 
-        $apiKey = $this->api_key;
-        $url = 'https://api.yelp.com/v3/businesses/search';
+        $response = Http::get('https://serpapi.com/search?q=' . $this->search_term . '&tbm=shop&api_key=' . $this->api_key);
 
-        $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $apiKey,
-        ])->get($url, [
-            'term' => $this->search_term,
-            'location' => $this->location,
-            'limit' => $this->limit,
+        $this->search_response = $response->json()['shopping_results'];
+    }
+
+    public function setProduct($productName = null, $product_id = null)
+    {
+        session()->forget('G_productName');
+        session()->forget('product_id');
+
+        session()->put('G_productName', $productName);
+        session()->put('product_id', $product_id);
+
+        $this->productName = session()->get('G_productName');
+        $this->product_id = session()->get('product_id');
+        $this->search_response = [];
+    }
+
+    public function getReviews()
+    {
+        $this->validate([
+            'productName' => 'required',
         ]);
-        $expirationTime = Carbon::now()->addMinutes(5);
+
+        $response = Http::get('https://serpapi.com/search.json?engine=google_product&store=apps&product_id=' . $this->product_id . '&gl=us&hl=en&num=&reviews=1&api_key=' . $this->api_key);
 
         if (isset($response->json()['error'])) {
-            $this->result = []; 
-            session()->flash('error', $response->json()['error']['code'] . ': Check Yelp API key');
-            return ;
+            $this->result = [];
+            session()->flash('error', $response->json()['error']);
+            return;
         } else {
-            session()->put('yelp_result', $response->json()['businesses']);
-            session()->put('yelp_result_expires_at', $expirationTime);
-            return  $this->result = session()->get('yelp_result');
+
+            // dd($response->json()['reviews_results']['reviews']);
+            $expirationTime = Carbon::now()->addMinutes(5);
+            session()->put('google_result', $response->json()['reviews_results']['reviews']);
+            session()->put('google_result_expires_at', $expirationTime);
+
+            return  $this->result = session()->get('google_result');
         }
     }
-    public function saveDataToDatabase(){
+
+    public function saveDataToDatabase()
+    {
 
         $existingPlatformsCount = Platform::all()->count();
         if ($existingPlatformsCount >= $this->platformCount) {
@@ -87,7 +111,7 @@ class YelpComponent extends Component
         }
 
         $platform = Platform::create([
-            'name' => 'yelp',  
+            'name' => 'google',
         ]);
 
         $user = auth()->user();
@@ -125,54 +149,66 @@ class YelpComponent extends Component
                 'site_id' => $campaign->site_id,
                 'campaign_id' => $campaign->id,
                 'uuid' => Str::uuid()->toString(),
-                'net_promote_ans' => (round($data['rating']) *2 ),
-                'nps_comment_ans' => null,
-                'star_question_ans' =>round($data['rating']) ,
-                'review_platform_ans' => null,
+                'net_promote_ans' => (round($data['rating']) * 2),
+                'nps_comment_ans' =>  null,
+                'star_question_ans' => round($data['rating']),
+                'review_platform_ans' => $data['content'],
+                'likes' => null,
                 'video' => Cache::get('cloudinary_video_url') ?? null,
                 'contact_info_ans' => [
                     'email' => null,
-                    'location' => $data['location']['address1'] . " " . $data['location']['city'],
+                    'location' => null,
                     'organisation' => null,
-                    'image' => $data['image_url'] ?? null,
+                    'image' =>  null,
                 ],
-                
+
                 'private_feed_back_ans' => [
-                    'name' =>  $data['name'],
+                    'name' =>  $data['source'],
                     'email' => null,
-                    'phonenumber' =>  $data['display_phone'],
-                    'message' => null,
+                    'phonenumber' =>  null,
+                    'message' => $data['content'] ?? null,
                 ],
+                'date' => $data['date'] 
             ];
-    
+
             $existingReviewsCount = Review::all()->count();
             if ($existingReviewsCount >= 100) {
                 throw new NotFoundHttpException('Maximum review limit reached for this resource.');
             }
-    
+
             $feedback = Review::create($data);
 
-            if (session()->has('yelp_result')) {
-                session()->forget('yelp_result');
+            if (session()->has('google_result')) {
+                session()->forget('google_result');
+                
             }
 
             session()->flash('success', 'imported successfully');
-            return redirect()->to('review');
-            // $this->dispatch('refreshPage');
-        }
 
+            $this->dispatch('refreshPage');
+        }
     }
+
     public function saveAPIKey()
     {
         $this->validate([
-            'yelp_api_key'=> 'required',
+            'serp_api_key' => 'required',
         ]);
-       dd($this->yelp_api_key);
-       session()->flash('success', 'Updated successfully');
+
+        $user = auth()->user();
+
+        $user->sites()->first();
+        $site = $user->sites()->first();
+
+        $site->serp_api_key = $this->serp_api_key;
+        $site->update();
+
+        session()->flash('success', 'Updated successfully');
+
+        $this->dispatch('refreshPage');
     }
     public function render()
     {
-        return view('livewire.yelp-component');
+        return view('livewire.google-component');
     }
-
 }

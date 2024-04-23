@@ -43,11 +43,9 @@
                 <div
                     class=" pb-2 lg:pb-0 w-full lg:max-w-sm px-3 flex flex-row lg:flex-col flex-wrap lg:flex-nowrap mb-10 lg:mb-0">
                     <!-- control content left -->
-                    <div class="w-full h-24 min-h-0 min-w-0 mb-4 space-y-8">
-                        <div>
-                            <p class="font-bold text-xl capitalize">for your google play review</p>
-                            <h1 class="font-bold text-sm capitalize">Add Your Serp API Key</h1>
-                        </div>
+                    <div class="w-full h-24 min-h-0 min-w-0 mb-4 space-y-4">
+                        <p class="font-bold text-xl capitalize">for your google review</p>
+                        <h1 class="font-bold text-sm capitalize">Add Your Serp API Key</h1>
                         <form wire:submit="saveAPIKey">
                             <input type="text" name="serp_api_key" wire:model="serp_api_key"
                                 class="form-control shadow" placeholder="o6yLhuE4_********">
@@ -90,7 +88,7 @@
                                 </div>
                                 <input type="text" id="term" wire:model="search_term"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  "
-                                    placeholder="App, Music, Games ..">
+                                    placeholder="search product..">
                             </div>
                             <div>
                                 <button type="button" wire:click="searchData"
@@ -101,37 +99,68 @@
                             </div>
 
                             <div
-                                class="absolute right-0 z-10 mt-10 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                                <div>
-                                    @foreach ($search_response as $item)
-                                        <a href="javascript:void(0)"
-                                            wire:click="setProduct('{{ $item['title'] }}','{{ $item['product_id'] }}')"
-                                            class="text-gray-700 block px-4 py-2  text-sm hover:bg-slate-200"
-                                            role="menuitem" id="menu-item-0">{{ $item['title'] }}</a>
-                                    @endforeach
+                            class="absolute right-0 z-10 mt-10 w-full grid grid-cols-5 gap-1 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                            
+                                @foreach ($search_response as $item)
+                                    <div wire:click="setProduct('{{ $item['title'] }}','{{ $item['product_id'] }}')"
+                                        class="w-full bg-white border border-gray-200 rounded-lg shadow cursor-pointer hover:shadow-md">
+                                        <div class="w-full h-32 overflow-hidden">
+                                            <img class="rounded-t-lg w-full" src="{{ $item['thumbnail'] }}"
+                                                alt="" />
+                                        </div>
+                                        <div class="p-1.5 space-y-2 divide-y">
+                                            <div>
+                                                <h5 class=" text-xs tracking-tight text-gray-700 ">
+                                                    {{ $item['title'] }}</h5>
+                                                @if (isset($item['rating']))
+                                                    @for ($i = 1; $i <= $item['rating']; $i++)
+                                                        <i class="bx bxs-star text-yellow-400 text-xs"></i>
+                                                    @endfor
+                                                @endif
+                                                @if (isset($item['reviews']))
+                                                    <span
+                                                        class="text-xs tracking-tight  text-blue-500  capitalize">{{ $item['reviews'] }}</span>
+                                                @endif
+                                            </div>
+                                            <div>
+                                                <h5 class=" text-xs tracking-tight font-semibold text-gray-900 ">
+                                                    {{ $item['price'] }}</h5>
+                                                @if (isset($item['seller']))
+                                                    <h5 class=" text-xs tracking-tight  text-blue-500  capitalize">
+                                                        {{ $item['seller'] }}</h5>
+                                                @endif
 
-                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                @endforeach
+
                         </form>
 
                     </div>
 
                     <!-- next form-->
-                    <form class="flex gap-4   flex-col md:flex-row">
-                        <div
-                            class="bg-gray-50 border truncate w-5/6  border-gray-300 text-gray-900 text-sm rounded-lg  ps-10 p-2.5 ">
-                            {{ $productName ?? 'Search and Enter product name' }}
-                        </div>
+                    <form class="flex gap-4 flex-col md:flex-row ">
+                        {{-- <div class="relative  block w-full ">
+                            <div class="absolute inset-y-0 start-0 flex items-center ps-3.5 pointer-events-none mr-1">
+                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                    stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round"
+                                        d="m15.75 15.75-2.489-2.489m0 0a3.375 3.375 0 1 0-4.773-4.773 3.375 3.375 0 0 0 4.774 4.774ZM21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                                </svg>
+                            </div>
+                            <input type="text" wire:model.live="productName"
+                                @if ($productName == '') disabled @endif
+                                class="hidden bg-gray-50 border  border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  "
+                                placeholder="Name">
 
-                        <select id="limit" wire:model="limit" @if ($productName == '') disabled @endif
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500  w-full p-2.5 ">
-                            <option value="">Limit</option>
-                            <option value="10">10</option>
-                            <option value="20">20</option>
-                            <option value="30">30</option>
-                        </select>
-
+                            </div> --}}
+                            <div
+                                class="bg-gray-50 border truncate w-5/6  border-gray-300 text-gray-900 text-sm rounded-lg  ps-10 p-2.5 ">
+                                {{ $productName ?? 'Search and Enter product name' }}
+                            </div>
                         <div>
-                            <button type="button" wire:click="getReviews"
+                            <button type="button" wire:click="getReviews"  @if ($productName == '') disabled @endif
                                 class="btn flex items-center whitespace-nowrap">
                                 <span wire:loading><i class='bx bx-loader-alt animate-spin'></i> loading..</span>
                                 <span wire:loading.remove>Search</span>
@@ -143,15 +172,11 @@
                             <thead
                                 class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                 <tr>
-                                    <th scope="col" class="px-6 py-3">
-                                        Image
-                                    </th>
+                                    
                                     <th scope="col" class="px-6 py-3">
                                         Name
                                     </th>
-                                    <th scope="col" class="px-6 py-3">
-                                        Likes
-                                    </th>
+                                    
                                     <th scope="col" class="px-6 py-3">
                                         Rating
                                     </th>
@@ -171,17 +196,9 @@
                                     <tr class="bg-white border-b dark:bg-gray-800 ">
                                         <th scope="row"
                                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                                            <img src="{{ $data['avatar'] }}" alt=""
-                                                class="w-16 h-10 rounded-full">
+                                            {{ $data['source'] }}
                                         </th>
-                                        <th scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-
-                                            {{ $data['title'] }}
-                                        </th>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            {{ $data['likes'] }}
-                                        </td>
+                                        
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             @for ($i = 1; $i <= round($data['rating']); $i++)
                                                 <i class="bx bxs-star text-yellow-400 text-xl"></i>
@@ -190,19 +207,16 @@
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             {{ round($data['rating']) * 2 }}
                                         </td>
-                                        {{-- <td class="px-6 py-4  line-clamp-2">
-                                            {{ $data['snippet'] }}
-                                        </td> --}}
-                                        <td class="px-6 py-4 ">
+                                        <td class="px-6 py-4  ">
                                             <details class="cursor-pointer">
-                                                <summary class="line-clamp-1">{{ $data['snippet'] }}</summary>
-                                                <p class="line-clamp-4">{{ $data['snippet'] }}</p>
-                                            </details>
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            {{ $data['date'] }}
+                                                <summary class="line-clamp-1">{{ $data['content'] }}</summary>
+                                                <p class="line-clamp-4">{{ $data['content'] }}</p>
+                                              </details>
                                         </td>
 
+                                        <td class="px-6 py-4 ">
+                                            {{ $data['date'] }}
+                                        </td>
                                     </tr>
 
                                 @empty
