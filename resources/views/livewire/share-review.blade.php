@@ -202,7 +202,8 @@
                                 <div class="inline-block font-bold tracking-tight text-sm break-all">
                                     <p>{{ $review->contact_info_ans['location'] }}</p>
                                     <p class="font-medium text-black/60">
-                                        {{ $review->contact_info_ans['organisation'] }}
+                                        {{ $review->contact_info_ans['organisation'] ?? $review->private_feed_back_ans['name'] }} 
+                                        
                                     </p>
                                     @if ($star)
 

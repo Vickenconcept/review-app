@@ -44,7 +44,7 @@
         <div class=" h-full sm:ml-64">
             {{ $slot }}
 
-            <x-footer />
+            {{-- <x-footer /> --}}
         </div>
     </div>
 

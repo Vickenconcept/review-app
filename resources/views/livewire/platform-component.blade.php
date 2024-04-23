@@ -8,6 +8,7 @@
     <h1 class="text-3xl font-bold -tracking-wider  px-3 md:px-10"> Add new platform for reviews</h1>
 
 
+  
     <section class="px-3 md:px-10 ">
         <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
             <div class=" w-full">

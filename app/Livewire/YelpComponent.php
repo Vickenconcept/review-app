@@ -26,7 +26,7 @@ class YelpComponent extends Component
         $result = [],
         $platformCount = 7,
         $platforms,
-        $api_key;
+        $yelp_api_key;
 
 
 
@@ -65,8 +65,7 @@ class YelpComponent extends Component
         session()->put('yelp_result', $response->json()['businesses']);
         session()->put('yelp_result_expires_at', $expirationTime);
 
-        $yelpResult = session()->get('yelp_result');
-        return  $this->result = $yelpResult;
+        return  $this->result = session()->get('yelp_result');
     }
     public function saveDataToDatabase(){
 
@@ -145,6 +144,7 @@ class YelpComponent extends Component
                 session()->forget('yelp_result');
             }
 
+            session()->flash('success', 'imported successfully');
             return redirect()->to('review');
             // $this->dispatch('refreshPage');
         }
@@ -153,9 +153,10 @@ class YelpComponent extends Component
     public function saveAPIKey()
     {
         $this->validate([
-            'api_key'=> 'required',
+            'yelp_api_key'=> 'required',
         ]);
-       dd($this->api_key);
+       dd($this->yelp_api_key);
+       session()->flash('success', 'Updated successfully');
     }
     public function render()
     {

@@ -31,6 +31,7 @@ return new class extends Migration
             $table->enum('show_star_review',[0,1])->default(0);
             $table->text('logo')->nullable();
             $table->text('background')->nullable();
+            $table->text('likes')->nullable();
             $table->timestamps();
         });
     }

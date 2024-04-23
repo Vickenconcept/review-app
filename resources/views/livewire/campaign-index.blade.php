@@ -1,4 +1,4 @@
-    <div class="h-full  space-y-8" x-data="{ openModal: false, link: 'Send', campaign: {}, folder: false, createFolder: false, editCampaign: false }">
+    <div class="h-full  space-y-8 " x-data="{ openModal: false, link: 'Send', campaign: {}, folder: false, createFolder: false, editCampaign: false }">
         <div class="py-5 border-b px-3 md:px-10 flex justify-between items-center ">
             <div>
                 <h3 class=" font-bold">Campaign</h3>
@@ -60,7 +60,7 @@
 
         <section class="px-3 md:px-10 ">
             <!-- List Group -->
-            <ul class="mt-3 flex flex-col space-y-0.5">
+            <ul class="mt-3 flex flex-col space-y-0.5 overflow-y-auto pb-10">
                 @forelse ($campaigns as $campaign)
                     <li
                         class="inline-flex items-center hover:shadow  gap-x-2  px-4 text-sm border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:border-gray-700 dark:text-gray-200">

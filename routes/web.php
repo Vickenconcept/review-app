@@ -82,7 +82,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('campaign/widget/{uuid?}', [CampaignController::class, 'selectWidget'])->name('selectWidget');
     Route::post('campaign/update-name', [CampaignController::class, 'changeName'])->name('changeCampaignName');
     Route::resource('campaign', CampaignController::class);
-    // Route::resource('widget', WidgetController::class);
+    Route::resource('widget', WidgetController::class);
     Route::resource('reseller', ResellerController::class);
     Route::resource('platform', PlatformController::class);
     Route::post('addToFolder', [FolderController::class, 'addToFolder'])->name('addToFolder');
