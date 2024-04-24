@@ -62,7 +62,14 @@ class GooglePlayComponent extends Component
         ]);
 
         $response = Http::get('https://serpapi.com/search.json?q=' . $this->search_term . '&engine=google_play&api_key=' . $this->api_key);
-        $this->search_response = $response->json()['organic_results'][0]['items'];
+
+        if (isset($response->json()['error'])) {
+            $this->result = [];
+            session()->flash('error', $response->json()['error']);
+            return;
+        } else {
+            $this->search_response = $response->json()['organic_results'][0]['items'];
+        }
     }
 
     public function setProduct($productName = null, $product_id = null)
@@ -88,19 +95,25 @@ class GooglePlayComponent extends Component
 
 
         if (isset($response->json()['error'])) {
-            $this->result = []; 
+            $this->result = [];
             session()->flash('error', $response->json()['error']);
-            return ;
+            return;
         } else {
-            $expirationTime = Carbon::now()->addMinutes(5);
-            session()->put('google_play_result', $response->json()['reviews']);
-            session()->put('google_play_result_expires_at', $expirationTime);
-    
-            return  $this->result = session()->get('google_play_result');
-        }
 
+            if (isset($response->json()['reviews'])) {
+                $expirationTime = Carbon::now()->addMinutes(5);
+                session()->put('google_play_result', $response->json()['reviews']);
+                session()->put('google_play_result_expires_at', $expirationTime);
+
+                return  $this->result = session()->get('google_play_result');
+            } else {
+                $this->result = [];
+                session()->flash('error', 'No review For this product');
+            }
+        }
     }
-    public function saveDataToDatabase(){
+    public function saveDataToDatabase()
+    {
 
         $existingPlatformsCount = Platform::all()->count();
         if ($existingPlatformsCount >= $this->platformCount) {
@@ -108,7 +121,7 @@ class GooglePlayComponent extends Component
         }
 
         $platform = Platform::create([
-            'name' => 'google_play',  
+            'name' => 'google_play',
         ]);
 
         $user = auth()->user();
@@ -146,9 +159,9 @@ class GooglePlayComponent extends Component
                 'site_id' => $campaign->site_id,
                 'campaign_id' => $campaign->id,
                 'uuid' => Str::uuid()->toString(),
-                'net_promote_ans' => (round($data['rating']) *2 ),
+                'net_promote_ans' => (round($data['rating']) * 2),
                 'nps_comment_ans' =>  null,
-                'star_question_ans' =>round($data['rating']) ,
+                'star_question_ans' => round($data['rating']),
                 'review_platform_ans' => $data['snippet'],
                 'likes' => $data['likes'],
                 'video' => Cache::get('cloudinary_video_url') ?? null,
@@ -158,21 +171,21 @@ class GooglePlayComponent extends Component
                     'organisation' => null,
                     'image' => $data['avatar'] ?? null,
                 ],
-                
+
                 'private_feed_back_ans' => [
                     'name' =>  $data['title'],
                     'email' => null,
                     'phonenumber' =>  null,
                     'message' => $data['snippet'] ?? null,
                 ],
-                'date'=> $data['date'] 
+                'date' => $data['date']
             ];
-    
+
             $existingReviewsCount = Review::all()->count();
             if ($existingReviewsCount >= 100) {
                 throw new NotFoundHttpException('Maximum review limit reached for this resource.');
             }
-    
+
             $feedback = Review::create($data);
 
             if (session()->has('google_play_result')) {
@@ -180,10 +193,9 @@ class GooglePlayComponent extends Component
             }
 
             session()->flash('success', 'imported successfully');
-            
+
             $this->dispatch('refreshPage');
         }
-
     }
 
     public function saveAPIKey()
@@ -193,7 +205,7 @@ class GooglePlayComponent extends Component
         ]);
 
         $user = auth()->user();
-        
+
         $user->sites()->first();
         $site = $user->sites()->first();
 

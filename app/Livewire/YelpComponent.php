@@ -28,8 +28,8 @@ class YelpComponent extends Component
         $platforms,
         $yelp_api_key;
 
-        public $api_key;
-        public $site;
+    public $api_key;
+    public $site;
 
 
 
@@ -43,7 +43,7 @@ class YelpComponent extends Component
             if (session()->has('yelp_result_expires_at') && Carbon::now()->gt(session()->get('yelp_result_expires_at'))) {
                 session()->forget('yelp_result');
                 session()->forget('yelp_result_expires_at');
-                $this->result = []; 
+                $this->result = [];
             } else {
                 $this->result = session()->get('yelp_result');
             }
@@ -70,16 +70,17 @@ class YelpComponent extends Component
         $expirationTime = Carbon::now()->addMinutes(5);
 
         if (isset($response->json()['error'])) {
-            $this->result = []; 
+            $this->result = [];
             session()->flash('error', $response->json()['error']['code'] . ': Check Yelp API key');
-            return ;
+            return;
         } else {
             session()->put('yelp_result', $response->json()['businesses']);
             session()->put('yelp_result_expires_at', $expirationTime);
             return  $this->result = session()->get('yelp_result');
         }
     }
-    public function saveDataToDatabase(){
+    public function saveDataToDatabase()
+    {
 
         $existingPlatformsCount = Platform::all()->count();
         if ($existingPlatformsCount >= $this->platformCount) {
@@ -87,7 +88,7 @@ class YelpComponent extends Component
         }
 
         $platform = Platform::create([
-            'name' => 'yelp',  
+            'name' => 'yelp',
         ]);
 
         $user = auth()->user();
@@ -125,9 +126,9 @@ class YelpComponent extends Component
                 'site_id' => $campaign->site_id,
                 'campaign_id' => $campaign->id,
                 'uuid' => Str::uuid()->toString(),
-                'net_promote_ans' => (round($data['rating']) *2 ),
+                'net_promote_ans' => (round($data['rating']) * 2),
                 'nps_comment_ans' => null,
-                'star_question_ans' =>round($data['rating']) ,
+                'star_question_ans' => round($data['rating']),
                 'review_platform_ans' => null,
                 'video' => Cache::get('cloudinary_video_url') ?? null,
                 'contact_info_ans' => [
@@ -136,7 +137,7 @@ class YelpComponent extends Component
                     'organisation' => null,
                     'image' => $data['image_url'] ?? null,
                 ],
-                
+
                 'private_feed_back_ans' => [
                     'name' =>  $data['name'],
                     'email' => null,
@@ -144,12 +145,12 @@ class YelpComponent extends Component
                     'message' => null,
                 ],
             ];
-    
+
             $existingReviewsCount = Review::all()->count();
             if ($existingReviewsCount >= 100) {
                 throw new NotFoundHttpException('Maximum review limit reached for this resource.');
             }
-    
+
             $feedback = Review::create($data);
 
             if (session()->has('yelp_result')) {
@@ -160,19 +161,27 @@ class YelpComponent extends Component
             return redirect()->to('review');
             // $this->dispatch('refreshPage');
         }
-
     }
     public function saveAPIKey()
     {
         $this->validate([
-            'yelp_api_key'=> 'required',
+            'yelp_api_key' => 'required',
         ]);
-       dd($this->yelp_api_key);
-       session()->flash('success', 'Updated successfully');
+
+        $user = auth()->user();
+
+        $user->sites()->first();
+        $site = $user->sites()->first();
+
+        $site->yelp_api_key = $this->yelp_api_key;
+        $site->update();
+
+        session()->flash('success', 'Updated successfully');
+
+        $this->dispatch('refreshPage');
     }
     public function render()
     {
         return view('livewire.yelp-component');
     }
-
 }
