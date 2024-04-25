@@ -57,6 +57,16 @@ class GoogleComponent extends Component
             $this->product_id = session()->get('product_id');
         }
     }
+
+    public function switchPage($page)
+    {
+        session()->forget('google_result');
+        session()->forget('google_result_expires_at');
+        session()->forget('G_productName');
+        session()->forget('product_id');
+        $this->productName = 'Place or product name ..';
+        $this->result = [];
+    }
     public function searchData()
     {
         $this->validate([
@@ -107,6 +117,8 @@ class GoogleComponent extends Component
                 $expirationTime = Carbon::now()->addMinutes(5);
                 session()->put('google_result', $response->json()['reviews_results']['reviews']);
                 session()->put('google_result_expires_at', $expirationTime);
+                session()->forget('G_productName');
+                session()->forget('product_id');
 
                 return  $this->result = session()->get('google_result');
             } else {
@@ -339,6 +351,8 @@ class GoogleComponent extends Component
                     $expirationTime = Carbon::now()->addMinutes(5);
                     session()->put('google_result', $response->json()['reviews']);
                     session()->put('google_result_expires_at', $expirationTime);
+                    session()->forget('G_productName');
+                    session()->forget('product_id');
 
                     return  $this->result = session()->get('google_result');
                 } else {

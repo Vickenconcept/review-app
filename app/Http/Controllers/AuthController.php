@@ -47,12 +47,6 @@ class AuthController extends Controller
 
     public function logout()
     {
-
-        // if ($request->wantsJson()) {
-        //     user()->tokens()->delete();
-        //     return Response::api('logged out successfully');
-        // }
-
         Auth::logout();
 
         return to_route('login');

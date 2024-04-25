@@ -26,8 +26,11 @@
                 @endif
             </span>
             <span class="mr-3 text-sm text-slate-600">
-              <button class="bg-cyan-900 hover:bg-cyan-800 text-cyan-50 rounded-md py-2 px-4 shadow hover:shadow-md" @click="isOpen = 'product'">Products</button>
-              <button class="bg-cyan-200 hover:bg-cyan-900 text-cyan-900 hover:text-cyan-50 transition-all duration-300 rounded-md py-2 px-4 shadow hover:shadow-md" @click="isOpen = 'map'">Map</button>
+                <button class="bg-cyan-900 hover:bg-cyan-800 text-cyan-50 rounded-md py-2 px-4 shadow hover:shadow-md"
+                    @click="isOpen = 'product'" wire:click="switchPage('product')">Products</button>
+                <button
+                    class="bg-cyan-200 hover:bg-cyan-900 text-cyan-900 hover:text-cyan-50 transition-all duration-300 rounded-md py-2 px-4 shadow hover:shadow-md"
+                    @click="isOpen = 'map'" wire:click="switchPage('map')">Map</button>
             </span>
             <span class="mr-3 text-sm text-slate-600">
                 <span class="font-semibold">Total import: </span> {{ $platforms->count() }}/{{ $platformCount }}
@@ -89,9 +92,9 @@
                 </div>
 
                 <!-- selection buttons -->
-                <div class=" h-full lg:flex-1 px-3 min-h-0 min-w-0" x-show="isOpen == null" style="display: none">
+                <div class=" h-full lg:flex-1 px-3 min-h-0 min-w-0 mt-10 lg:mt-0" x-show="isOpen == null" style="display: none">
                     <div class="grid grid-cols-2 gap-5">
-                        <div @click="isOpen = 'product'"
+                        <div @click="isOpen = 'product'" wire:click="switchPage('product')"
                             class="w-full bg-white border border-gray-200 rounded-lg shadow cursor-pointer hover:shadow-md">
                             <div class="w-full h-48 overflow-hidden">
                                 <img class="rounded-t-lg w-full"
@@ -106,7 +109,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div @click="isOpen = 'map'"
+                        <div @click="isOpen = 'map'" wire:click="switchPage('map')"
                             class="w-full bg-white border border-gray-200 rounded-lg shadow cursor-pointer hover:shadow-md">
                             <div class="w-full h-48 overflow-hidden">
                                 <img class="rounded-t-lg w-full"
@@ -121,6 +124,9 @@
                                 </div>
                             </div>
                         </div>
+                    </div>
+                    <div class=" text-center p-10">
+                        <h3 class="text-xl font-semibold animate-pulse text-cyan-700 drop-shadow-lg flex items-center"><span>Select One and continue</span> <i class='bx bx-up-arrow-alt'></i></h3>
                     </div>
                 </div>
                 <!-- selection buttons -->
@@ -200,7 +206,7 @@
                         <!-- next form-->
                         <form class="flex gap-4 flex-col md:flex-row ">
                             <div
-                                class="bg-gray-50 border truncate w-5/6  border-gray-300 text-gray-900 text-sm rounded-lg  ps-10 p-2.5 ">
+                                class="bg-gray-50 border truncate lg:w-5/6  border-gray-300 text-gray-900 text-sm rounded-lg  ps-10 p-2.5 ">
                                 {{ $productName ?? 'Search and Enter product name' }}
                             </div>
                             <div>
@@ -306,7 +312,7 @@
                                 </div>
                                 <input type="text" id="term" wire:model="search_term"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  "
-                                    placeholder="search product..">
+                                    placeholder="search place or product..">
                             </div>
                             <div>
                                 <button type="button" wire:click="searchMapData"
@@ -364,7 +370,7 @@
                         <!-- next form-->
                         <form class="flex gap-4 flex-col md:flex-row ">
                             <div
-                                class="bg-gray-50 border truncate w-5/6  border-gray-300 text-gray-900 text-sm rounded-lg  ps-10 p-2.5 ">
+                                class="bg-gray-50 border truncate lg:w-5/6  border-gray-300 text-gray-900 text-sm rounded-lg  ps-10 p-2.5 ">
                                 {{ $productName ?? 'Search and Enter product name' }}
                             </div>
                             <div>
@@ -406,58 +412,62 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($result as $data)
-                                        <tr class="bg-white border-b dark:bg-gray-800 ">
-                                            <th scope="row"
-                                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                                    @if ($forMap)
+                                        @forelse ($result as $data)
+                                            <tr class="bg-white border-b dark:bg-gray-800 ">
+                                                <th scope="row"
+                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
 
-                                                @if (isset($data['user']['thumbnail']))
-                                                    <img src="{{ $data['user']['thumbnail'] }}" alt=""
-                                                        class="w-16 h-10 rounded-full">
-                                                @endif
-                                            </th>
-                                            <th scope="row"
-                                                class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                                                @if (isset($data['user']['name']))
-                                                    {{ $data['user']['name'] }}
-                                                @endif
-                                            </th>
-
-                                            <td class="px-6 py-4 whitespace-nowrap">
-                                                @for ($i = 1; $i <= round($data['rating']); $i++)
-                                                    <i class="bx bxs-star text-yellow-400 text-xl"></i>
-                                                @endfor
-                                            </td>
-
-                                            <td class="px-6 py-4  ">
-                                                <details class="cursor-pointer">
-                                                    @if (isset($data['snippet']))
-                                                        <summary class="line-clamp-1">{{ $data['snippet'] }}</summary>
-                                                        <p class="line-clamp-4">{{ $data['snippet'] }}</p>
+                                                    @if (isset($data['user']['thumbnail']))
+                                                        <img src="{{ $data['user']['thumbnail'] }}" alt=""
+                                                            class="w-16 h-10 rounded-full">
                                                     @endif
-                                                </details>
-                                            </td>
+                                                </th>
+                                                <th scope="row"
+                                                    class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
+                                                    @if (isset($data['user']['name']))
+                                                        {{ $data['user']['name'] }}
+                                                    @endif
+                                                </th>
 
-                                            <td class="px-6 py-4 ">
-                                                @if (isset($data['likes']))
-                                                    {{ $data['likes'] }}
-                                                @endif
-                                            </td>
-                                            <td class="px-6 py-4 ">
-                                                @if (isset($data['date']))
-                                                    {{ $data['date'] }}
-                                                @endif
-                                            </td>
-                                        </tr>
+                                                <td class="px-6 py-4 whitespace-nowrap">
+                                                    @for ($i = 1; $i <= round($data['rating']); $i++)
+                                                        <i class="bx bxs-star text-yellow-400 text-xl"></i>
+                                                    @endfor
+                                                </td>
 
-                                    @empty
-                                        <tr class="bg-white">
-                                            <td colspan="9" class="text-center p-5">
-                                                <p class="text-sm">NO DATA FOUND</p>
-                                                <p><i class='bx bxs-folder-open text-6xl'></i></p>
-                                            </td>
-                                        </tr>
-                                    @endforelse
+                                                <td class="px-6 py-4  ">
+                                                    <details class="cursor-pointer">
+                                                        @if (isset($data['snippet']))
+                                                            <summary class="line-clamp-1">{{ $data['snippet'] }}
+                                                            </summary>
+                                                            <p class="line-clamp-4">{{ $data['snippet'] }}</p>
+                                                        @endif
+                                                    </details>
+                                                </td>
+
+                                                <td class="px-6 py-4 ">
+                                                    @if (isset($data['likes']))
+                                                        {{ $data['likes'] }}
+                                                    @endif
+                                                </td>
+                                                <td class="px-6 py-4 ">
+                                                    @if (isset($data['date']))
+                                                        {{ $data['date'] }}
+                                                    @endif
+                                                </td>
+                                            </tr>
+
+                                        @empty
+                                            <tr class="bg-white">
+                                                <td colspan="9" class="text-center p-5">
+                                                    <p class="text-sm">NO DATA FOUND</p>
+                                                    <p><i class='bx bxs-folder-open text-6xl'></i></p>
+                                                </td>
+                                            </tr>
+                                        @endforelse
+
+                                    @endif
 
                                 </tbody>
                             </table>
