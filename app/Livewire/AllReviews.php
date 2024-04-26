@@ -56,7 +56,10 @@ class AllReviews extends Component
                     ->orWhere("contact_info_ans->location", 'like', '%' . $this->search . '%')
                     ->orWhere("private_feed_back_ans->email", 'like', '%' . $this->search . '%')
                     ->orWhere("contact_info_ans->email", 'like', '%' . $this->search . '%')
-                    ->orWhere("contact_info_ans->organisation", 'like', '%' . $this->search . '%');
+                    ->orWhere("contact_info_ans->organisation", 'like', '%' . $this->search . '%')
+                    ->orWhereHas('campaign', function ($subQuery) {
+                        $subQuery->where("name", 'like', '%' . $this->search . '%');
+                    });
             });
         }
 

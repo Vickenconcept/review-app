@@ -165,7 +165,10 @@
                         </div>
                     </li>
                 @empty
-                    <p class="bg-cyan-100 text-cyan-500 py-4 text-center rounded">No Campaign Yet.</p>
+                    <div class="bg-cyan-100 text-cyan-500 py-4 flex justify-center items-center rounded ">
+                        <span>No Campaign Yet.</span>
+                        <p><i class='bx bxs-folder-open text-4xl'></i></p>
+                    </div>
                 @endforelse
                 {{ $campaigns->links() }}
 

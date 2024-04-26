@@ -31,8 +31,6 @@
             width: 65%;
             margin: auto;
         }
-
-  
     </style>
 
 </head>
@@ -45,6 +43,7 @@
             {{ $slot }}
 
             {{-- <x-footer /> --}}
+
         </div>
     </div>
 
@@ -190,7 +189,7 @@
         }
     </script>
 
-    
+
 
 
 

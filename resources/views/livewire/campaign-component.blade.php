@@ -160,15 +160,29 @@
                                 <div class="space-y-5 col-span-2">
                                     <p class="font-semibold text-sm">Send this link to the recipients via email, share
                                         in social media or add it to your website.</p>
-                                    <div class="rounded-lg border flex justify-between p-5">
-                                        <p x-bind:id="'component-id-' + campaign.id"
-                                            class="w-full text-sm font-semibold  flex items-center ">
-                                            {{ route('campaign.component', ['uuid' => '' . '/']) }}/<span
-                                                x-text="campaign.uuid"></span> </p>
-                                        <button class="btn2"
-                                            @click="toCopy(document.getElementById('component-id-' + campaign.id))">
+
+                                    <div class="rounded-lg border  p-2">
+
+                                        <button class="btn2 text-xs font-semibold text-right"
+                                            @click="toCopy(document.getElementById('copyEmbed'))">
                                             <i class="bx bx-copy text-xl"></i>Copy
                                         </button>
+                                        <p  id="copyEmbed"
+                                            class="bg-gray-800 text-gray-50 p-5 rounded shadow-inner ">
+
+                                            &lt;iframe id="myIframe"
+                                            src="{{ route('campaign.component', ['uuid' => $campaign->uuid]) }}
+                                            "
+                                            <br>
+                                            style=" position: relative;
+                                            <br>
+                                            "width="100%"
+                                            height="600" &gt;
+                                            <br>
+                                            &lt;/iframe&gt;
+                                            <br>
+
+                                        </p>
                                     </div>
                                 </div>
 
@@ -181,8 +195,8 @@
                             @php
 
                                 $QRCode = QrCode::size(200)
-                                    ->color(0, 139, 139) // Cyan (dark)
-                                    ->generate($campaign->uuid);
+                                    ->color(0, 139, 139) 
+                                    ->generate(route('campaign.component', ['uuid' => $campaign->uuid]));
                             @endphp
                             {{ $QRCode }}
                         </div>
@@ -835,5 +849,16 @@
 
                 });
             });
+
+
+            function toCopy(copyDiv) {
+                var range = document.createRange();
+                range.selectNode(copyDiv);
+                window.getSelection().removeAllRanges();
+                window.getSelection().addRange(range);
+                document.execCommand("copy");
+                // alert("copied!");
+
+            }
     </script>
 </div>

@@ -158,8 +158,8 @@ class YelpComponent extends Component
             }
 
             session()->flash('success', 'imported successfully');
-            return redirect()->to('review');
-            // $this->dispatch('refreshPage');
+            // return redirect()->to('review');
+            $this->dispatch('refreshPage');
         }
     }
     public function saveAPIKey()

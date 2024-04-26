@@ -127,7 +127,7 @@
 
                         <label class="relative inline-flex items-center  cursor-pointer">
                             <input type="checkbox" value="1" class="sr-only peer"
-                                @if ($auto_publish_reviews) checked @endif wire:click="toggleAutoPublishReviews"
+                                @if ($auto_publish_reviews) checked @endif wire:click="toggleAutoPublishReviews('{{ $name }}')"
                                 wire:model.live="auto_publish_reviews">
                             <div
                                 class="w-11 z-0 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all 

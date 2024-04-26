@@ -18,8 +18,10 @@ class PlatformComponent extends Component
 
         $groupedPlatforms = $platforms->groupBy('name')->toArray();
         
-        // dd($groupedPlatforms);
-        $this->allPlatforms = $groupedPlatforms;
+        $this->allPlatforms = $groupedPlatforms; 
+
+        $this->auto_publish_reviews = $platforms->first()->is_auto_import;
+
     }
 
 
@@ -27,9 +29,24 @@ class PlatformComponent extends Component
     {
         return $this->$platform = $platform;
     }
-    public function toggleAutoPublishReviews()
+    public function toggleAutoPublishReviews($name)
     {
-        return 'toggleAutoPublishReviews';
+
+        $platforms = Platform::where('name', $name) ->get();
+        //  dd($platforms);
+        foreach ($platforms as $key => $platform) {
+            if ($this->auto_publish_reviews) {
+                $platform->is_auto_import = '0';
+                // dd('0');
+                $platform->update();
+            }else{
+                $platform->is_auto_import = '1';
+                // dd('1');
+                $platform->update();
+            }
+            
+        }
+        $this->dispatch('refreshPage');
     }
     public function render()
     {
