@@ -61,9 +61,9 @@ class Campaign extends Model
 
         static::addGlobalScope(new DataAccessScope);
 
-        // static::deleting(function ($campaign) {
-        //     // Delete the associated messages
-        //     $campaign->reviews()->delete();
-        // });
+        static::deleting(function ($campaign) {
+            // Delete the associated messages
+            $campaign->reviews()->delete();
+        });
     }
 }

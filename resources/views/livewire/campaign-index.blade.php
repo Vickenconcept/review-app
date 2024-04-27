@@ -83,7 +83,7 @@
                                     <p class="text-xs ">
                                         @if ($campaign->platform_id)
                                             <span
-                                                class="rounded-full pt-0.5 pb-1 px-2 bg-cyan-800  text-gray-50">{{ $campaign->platform->name }}</span>
+                                                class="rounded-full pt-0.5 pb-1 px-2 bg-cyan-800  text-gray-50">{{ optional($campaign->platform)->name }}</span>
                                         @endif
                                     </p>
                                     

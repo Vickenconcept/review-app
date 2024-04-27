@@ -17,11 +17,12 @@ class PlatformComponent extends Component
         $platforms = Platform::latest()->get();
 
         $groupedPlatforms = $platforms->groupBy('name')->toArray();
-        
-        $this->allPlatforms = $groupedPlatforms; 
 
-        $this->auto_publish_reviews = $platforms->first()->is_auto_import;
 
+        $this->allPlatforms = $groupedPlatforms;
+        // dd($this->allPlatforms);
+
+        $this->auto_publish_reviews = optional($platforms->first())->is_auto_import;
     }
 
 
@@ -32,19 +33,27 @@ class PlatformComponent extends Component
     public function toggleAutoPublishReviews($name)
     {
 
-        $platforms = Platform::where('name', $name) ->get();
-        //  dd($platforms);
-        foreach ($platforms as $key => $platform) {
+        $platforms = Platform::where('name', $name)->get();
+        foreach ($platforms as $platform) {
             if ($this->auto_publish_reviews) {
-                $platform->is_auto_import = '0';
-                // dd('0');
-                $platform->update();
-            }else{
-                $platform->is_auto_import = '1';
-                // dd('1');
-                $platform->update();
+                $platform->is_auto_import = true;
+
+                $campaign = $platform->campaigns()->first();
+                $reviews = $campaign->reviews()->get();
+                foreach ($reviews as $review) {
+                    $review->show = '1';
+                    $review->update();
+                }
+            } else {
+                $platform->is_auto_import = false;
+                $campaign = $platform->campaigns()->first();
+                $reviews = $campaign->reviews()->get();
+                foreach ($reviews as $review) {
+                    $review->show = '0';
+                    $review->update();
+                }
             }
-            
+            $platform->update();
         }
         $this->dispatch('refreshPage');
     }

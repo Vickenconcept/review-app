@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('platforms', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id');
+            $table->foreignId('site_id');
             $table->string('name')->nullable();
             $table->boolean('is_auto_import')->default(false);
             $table->timestamps();

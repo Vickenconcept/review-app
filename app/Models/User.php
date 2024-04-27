@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Site;
 use App\Models\Reseller;
+use App\Models\Platform;
 
 class User extends Authenticatable
 {
@@ -59,5 +60,9 @@ class User extends Authenticatable
     public function resellers()
     {
         return $this->hasMany(Reseller::class);
+    }
+    public function platforms()
+    {
+        return $this->hasMany(Platform::class);
     }
 }

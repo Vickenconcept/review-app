@@ -84,6 +84,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('campaign', CampaignController::class);
     Route::resource('widget', WidgetController::class);
     Route::resource('reseller', ResellerController::class);
+    Route::delete('/platforms/batch-delete',[PlatformController::class, 'batchDelete'])->name('platform.batchDelete');
     Route::resource('platform', PlatformController::class);
     Route::post('addToFolder', [FolderController::class, 'addToFolder'])->name('addToFolder');
     Route::resource('folder', FolderController::class);
@@ -101,6 +102,9 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/setting/theme/{id}', 'updateTheme')->name('updateTheme');
         Route::get('/email', 'email')->name('email');
     });
+
+
+
 });
 
 Route::controller(FacebookController::class)->group(function () {

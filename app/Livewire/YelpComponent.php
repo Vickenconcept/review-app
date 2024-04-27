@@ -87,7 +87,10 @@ class YelpComponent extends Component
             throw new NotFoundHttpException('Maximum Platform limit reached for this resource.');
         }
 
-        $platform = Platform::create([
+        $user = auth()->user();
+        $site = $user->sites()->first();
+        $platform = $user->platforms()->create([
+            'site_id' => $site->id,
             'name' => 'yelp',
         ]);
 

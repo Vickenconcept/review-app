@@ -8,7 +8,7 @@
     <h1 class="text-3xl font-bold -tracking-wider  px-3 md:px-10"> Add new platform for reviews</h1>
 
 
-  
+
     <section class="px-3 md:px-10 ">
         <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
             <div class=" w-full">
@@ -127,7 +127,8 @@
 
                         <label class="relative inline-flex items-center  cursor-pointer">
                             <input type="checkbox" value="1" class="sr-only peer"
-                                @if ($auto_publish_reviews) checked @endif wire:click="toggleAutoPublishReviews('{{ $name }}')"
+                                @if ($auto_publish_reviews) checked @endif
+                                wire:click="toggleAutoPublishReviews('{{ $name }}')"
                                 wire:model.live="auto_publish_reviews">
                             <div
                                 class="w-11 z-0 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-green-300 dark:peer-focus:ring-green-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:w-5 after:h-5 after:transition-all 
@@ -153,11 +154,11 @@
                         <p class="text-xs text-gray-400"> {{ array_pop($platforms)['created_at'] }}</p>
 
                     </div>
-                    <div class=" space-y-2">
+                    {{-- <div class=" space-y-2">
                         <h2 class="font-bold text-sm">Next scheduled import</h2>
                         <p class="text-xs text-gray-400"> March 18, 2024 2:55 AM0/0</p>
 
-                    </div>
+                    </div> --}}
 
                 </div>
                 <div class="space-y-5 py-5">
@@ -172,7 +173,7 @@
                     </div>
                 </div>
 
-                <div class="flex space-x-10  pt-10 pb-5">
+                {{-- <div class="flex space-x-10  pt-10 pb-5">
                     <div class=" space-y-2">
                         <h2 class="font-bold text-sm">Custom review fields</h2>
                     </div>
@@ -182,7 +183,7 @@
                             <i class='bx bx-menu mr-1 text-lg'></i> Manage Fields
                         </button>
                     </div>
-                </div>
+                </div> --}}
 
                 <div class="space-y-5 py-5">
                     <div class="flex justify-between pb-4">
@@ -195,25 +196,61 @@
                         </div>
                         <div>
 
-                            <button type="submit"
-                                class=" rounded-lg px-3 py-1.5 border border-red-600 text-red-600 text-sm font-semibold flex items-center hover:shadow-md ">
+
+                            {{-- <button type="button"
+                                class="
+                                 rounded-lg px-3 py-1.5 border border-red-600 text-red-600 text-sm font-semibold flex items-center hover:shadow-md ">
 
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                     stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
                                     <path stroke-linecap="round" stroke-linejoin="round"
                                         d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
-                                </svg> Delete Platform</button>
+                                </svg> Delete Platform</button> --}}
+
+                            <form action="{{ route('platform.batchDelete') }}" method="post" class="delete-form">
+                                @csrf
+                                @method('DELETE')
+
+                                <ul>
+                                    @foreach ($allPlatforms[$name] as $platform)
+                                        <li>
+                                            <input type="checkbox"  checked name="platforms[]" class="hidden"
+                                                value="{{ $platform['id'] }}">
+                                        </li>
+                                    @endforeach
+                                </ul>
+                                {{-- <button type="button" class="delete-btn">Delete Selected</button> --}}
+                                <button type="button" {{-- data-item-id="{{ $platform->id }}" --}}
+                                    class="delete-btn
+                                     rounded-lg px-3 py-1.5 border border-red-600 text-red-600 text-sm font-semibold flex items-center hover:shadow-md ">
+    
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                        stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
+                                        <path stroke-linecap="round" stroke-linejoin="round"
+                                            d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
+                                    </svg> Delete Platform</button>
+
+
+                            </form>
 
                         </div>
                     </div>
                 </div>
             </div>
         </section>
-        <ul>
-            {{-- @foreach ($platforms as $platform)
+        {{-- <ul>
+            @foreach ($platforms as $platform)
                 <li>{{ $platform['name'] }}</li>
-            @endforeach --}}
-        </ul>
+
+                <form action="{{ route('platform.destroy', ['platform'=>  $platform['id'] ]) }}" method="post">
+                    @method('DELETE')
+                    @csrf
+                    <button>
+                        delete me
+                    </button>
+                </form>
+            @endforeach
+        </ul> --}}
     @endforeach
 
 
@@ -258,6 +295,35 @@
             </div>
         </div>
     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let deleteForms = document.querySelectorAll('.delete-form');
+
+            deleteForms.forEach(function(form) {
+                let deleteButton = form.querySelector('.delete-btn');
+                deleteButton.addEventListener('click', function(event) {
+                    event.preventDefault(); 
+
+                    Swal.fire({
+                        title: "Are you sure?",
+                        text: "You won't be able to revert this!",
+                        icon: "warning",
+                        showCancelButton: true,
+                        confirmButtonColor: "#3085d6",
+                        cancelButtonColor: "#d33",
+                        confirmButtonText: "Yes, delete it!"
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            form.submit(); 
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 
 
 </div>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Campaign;
 use App\Models\Platform;
 use Illuminate\Http\Request;
 
@@ -55,11 +56,22 @@ class PlatformController extends Controller
         //
     }
 
+    public function batchDelete(Request $request)
+    {
+        $platformIds = $request->input('platforms');
+
+        Campaign::whereIn('platform_id', $platformIds)->update(['platform_id' => null]);
+
+        Platform::whereIn('id', $platformIds)->delete();
+
+        return redirect()->back()->with('success', 'Platforms deleted successfully.');
+    }
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Platform $platform)
     {
-        //
+        $platform->delete();
     }
 }

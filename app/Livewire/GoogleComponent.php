@@ -136,7 +136,10 @@ class GoogleComponent extends Component
             throw new NotFoundHttpException('Maximum Platform limit reached for this resource.');
         }
 
-        $platform = Platform::create([
+        $user = auth()->user();
+        $site = $user->sites()->first();
+        $platform = $user->platforms()->create([
+            'site_id' => $site->id,
             'name' => 'google',
         ]);
 
@@ -222,7 +225,10 @@ class GoogleComponent extends Component
             throw new NotFoundHttpException('Maximum Platform limit reached for this resource.');
         }
 
-        $platform = Platform::create([
+        $user = auth()->user();
+        $site = $user->sites()->first();
+        $platform = $user->platforms()->create([
+            'site_id' => $site->id,
             'name' => 'google',
         ]);
 
@@ -330,8 +336,6 @@ class GoogleComponent extends Component
         $this->validate([
             'productName' => 'required',
         ]);
-
-        $this->product_id = '0x89c259a61c75684f:0x79d31adb123348d2';
 
         $response = Http::get('https://serpapi.com/search.json?engine=google_maps_reviews&data_id=' . $this->product_id . '&api_key=' . $this->api_key);
 

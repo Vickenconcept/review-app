@@ -119,8 +119,11 @@ class GooglePlayComponent extends Component
         if ($existingPlatformsCount >= $this->platformCount) {
             throw new NotFoundHttpException('Maximum Platform limit reached for this resource.');
         }
-
-        $platform = Platform::create([
+        
+        $user = auth()->user();
+        $site = $user->sites()->first();
+        $platform = $user->platforms()->create([
+            'site_id' => $site->id,
             'name' => 'google_play',
         ]);
 
