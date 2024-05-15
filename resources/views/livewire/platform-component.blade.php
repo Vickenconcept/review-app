@@ -277,7 +277,7 @@
                 </div>
                 <!-- ended -->
                 <div style="display: none" x-show="platform == 'facebook'" class=" h-full w-full p-5">
-                    facebook
+                    <livewire:face-book-component />
                 </div>
                 <div style="display: none" x-show="platform == 'google_play'" class=" h-full w-full p-5">
                     <livewire:google-play-component />

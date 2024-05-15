@@ -20,7 +20,6 @@ class PlatformComponent extends Component
 
 
         $this->allPlatforms = $groupedPlatforms;
-        // dd($this->allPlatforms);
 
         $this->auto_publish_reviews = optional($platforms->first())->is_auto_import;
     }
@@ -37,20 +36,28 @@ class PlatformComponent extends Component
         foreach ($platforms as $platform) {
             if ($this->auto_publish_reviews) {
                 $platform->is_auto_import = true;
-
+                
                 $campaign = $platform->campaigns()->first();
-                $reviews = $campaign->reviews()->get();
-                foreach ($reviews as $review) {
-                    $review->show = '1';
-                    $review->update();
+                if ($campaign) {
+                    $reviews = $campaign->reviews()->get();
+                    if ($reviews) {
+                        foreach ($reviews as $review) {
+                            $review->show = '1';
+                            $review->update();
+                        }
+                    }
                 }
             } else {
                 $platform->is_auto_import = false;
                 $campaign = $platform->campaigns()->first();
-                $reviews = $campaign->reviews()->get();
-                foreach ($reviews as $review) {
-                    $review->show = '0';
-                    $review->update();
+                if ($campaign) {
+                    $reviews = $campaign->reviews()->get();
+                    if ($reviews) {
+                        foreach ($reviews as $review) {
+                            $review->show = '0';
+                            $review->update();
+                        }
+                    }
                 }
             }
             $platform->update();

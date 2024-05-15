@@ -25,7 +25,8 @@ return new class extends Migration
             $table->text('review_type')->nullable();
             $table->text('font')->nullable();
             $table->text('email_number')->nullable();
-
+            $table->text('facebook_token')->nullable();
+            $table->text('facebook_id')->nullable();
             $table->text('serp_api_key')->nullable();
             $table->text('yelp_api_key')->nullable();
             $table->timestamps();

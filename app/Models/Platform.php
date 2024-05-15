@@ -41,7 +41,6 @@ class Platform extends Model
         static::addGlobalScope(new DataAccessScope);
 
         static::deleting(function ($platform) {
-            // Delete the associated messages
             $platform->campaigns()->delete();
         });
     }

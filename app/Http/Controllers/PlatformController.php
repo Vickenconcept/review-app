@@ -75,3 +75,8 @@ class PlatformController extends Controller
         $platform->delete();
     }
 }
+
+
+
+// I have this in my recent WEAC result in Nigeria: Civic Education   A1, English   B3, Mathematics D7, Agricultural Science  C6, Biology  C6, Chemistry  f9, Physics  f9. I want to apply for an undergraduate scholarship program  in the school,  can i get any. I have four years of work experience in software development. I wanted to study computer but because of my grade, I now started considering art which is my born talent that i have practiced  since childhood till now.
+// So my question is this: can my grade score afford me the scholarship program in  Dundee.
