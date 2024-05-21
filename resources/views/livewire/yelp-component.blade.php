@@ -25,10 +25,10 @@
                 @endif
             </span>
             <span class="mr-3 text-sm text-slate-600">
-                <span class="font-semibold">Total import: </span> {{ $platforms->count() }}/{{ $platformCount }}
+                <span class="font-semibold">Total import: </span> {{ $yelp_used }}/{{ $platformCount }}
             </span>
             <button title="import" wire:click="saveDataToDatabase"
-                @if ($platforms->count() == $platformCount) disabled
+                @if ($yelp_used == $platformCount) disabled
                 @elseif(count($result) == 0)
                 disabled @endif
                 class=" bg-cyan-950 hover:bg-cyan-800 hover:shadow font-semibold text-blue-50 ml-auto border rounded-full  w-10 h-10 text-center leading-none  focus:outline-none focus:ring-2 focus:border-transparent flex items-center justify-center">

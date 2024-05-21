@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Folder;
 use App\Models\Campaign;
 use App\Models\Review;
+use App\Models\UserActivity;
 
 class Site extends Model
 {
@@ -29,5 +30,10 @@ class Site extends Model
     public function campaigns()
     {
         return $this->hasMany(Campaign::class);
+    }
+
+    public function user_activities()
+    {
+        return $this->hasMany(UserActivity::class);
     }
 }

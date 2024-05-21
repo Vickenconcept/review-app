@@ -38,6 +38,7 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 
 Route::get('/', function () {
     // return view('welcome');
+    return redirect()->to('login');
 
     // echo phpinfo();
 });
@@ -159,16 +160,20 @@ Route::get('test', function () {
  $site->facebook_id;
  
 
- $response = Http::get('https://graph.facebook.com/v12.0/me/accounts', [
-    'access_token' => $site->facebook_token, 
-]);
-//  $response = Http::get('https://graph.facebook.com/'.$site->facebook_id.'/accounts', [
+//  $response = Http::get('https://graph.facebook.com/v12.0/me/accounts', [
 //     'access_token' => $site->facebook_token, 
 // ]);
 
-$data = $response->json();
+// $data = $response->json();
+// dd($response->json()['data'][0]['access_token']);
 
-// var_dump($data);
- dd($data);
+$pageId = '112168241820907';
+$response = Http::get("https://graph.facebook.com/v12.0/".$pageId."/ratings", [
+    'access_token' => 'EAAPZBgxGKhDwBO3PaVyU6SvfBA9u03XGjDUzGnSfgsVsfskamODlsqjORqg4diyr22bBaw2boMk7pqhKngPVrZBSb89SdUbQSjE5NfA1QlZCcPno2ysRgJzYmKkpfkMJ890Kb0Iw81FselPSFNZA0nh2pIIXZCAnwROON30ZBkDGrxPVzC1b4zdW53bUWu4vqECkZCErC6cQtUE7IsiBVPUUeCpsYRysDNfn62NgY5E8komr0N4PZBDv',
+]);
+
+// $reviews = $response->json()['data'];
+
+ dd($response->json());
 
 });

@@ -22,6 +22,7 @@ class GoogleComponent extends Component
         $limit,
         $product_id,
         $api_key,
+        $google_used,
         $productName;
     public $forProduct = true,
         $forMap = true;
@@ -39,6 +40,10 @@ class GoogleComponent extends Component
         $this->api_key = $this->site->serp_api_key ??  env('SERP_API_KEY');
 
         $this->platforms = Platform::all();
+
+        $activities = $this->site->user_activities->first();
+
+        $this->google_used =   $activities->google_used;
 
         if (session()->has('google_result')) {
             if (session()->has('google_result_expires_at') && Carbon::now()->gt(session()->get('google_result_expires_at'))) {
@@ -131,13 +136,20 @@ class GoogleComponent extends Component
     public function saveDataToDatabase()
     {
 
-        $existingPlatformsCount = Platform::all()->count();
-        if ($existingPlatformsCount >= $this->platformCount) {
-            throw new NotFoundHttpException('Maximum Platform limit reached for this resource.');
-        }
-
         $user = auth()->user();
         $site = $user->sites()->first();
+        $activities = $site->user_activities->first();
+        
+        if ($site->serp_api_key === null) {
+            if ($activities->google_used >= $this->platformCount) {
+                return  session()->flash('error', 'Free search exceeded');
+            }
+        }
+        $activities->google_used++;
+        if ($activities->google_used < $this->platformCount) {
+            $activities->update();
+        }
+
         $platform = $user->platforms()->create([
             'site_id' => $site->id,
             'name' => 'google',
@@ -219,14 +231,28 @@ class GoogleComponent extends Component
 
 
     public function saveMapDataToDatabase()
-    {
-        $existingPlatformsCount = Platform::all()->count();
-        if ($existingPlatformsCount >= $this->platformCount) {
-            throw new NotFoundHttpException('Maximum Platform limit reached for this resource.');
-        }
-
+    { 
+        
         $user = auth()->user();
         $site = $user->sites()->first();
+        $activities = $site->user_activities->first();
+        
+        if ($site->serp_api_key === null) {
+            if ($activities->google_used >= $this->platformCount) {
+                return  session()->flash('error', 'Free search exceeded');
+            }
+        }
+        
+        $activities->google_used++;
+        if ($activities->google_used < $this->platformCount) {
+            $activities->update();
+        }
+
+        // $existingPlatformsCount = Platform::all()->count();
+        // if ($existingPlatformsCount >= $this->platformCount) {
+        //     return  session()->flash('error', 'Free search exceeded');
+        // }
+
         $platform = $user->platforms()->create([
             'site_id' => $site->id,
             'name' => 'google',

@@ -19,13 +19,14 @@ class FacebookController extends Controller
     public function redirectToFacebook()
     {
         return Socialite::driver('facebook')
-            ->scopes(['email', 'public_profile', 'pages_show_list'])
+            ->scopes(['email', 'public_profile', 'pages_show_list', 'pages_read_user_content'])
             ->redirect();
     }
 
     public function handleFacebookCallback()
     {
 
+        dd(Socialite::driver('facebook')->user());
         try {
 
             $user = Socialite::driver('facebook')->user();
@@ -37,6 +38,18 @@ class FacebookController extends Controller
                 $site->facebook_token =  $user->token;
                 $site->facebook_id =  $user->id;
                 $site->update();
+                
+
+                  // $response = Http::get('https://graph.facebook.com/v12.0/me/accounts', [
+                //     'access_token' => $site->facebook_token, 
+                // ]);
+                
+                // $data = $response->json();
+                // $site->facebook_Page_access_token =  $response->json()['data'][0]['access_token'];
+                // $site->update();
+                dd($user);
+
+
 
                 $platform = $finduser->platforms()->create([
                     'site_id' => $site->id,

@@ -26,6 +26,7 @@ class YelpComponent extends Component
         $result = [],
         $platformCount = 7,
         $platforms,
+        $yelp_used,
         $yelp_api_key;
 
     public $api_key;
@@ -48,7 +49,12 @@ class YelpComponent extends Component
                 $this->result = session()->get('yelp_result');
             }
         }
+
         $this->platforms = Platform::all();
+
+        $activities = $this->site->user_activities->first();
+
+        $this->yelp_used =   $activities->yelp_used;
     }
     public function searchData()
     {
@@ -81,14 +87,21 @@ class YelpComponent extends Component
     }
     public function saveDataToDatabase()
     {
-
-        $existingPlatformsCount = Platform::all()->count();
-        if ($existingPlatformsCount >= $this->platformCount) {
-            throw new NotFoundHttpException('Maximum Platform limit reached for this resource.');
-        }
-
         $user = auth()->user();
         $site = $user->sites()->first();
+        $activities = $site->user_activities->first();
+
+        if ($site->yelp_api_key === null) {
+            if ($site->user_activities->yelp_used >= $this->platformCount) {
+                return  session()->flash('error', 'Free search exceeded');
+            }
+        }
+        
+        $activities->yelp_used++ ;
+        if ($activities->yelp_used < $this->platformCount) {
+            $activities->update();
+        }
+
         $platform = $user->platforms()->create([
             'site_id' => $site->id,
             'name' => 'yelp',

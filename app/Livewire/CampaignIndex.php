@@ -37,19 +37,17 @@ class CampaignIndex extends Component
     public function invitUser()
     {
         $user = Auth::user();
-
+        
         $site = $user->sites()->first();
 
         if ($site->email_number <= 15) {
-            # code...
+
             Mail::to($this->email)->send(new InviteMail($this->url, $this->name));
 
             $this->name = '';
             $this->email = '';
             
             session()->flash('success', 'Invitation email sent successfully!');
-
-
 
             $emailNumber = $site->email_number + 1;
 

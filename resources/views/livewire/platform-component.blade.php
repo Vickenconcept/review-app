@@ -7,11 +7,9 @@
     </div>
     <h1 class="text-3xl font-bold -tracking-wider  px-3 md:px-10"> Add new platform for reviews</h1>
 
-
-
     <section class="px-3 md:px-10 ">
         <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
-            <div class=" w-full">
+            {{-- <div class=" w-full">
                 <button @click="openModal = true; platform ='g2'" wire:click="updatePlatform('g2')"
                     class=" {{ $platform == 'g2' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
@@ -19,13 +17,34 @@
                     <p class="font-semibold text-xs">G2</p>
 
                 </button>
-            </div>
+            </div> --}}
+
+            {{-- <div class=" w-full">
+                <button @click="openModal = true; platform ='capterra'" wire:click="updatePlatform('capterra')"
+                    class=" {{ $platform == 'capterra' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
+             p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
+                    <p><i class="bx bxs-star text-3xl"></i></p>
+                    <p class="font-semibold text-xs">Capterra</p>
+
+                </button>
+            </div> --}}
+
+            {{-- <div class=" w-full">
+                <button @click="openModal = true; platform ='tripadvisor'" wire:click="updatePlatform('tripadvisor')"
+                    class=" {{ $platform == 'tripadvisor' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
+             p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
+                    <p><i class="bx bxs-star text-3xl"></i></p>
+                    <p class="font-semibold text-xs">Tripadvisor</p>
+
+                </button>
+            </div> --}}
+
             <div class=" w-full">
                 <button @click="openModal = true; platform ='google'" wire:click="updatePlatform('google')"
                     class=" {{ $platform == 'google' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
                     <p>
-                        <i class='bx bxl-google text-3xl'></i>
+                        <i class='bx bxl-google text-green-500 text-3xl'></i>
                     </p>
                     <p class="font-semibold text-xs">Google</p>
 
@@ -35,20 +54,12 @@
                 <button @click="openModal = true; platform ='facebook'" wire:click="updatePlatform('facebook')"
                     class=" {{ $platform == 'facebook' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
-                    <p><i class="bx bxs-star text-3xl"></i></p>
+                    <p><i class="bx bxl-facebook-circle text-blue-600 text-3xl"></i></p>
                     <p class="font-semibold text-xs">Facebook</p>
 
                 </button>
             </div>
-            <div class=" w-full">
-                <button @click="openModal = true; platform ='capterra'" wire:click="updatePlatform('capterra')"
-                    class=" {{ $platform == 'capterra' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
-             p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
-                    <p><i class="bx bxs-star text-3xl"></i></p>
-                    <p class="font-semibold text-xs">Capterra</p>
-
-                </button>
-            </div>
+            
             <div class=" w-full">
                 <button @click="openModal = true; platform ='yelp'" wire:click="updatePlatform('yelp')"
                     class=" {{ $platform == 'yelp' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
@@ -65,21 +76,13 @@
                     class=" {{ $platform == 'google_play' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
                     <p>
-                        <i class='bx bxl-play-store text-3xl'></i>
+                        <i class='bx bxl-play-store text-yellow-300 text-3xl'></i>
                     </p>
                     <p class="font-semibold text-xs">Google Play</p>
 
                 </button>
             </div>
-            <div class=" w-full">
-                <button @click="openModal = true; platform ='tripadvisor'" wire:click="updatePlatform('tripadvisor')"
-                    class=" {{ $platform == 'tripadvisor' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
-             p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
-                    <p><i class="bx bxs-star text-3xl"></i></p>
-                    <p class="font-semibold text-xs">Tripadvisor</p>
-
-                </button>
-            </div>
+           
             <div class=" w-full">
                 <button @click="openModal = true; platform ='manually'" wire:click="updatePlatform('manually')"
                     class=" {{ $platform == 'manually' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
@@ -91,9 +94,6 @@
 
                 </button>
             </div>
-
-
-
         </div>
     </section>
     <hr class="px-3 md:px-10">
@@ -154,11 +154,6 @@
                         <p class="text-xs text-gray-400"> {{ array_pop($platforms)['created_at'] }}</p>
 
                     </div>
-                    {{-- <div class=" space-y-2">
-                        <h2 class="font-bold text-sm">Next scheduled import</h2>
-                        <p class="text-xs text-gray-400"> March 18, 2024 2:55 AM0/0</p>
-
-                    </div> --}}
 
                 </div>
                 <div class="space-y-5 py-5">
@@ -173,18 +168,6 @@
                     </div>
                 </div>
 
-                {{-- <div class="flex space-x-10  pt-10 pb-5">
-                    <div class=" space-y-2">
-                        <h2 class="font-bold text-sm">Custom review fields</h2>
-                    </div>
-                    <div class=" space-y-2">
-                        <button type="submit"
-                            class=" rounded-lg px-3 py-1  text-xs  text-cyan-700  font-semibold flex items-center hover:shadow-md hover:bg-gray-100 ">
-                            <i class='bx bx-menu mr-1 text-lg'></i> Manage Fields
-                        </button>
-                    </div>
-                </div> --}}
-
                 <div class="space-y-5 py-5">
                     <div class="flex justify-between pb-4">
                         <div class="flex space-x-4">
@@ -196,17 +179,6 @@
                         </div>
                         <div>
 
-
-                            {{-- <button type="button"
-                                class="
-                                 rounded-lg px-3 py-1.5 border border-red-600 text-red-600 text-sm font-semibold flex items-center hover:shadow-md ">
-
-                                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                    stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
-                                    <path stroke-linecap="round" stroke-linejoin="round"
-                                        d="m20.25 7.5-.625 10.632a2.25 2.25 0 0 1-2.247 2.118H6.622a2.25 2.25 0 0 1-2.247-2.118L3.75 7.5m6 4.125 2.25 2.25m0 0 2.25 2.25M12 13.875l2.25-2.25M12 13.875l-2.25 2.25M3.375 7.5h17.25c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125H3.375c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125Z" />
-                                </svg> Delete Platform</button> --}}
-
                             <form action="{{ route('platform.batchDelete') }}" method="post" class="delete-form">
                                 @csrf
                                 @method('DELETE')
@@ -214,16 +186,15 @@
                                 <ul>
                                     @foreach ($allPlatforms[$name] as $platform)
                                         <li>
-                                            <input type="checkbox"  checked name="platforms[]" class="hidden"
+                                            <input type="checkbox" checked name="platforms[]" class="hidden"
                                                 value="{{ $platform['id'] }}">
                                         </li>
                                     @endforeach
                                 </ul>
-                                {{-- <button type="button" class="delete-btn">Delete Selected</button> --}}
-                                <button type="button" {{-- data-item-id="{{ $platform->id }}" --}}
+                                <button type="button"
                                     class="delete-btn
                                      rounded-lg px-3 py-1.5 border border-red-600 text-red-600 text-sm font-semibold flex items-center hover:shadow-md ">
-    
+
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
                                         stroke-width="1.5" stroke="currentColor" class="w-5 h-5 mr-2">
                                         <path stroke-linecap="round" stroke-linejoin="round"
@@ -305,7 +276,7 @@
             deleteForms.forEach(function(form) {
                 let deleteButton = form.querySelector('.delete-btn');
                 deleteButton.addEventListener('click', function(event) {
-                    event.preventDefault(); 
+                    event.preventDefault();
 
                     Swal.fire({
                         title: "Are you sure?",
@@ -317,7 +288,7 @@
                         confirmButtonText: "Yes, delete it!"
                     }).then((result) => {
                         if (result.isConfirmed) {
-                            form.submit(); 
+                            form.submit();
                         }
                     });
                 });

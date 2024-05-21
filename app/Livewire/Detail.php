@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Site;
 use App\Models\User;
+use App\Models\UserActivity;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
 use OpenGraph;
@@ -45,9 +46,15 @@ class Detail extends Component
         $site->url = $data['url'] ?? null;
         $site->color = $data['theme-color'] ?? null;
 
+        
+        
         $user = User::find($this->userId); 
         // Save the site and associate it with the user
         $user->sites()->save($site);
+        UserActivity::create([
+            'site_id' => $site->id,
+        ]);
+        
         Auth::login($user);
 
         $this->dispatch('site-created');
