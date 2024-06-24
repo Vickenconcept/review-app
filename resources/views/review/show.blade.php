@@ -4,18 +4,17 @@
 
     <div class="h-screen">
         <nav
-            class="relative flex w-full flex-wrap items-center justify-between bg-neutral-100 py-2 text-neutral-500 shadow-lg hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-600 lg:py-4">
+            class="relative flex w-full flex-wrap items-center justify-between bg-cyan-900 py-2 text-neutral-500 shadow-lg hover:text-neutral-700 focus:text-neutral-700 dark:bg-neutral-600 lg:py-4">
             <div class="flex w-full flex-wrap items-center justify-between px-3">
                 <div>
-                    <a class="mx-2 my-1 flex items-center text-neutral-900 hover:text-neutral-900 focus:text-neutral-900 lg:mb-0 lg:mt-0"
+                    <a class="mx-2 my-1 flex items-center text-white hover:text-neutral-900 focus:text-neutral-900 lg:mb-0 lg:mt-0"
                         href="/">
-                        <img src="https://tecdn.b-cdn.net/img/logo/te-transparent-noshadows.webp" style="height: 20px"
-                            alt="TE Logo" loading="lazy" />
+                            Home
                     </a>
                 </div>
             </div>
         </nav>
-        <div class="h-[95%] bg-gray-200  dark:bg-gray-800   flex flex-wrap items-center  justify-center  ">
+        <div class="h-[95%] bg-cyan-50  dark:bg-gray-800   flex flex-wrap items-center  justify-center  ">
             <div
                 class="container lg:w-2/6 xl:w-2/7 sm:w-full md:w-2/3  rounded-lg    bg-white  shadow-lg    transform   duration-200  easy-in-out">
                 <div class=" h-32 overflow-hidden bg-slate-300 rounded-t-lg ">

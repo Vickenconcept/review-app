@@ -39,7 +39,7 @@
 
 
 
-            <div class="relative">
+            <div class="relative ">
                 <div class="absolute inset-y-0 start-0 flex items-center ps-3 pointer-events-none">
                     <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true"
                         xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -86,7 +86,7 @@
                                                 class="rounded-full pt-0.5 pb-1 px-2 bg-cyan-800  text-gray-50">{{ optional($campaign->platform)->name }}</span>
                                         @endif
                                     </p>
-                                    
+
                                 </div>
                             </a>
                             <div
@@ -217,6 +217,11 @@
                                     @if (session()->has('success'))
                                         <div class="bg-green-100 text-green-400 p-3">
                                             {{ session('success') }}
+                                        </div>
+                                    @endif
+                                    @if (session('error'))
+                                        <div class="bg-red-200 text-red-500 p-4">
+                                            {{ session('error') }}
                                         </div>
                                     @endif
                                     <div class="flex items-center">
@@ -417,10 +422,10 @@
                         @csrf
 
                         <div>
-                            <input class="form-control" id="" type="text" name="campaign_name" x-model="campaign.name"
-                                placeholder="campaign name">
-                            <input class="form-control " id="" type="hidden" name="id" x-model="campaign.id"
-                                placeholder="">
+                            <input class="form-control" id="" type="text" name="campaign_name"
+                                x-model="campaign.name" placeholder="campaign name">
+                            <input class="form-control " id="" type="hidden" name="id"
+                                x-model="campaign.id" placeholder="">
                         </div>
 
                         <button
@@ -440,10 +445,10 @@
                 <div class=" h-full ">
 
                     <div class="font-bold text-xl">Create Folder</div>
-                    <form action="{{ route('folder.store') }}" method="post" class="my-10 space-y-3">
+                    <form action="{{ route('folder.store') }}" method="post" class="my-10 ">
                         @csrf
 
-                        <div>
+                        <div class="mb-3">
                             <input class="form-control" id="folder_name" type="text" name="name"
                                 placeholder="my folder">
                         </div>

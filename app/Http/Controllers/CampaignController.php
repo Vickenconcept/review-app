@@ -93,7 +93,6 @@ class CampaignController extends Controller
     {
 
         $campaign = Campaign::where('uuid', $uuid)->firstOrFail();
-        // dd($campaign);
 
         return view('campaign.share', ['campaign' => $campaign]);
     }
@@ -103,7 +102,7 @@ class CampaignController extends Controller
 
         $reviews = Review::where('campaign_id', $campaign->id)
             ->where('show', '1')
-            ->take(2)
+            ->take(4)
             ->get();
 
         return view('campaign.component', ['campaign' => $campaign, 'reviews' => $reviews]);

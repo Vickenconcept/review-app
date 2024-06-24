@@ -23,6 +23,7 @@
         "alpinejs": "^3.13.0",
         "boxicons": "^2.1.4",
         "flowbite": "^2.2.1",
+        "puppeteer": "^22.12.0",
         "sortablejs": "^1.15.0",
         "toastify-js": "^1.12.0"
     }

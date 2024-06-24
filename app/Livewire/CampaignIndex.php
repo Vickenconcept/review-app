@@ -25,7 +25,6 @@ class CampaignIndex extends Component
         $this->textEmail = auth()->user()->email;
     }
 
-
     public function setUrl($uuid)
     {
         // Set $url to the clicked campaign's uuid
@@ -40,7 +39,7 @@ class CampaignIndex extends Component
         
         $site = $user->sites()->first();
 
-        if ($site->email_number <= 15) {
+        if ($site->email_number < 20) {
 
             Mail::to($this->email)->send(new InviteMail($this->url, $this->name));
 
@@ -52,9 +51,11 @@ class CampaignIndex extends Component
             $emailNumber = $site->email_number + 1;
 
             $site->update(['email_number' => $emailNumber]);
+            $this->dispatch('email-sent');
+        }else{
+            session()->flash('error', 'Email credit elapsed for the month');
         }
 
-        $this->dispatch('email-sent');
     }
     public function testInvite()
     {

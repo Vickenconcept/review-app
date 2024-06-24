@@ -51,7 +51,6 @@ class Campaign extends Model
     }
     public function widget()
     {
-        // return $this->belongsTo(Widget::class);
         return $this->belongsTo(Widget::class)->withDefault(['name' => 'Default Widget']);
     }
 
@@ -62,7 +61,6 @@ class Campaign extends Model
         static::addGlobalScope(new DataAccessScope);
 
         static::deleting(function ($campaign) {
-            // Delete the associated messages
             $campaign->reviews()->delete();
         });
     }

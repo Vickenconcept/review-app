@@ -27,7 +27,7 @@
             {{--  --}}
             <div class="p-6 bg-gray-50 border border-gray-200 rounded-lg shadow flex justify-between">
                 <div>
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">0</h5>
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ count($platforms) }}</h5>
                     <p class="mb-3 text-gray-600  font-bold">Platforms</p>
                     <a href="{{ route('platform.index') }}">
                         <x-main-button><i class="bx bxs-plug mr-1 "></i>Add new platforms</x-main-button>
@@ -70,7 +70,7 @@
             {{--  --}}
             <div class="p-6 bg-gray-50 border border-gray-200 rounded-lg shadow flex justify-between">
                 <div>
-                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $site->email_number ?? 0}} <sup class="text-gray-400 text-sm">/15</sup></h5>
+                    <h5 class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white">{{ $site->email_number ?? 0}} <sup class="text-gray-400 text-sm">/20</sup></h5>
                     <p class="mb-3 text-gray-600  font-bold">Emails sent this month</p>
                     <a href="{{ route('campaign.index') }}">
                         <x-main-button>

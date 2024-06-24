@@ -25,12 +25,8 @@ class SideBarComponent extends Component
 
 
         $totalEmail =  $site->email_number;
-        $totalNumberOfEmail =  15;
+        $totalNumberOfEmail =  20;
         $emailPercentage = ($totalEmail / $totalNumberOfEmail) * 100;
-
-
-
-
 
         return view('livewire.side-bar-component', compact(
             'site', 'UserPercentage', 'totalNumberOfUsers',

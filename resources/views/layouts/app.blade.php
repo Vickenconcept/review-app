@@ -20,10 +20,10 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 
-    {{-- <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/assets/app-7fb7214e.css') }}"> --}}
+    <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-5f5cc9ed.css') }}">
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
 
     @livewireStyles
     <style>
@@ -42,6 +42,11 @@
         <div class=" h-full sm:ml-64">
             {{ $slot }}
 
+            <iframe id="myIframe"
+                src="https://trustconvertio.com/campaign/component/093073c1-bb5b-402e-8ac7-23c83596bd98 "
+                style=" position: relative;
+                "width="100%" height="600">
+            </iframe>
             {{-- <x-footer /> --}}
 
         </div>
@@ -190,11 +195,8 @@
     </script>
 
 
-
-
-
     @livewireScripts
-    {{-- <script type="module" src="{{ asset('build/assets/app-abe98564.js') }}"></script> --}}
+    <script type="module" src="{{ asset('build/assets/app-abe98564.js') }}"></script>
 
 </body>
 

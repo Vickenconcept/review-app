@@ -167,7 +167,7 @@
             {{--  --}}
         @elseif ($widget->id == 3)
             {{-- 1 --}}
-            <section>
+            {{-- <section>
                 <div class="bg-gray-950 flex justify-center items-center min-h-screen p-10">
                     <div class="md:w-3/5 w-3/4 px-10 flex flex-col gap-2 p-5 bg-gray-800 text-white">
                         <h1 class="py-5 text-lg">Reviews</h1>
@@ -228,6 +228,79 @@
                     </div>
                 </div>
                 <script src="https://unpkg.com/ionicons@5.0.0/dist/ionicons.js"></script>
+            </section> --}}
+            <section class="w-full">
+                <section class="rounded-md p-6 text-center  md:p-12 md:text-left" 
+
+                {{-- style="background-image: url(https://tecdn.b-cdn.net/img/Photos/Others/background2.jpg)" --}}
+                >
+                    <div class="flex justify-center overflow-x-auto  pl-10">
+                            <div class="max-w-3xl space-x-5">
+                                <div
+                                    class="m-4 block rounded-lg bg-white p-6 shadow-lg dark:bg-neutral-800 dark:shadow-black/20">
+                                    <!--Testimonial-->
+                                    <div class="md:flex md:flex-row">
+                                        <div
+                                            class="mx-auto mb-6 flex w-36 items-center justify-center md:mx-0 md:w-96 lg:mb-0">
+                                            <img src="{{ asset('images/image-thumb.png') }}"
+                                                class="rounded-full shadow-md dark:shadow-black/30"
+                                                alt="woman avatar" />
+                                        </div>
+                                        <div class="md:ml-2 ">
+                                            <p class="mb-6 font-light text-neutral-500 dark:text-neutral-300 ">
+                                                Lorem ipsum dolor sit amet eos adipisci, consectetur adipisicing elit sed ut perspiciatis unde omnis
+                                            </p>
+                                            </p>
+                                            <p
+                                                class="mb-2 text-xl font-semibold text-neutral-800 dark:text-neutral-200">
+                                                Anna Morian
+                                            </p>
+                                            <p class="mb-0 font-semibold text-neutral-500 dark:text-neutral-400">
+                                                morian.anne@example.com
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="max-w-3xl space-x-5">
+                                <div
+                                    class="m-4 block rounded-lg bg-white p-6 shadow-lg dark:bg-neutral-800 dark:shadow-black/20">
+                                    <!--Testimonial-->
+                                    <div class="md:flex md:flex-row">
+                                        <div
+                                            class="mx-auto mb-6 flex w-36 items-center justify-center md:mx-0 md:w-96 lg:mb-0">
+                                            <img src="{{ asset('images/image-thumb.png') }}"
+                                                class="rounded-full shadow-md dark:shadow-black/30"
+                                                alt="woman avatar" />
+                                        </div>
+                                        <div class="md:ml-2 ">
+                                            <p class="mb-6 font-light text-neutral-500 dark:text-neutral-300 ">
+                                                Lorem ipsum dolor sit amet eos adipisci, consectetur adipisicing elit sed ut perspiciatis unde omnis
+                                            </p>
+                                            </p>
+                                            <p
+                                                class="mb-2 text-xl font-semibold text-neutral-800 dark:text-neutral-200">
+                                                Anna Morian
+                                            </p>
+                                            <p class="mb-0 font-semibold text-neutral-500 dark:text-neutral-400">
+                                                morian.anne@example.com
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                    </div>
+                    <div class="text-center py-5">
+                        <a href="javascript:void(0)" >
+                            <button
+                                class="w-36 rounded-full bg-blue-900 py-3 text-white font-medium hover:shadow-lg">Write
+                                a
+                                review</button>
+                        </a>
+                    </div>
+                </section>
+
             </section>
             {{--  --}}
         @elseif ($widget->id == 4)
@@ -277,27 +350,27 @@
                 <div id="default-carousel" class="relative w-full bg-gray-500" data-carousel="slide">
                     <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
                         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="{{ asset('images/video-image.png') }}"
+                            <img src="https://plus.unsplash.com/premium_photo-1715914879541-57bf3411c4ed?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxN3x8fGVufDB8fHx8fA%3D%3D"
                                 class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                                 alt="...">
                         </div>
                         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="{{ asset('images/video-image.png') }}"
+                            <img src="https://plus.unsplash.com/premium_photo-1674676470323-4aa46ef69086?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw2MXx8fGVufDB8fHx8fA%3D%3D"
                                 class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                                 alt="...">
                         </div>
                         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="{{ asset('images/video-image.png') }}"
+                            <img src="https://plus.unsplash.com/premium_photo-1715914879541-57bf3411c4ed?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxN3x8fGVufDB8fHx8fA%3D%3D"
                                 class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                                 alt="...">
                         </div>
                         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="{{ asset('images/video-image.png') }}"
+                            <img src="https://plus.unsplash.com/premium_photo-1674676470323-4aa46ef69086?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw2MXx8fGVufDB8fHx8fA%3D%3D"
                                 class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                                 alt="...">
                         </div>
                         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="{{ asset('images/video-image.png') }}"
+                            <img src="https://plus.unsplash.com/premium_photo-1715914879541-57bf3411c4ed?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxN3x8fGVufDB8fHx8fA%3D%3D"
                                 class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                                 alt="...">
                         </div>
@@ -350,33 +423,28 @@
                 <div id="indicators-carousel" class="relative w-full bg-gray-500" data-carousel="static">
                     <!-- Carousel wrapper -->
                     <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-                        <!-- Item 1 -->
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
-                            <img src="https://images.unsplash.com/photo-1707669291003-a7afa20b0a05?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHx8"
+                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                            <img src="https://images.unsplash.com/photo-1715704698525-6581ceb2d32f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw4NHx8fGVufDB8fHx8fA%3D%3D"
                                 class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                                 alt="...">
                         </div>
-                        <!-- Item 2 -->
                         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="https://images.unsplash.com/photo-1707343888207-2ffddba86fd5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxMXx8fGVufDB8fHx8fA%3D%3D"
+                            <img src="https://plus.unsplash.com/premium_photo-1674676470323-4aa46ef69086?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw2MXx8fGVufDB8fHx8fA%3D%3D"
                                 class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                                 alt="...">
                         </div>
-                        <!-- Item 3 -->
                         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="https://plus.unsplash.com/premium_photo-1703026186056-0b37531f879e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMnx8fGVufDB8fHx8fA%3D%3D"
+                            <img src="https://images.unsplash.com/photo-1715704698525-6581ceb2d32f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw4NHx8fGVufDB8fHx8fA%3D%3D"
                                 class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                                 alt="...">
                         </div>
-                        <!-- Item 4 -->
                         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="/docs/images/carousel/carousel-4.svg"
+                            <img src="https://plus.unsplash.com/premium_photo-1674676470323-4aa46ef69086?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw2MXx8fGVufDB8fHx8fA%3D%3D"
                                 class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                                 alt="...">
                         </div>
-                        <!-- Item 5 -->
                         <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="/docs/images/carousel/carousel-5.svg"
+                            <img src="https://images.unsplash.com/photo-1716136716704-7d5f7bbb6de4?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw4OHx8fGVufDB8fHx8fA%3D%3D"
                                 class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
                                 alt="...">
                         </div>

@@ -171,11 +171,11 @@
                 <div class="space-y-5 py-5">
                     <div class="flex justify-between pb-4">
                         <div class="flex space-x-4">
-                            <a href="#">
+                            {{-- <a href="#">
                                 <button
                                     class=" rounded-lg px-3 py-0.5 border border-cyan-900 bg-cyan-900 text-cyan-50 text-xs flex items-center hover:shadow-md"><i
                                         class="bx bxs-share-alt text-lg mr-2"></i> Import reviews now</button>
-                            </a>
+                            </a> --}}
                         </div>
                         <div>
 

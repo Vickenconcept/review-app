@@ -12,10 +12,12 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResellerController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\SettingsController;
+use App\Http\Controllers\TripAdvisorScrapeController;
 use App\Http\Controllers\VideoController;
 use App\Http\Controllers\WidgetController;
 use App\Http\Requests\CreateUserRequest;
 use App\Livewire\ReviewComponent;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
@@ -37,15 +39,11 @@ use SimpleSoftwareIO\QrCode\Facades\QrCode;
 */
 
 Route::get('/', function () {
-    // return view('welcome');
     return redirect()->to('login');
-
     // echo phpinfo();
 });
 
-// Route::get('home', function () {
-//     return view('dashboard');
-// });
+
 
 Route::middleware('guest')->group(function () {
     Route::view('/login', 'auth.login')->name('login');
@@ -116,64 +114,175 @@ Route::controller(LinkedInController::class)->group(function () {
     Route::get('auth/linkedin', 'redirectToLinkedIn')->name('auth.linkedin');
     Route::get('auth/linkedin/callback', 'handleLinkedInCallback');
 });
+Route::get('trip', [TripAdvisorScrapeController::class, 'scrapeReviews'])->name('trip');
 
-Route::get('test', function () {
+Route::get('test', 
+// function (Request $request)
+//  {
 
+//     $apifyApiToken = env('APIFY_API_TOKEN');  
+//     // Prepare the input data for the Apify actor
+//     $inputData = [
+//         'startUrls' => [
+//             [
+//                 'url' => 'https://www.tripadvisor.com/Hotel_Review-g60763-d208453-Reviews-Hilton_New_York_Times_Square-New_York_City_New_York.html'
+//             ]
+//         ],
+//         'maxItemsPerQuery' => 5,
+//         'scrapeReviewerInfo' => true,
+//         'lastReviewDate' => '',
+//         'reviewRatings' => [
+//             'ALL_REVIEW_RATINGS'
+//         ],
+//         'reviewsLanguages' => [
+//             'ALL_REVIEW_LANGUAGES'
+//         ]
+//     ];
 
-    // Auth::logout();
-
-    // Artisan::call('optimize:clear');
-    // Artisan::call('db:seed');
-
-
-    // $apiKey = env('YELP_API');
-    // $endpoint = 'https://api.tripadvisor.com/data/1.0/location/123456789/reviews';
-    // $params = [
-    //     'api_key' => $apiKey,
-    //     // Add other required parameters as needed
-    // ];
-
-    // $response = Http::get($endpoint, $params);
-
-    // if ($response->successful()) {
-    //     $data = $response->json();
-    // } else {
-    //     $statusCode = $response->status();
-    //     $errorMessage = $response->body();
-    // }
-
-
+//     // Start the Apify actor
+//     $response = Http::withHeaders([
+//         'Content-Type' => 'application/json',
+//     ])->post("https://api.apify.com/v2/acts/Hvp4YfFGyLM635Q2F/runs?token=$apifyApiToken", $inputData);
     
+//     if ($response->failed()) {
+//         return response()->json(['error' => 'Failed to start the Apify actor'], 500);
+//     }
+    
+//     $runId = $response->json()['data']['id'];
+    
+//     // Poll the actor run status until it finishes
+//     $status = 'RUNNING';
+//     while ($status === 'RUNNING' || $status === 'READY') {
+//         sleep(5);  // Wait for a few seconds before checking the status again
+        
+//         $statusResponse = Http::withHeaders([
+//             'Authorization' => "Bearer $apifyApiToken",
+//             ])->get("https://api.apify.com/v2/actor-runs/$runId");
+            
+//             if ($statusResponse->failed()) {
+//                 return response()->json(['error' => 'Failed to fetch the actor run status'], 500);
+//             }
+            
+//             // return  $statusResponse->json();
+//             $status = $statusResponse->json()['data']['status'];
+//     }
 
+//     if ($status !== 'SUCCEEDED') {
+//         // Fetch the logs if the run did not succeed
+//         $logsResponse = Http::withHeaders([
+//             'Authorization' => "Bearer $apifyApiToken",
+//         ])->get("https://api.apify.com/v2/actor-runs/$runId/logs");
 
-//    $response = Http::get('https://serpapi.com/search.json?engine=google_play_product&store=apps&product_id=com.duolingo&all_reviews=true&platform=phone&sort_by=1&num=40&api_key=' . env('SERP_API_KEY'));
-//     // $response = Http::get('https://serpapi.com/search.json?q=games&engine=google_play&api_key=' . env('SERP_API_KEY'));
+//         if ($logsResponse->failed()) {
+//             return response()->json(['error' => 'Failed to fetch the run logs'], 500);
+//         }
 
-//     return $response->json()['reviews'];
+//         return response()->json([
+//             'error' => 'Actor run did not succeed',
+//             'logs' => $logsResponse->json()
+//         ], 500);
+//     }
 
+//     // Fetch the results
+//     $resultsResponse = Http::withHeaders([
+//         'Authorization' => "Bearer $apifyApiToken",
+//     ])->get("https://api.apify.com/v2/actor-runs/$runId/dataset/items");
 
+//     if ($resultsResponse->failed()) {
+//         return response()->json(['error' => 'Failed to fetch the results'], 500);
+//     }
 
- $user = auth()->user();
+//     return response()->json($resultsResponse->json());
+// }
 
- $site = $user->sites()->first();
- $site->facebook_token;
- $site->facebook_id;
- 
+ function (Request $request)
+{
+    $apifyApiToken = env('APIFY_API_TOKEN');  
 
-//  $response = Http::get('https://graph.facebook.com/v12.0/me/accounts', [
-//     'access_token' => $site->facebook_token, 
-// ]);
+    $searchType = $request->input('search_type', 'keyword'); // e.g., 'url', 'keyword'
+    $searchValue = $request->input('search_value', 'shoe'); 
+    // $searchValue = $request->input('search_value', 'https://www.tripadvisor.com/Hotel_Review-g60763-d208453-Reviews-Hilton_New_York_Times_Square-New_York_City_New_York.html'); 
+    if (empty($searchType) || empty($searchValue)) {
+        return response()->json(['error' => 'Missing search type or search value'], 400);
+    }
 
-// $data = $response->json();
-// dd($response->json()['data'][0]['access_token']);
+    $startUrls = [];
 
-$pageId = '112168241820907';
-$response = Http::get("https://graph.facebook.com/v12.0/".$pageId."/ratings", [
-    'access_token' => 'EAAPZBgxGKhDwBO3PaVyU6SvfBA9u03XGjDUzGnSfgsVsfskamODlsqjORqg4diyr22bBaw2boMk7pqhKngPVrZBSb89SdUbQSjE5NfA1QlZCcPno2ysRgJzYmKkpfkMJ890Kb0Iw81FselPSFNZA0nh2pIIXZCAnwROON30ZBkDGrxPVzC1b4zdW53bUWu4vqECkZCErC6cQtUE7IsiBVPUUeCpsYRysDNfn62NgY5E8komr0N4PZBDv',
-]);
+    if ($searchType === 'url') {
+        if (!filter_var($searchValue, FILTER_VALIDATE_URL)) {
+            return response()->json(['error' => 'Invalid URL'], 400);
+        }
+        $startUrls[] = ['url' => $searchValue];
+    } elseif ($searchType === 'keyword') {
+        $searchUrl = "https://www.tripadvisor.com/Search?q=" . urlencode($searchValue);
+        $startUrls[] = ['url' => $searchUrl];
+    } else {
+        return response()->json(['error' => 'Unsupported search type'], 400);
+    }
 
-// $reviews = $response->json()['data'];
+    $inputData = [
+        'startUrls' => $startUrls,
+        'maxItemsPerQuery' => 50,
+        'scrapeReviewerInfo' => true,
+        'lastReviewDate' => '',
+        'reviewRatings' => [
+            'ALL_REVIEW_RATINGS'
+        ],
+        'reviewsLanguages' => [
+            'ALL_REVIEW_LANGUAGES'
+        ],
+        'customMapFunction' => '(object) => { return { ...object } }'
+    ];
+    
+    $response = Http::withHeaders([
+        'Content-Type' => 'application/json',
+        ])->post("https://api.apify.com/v2/acts/Hvp4YfFGyLM635Q2F/runs?token=$apifyApiToken", $inputData);
+        
+        if ($response->failed()) {
+            return response()->json(['error' => 'Failed to start the Apify actor'], 500);
+        }
+        
+        $runId = $response->json()['data']['id'];
+        
+        $status = 'RUNNING';
+        while ($status === 'RUNNING' || $status === 'READY') {
+            sleep(5);  
+            
+            $statusResponse = Http::withHeaders([
+                'Authorization' => "Bearer $apifyApiToken",
+                ])->get("https://api.apify.com/v2/actor-runs/$runId");
+                
+                if ($statusResponse->failed()) {
+                    return response()->json(['error' => 'Failed to fetch the actor run status'], 500);
+                }
+                
+                $status = $statusResponse->json()['data']['status'];
+            }
+            
+            if ($status !== 'SUCCEEDED') {
+                $logsResponse = Http::withHeaders([
+                    'Authorization' => "Bearer $apifyApiToken",
+                ])->get("https://api.apify.com/v2/actor-runs/$runId/logs");
+                
+                if ($logsResponse->failed()) {
+                    return response()->json(['error' => 'Failed to fetch the run logs'], 500);
+                }
+                
+                return response()->json([
+                    'error' => 'Actor run did not succeed',
+                    'logs' => $logsResponse->json()
+                ], 500);
+            }
+            
+            $resultsResponse = Http::withHeaders([
+                'Authorization' => "Bearer $apifyApiToken",
+                ])->get("https://api.apify.com/v2/actor-runs/$runId/dataset/items");
+                dd($resultsResponse->json());
+                
+    if ($resultsResponse->failed()) {
+        return response()->json(['error' => 'Failed to fetch the results'], 500);
+    }
 
- dd($response->json());
-
-});
+    return response()->json($resultsResponse->json());
+}
+);

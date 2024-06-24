@@ -176,10 +176,7 @@
         @elseif ($campaign->widget_id == 3)
             {{-- 1 --}}
             <section class="w-full">
-                <section class="rounded-md p-6 text-center  md:p-12 md:text-left" 
-
-                {{-- style="background-image: url(https://tecdn.b-cdn.net/img/Photos/Others/background2.jpg)" --}}
-                >
+                <section class="rounded-md p-6 text-center  md:p-12 md:text-left" {{-- style="background-image: url(https://tecdn.b-cdn.net/img/Photos/Others/background2.jpg)" --}}>
                     <div class="flex justify-center overflow-x-auto  pl-10">
 
                         @foreach ($reviews as $review)
@@ -228,11 +225,12 @@
         @elseif ($campaign->widget_id == 4)
             {{-- 8 --}}
 
-            <section class="px-4">
+            <section class="px-4 h-full overflow-y-auto">
                 <div class="mx-auto max-w-3xl text-center">
                     <h3 class="mb-6 text-3xl font-bold">Testimonials</h3>
                     <p class="mb-6 pb-2 text-neutral-500 dark:text-neutral-300 md:mb-12">
-                        "Discover what others are saying. Explore the voices that shape our community and share your own experience with us."
+                        "Discover what others are saying. Explore the voices that shape our community and share your own
+                        experience with us."
                     </p>
                 </div>
 
@@ -263,52 +261,40 @@
         @elseif ($campaign->widget_id == 5)
             {{-- 11 --}}
             <section class="w-full">
-                <div id="default-carousel" class="relative w-full bg-gray-500" data-carousel="slide">
+                <div id="default-carousel" class="relative w-full bg-gray-50" 
+                style="background-image: url(https://tecdn.b-cdn.net/img/Photos/Others/background2.jpg)"
+                 data-carousel="slide">
                     <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="https://plus.unsplash.com/premium_photo-1702635214548-db9e08aa6126?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxN3x8fGVufDB8fHx8fA%3D%3D"
-                                class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                alt="...">
-                        </div>
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="https://plus.unsplash.com/premium_photo-1702635214548-db9e08aa6126?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxN3x8fGVufDB8fHx8fA%3D%3D"
-                                class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                alt="...">
-                        </div>
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="https://plus.unsplash.com/premium_photo-1702635214548-db9e08aa6126?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxN3x8fGVufDB8fHx8fA%3D%3D"
-                                class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                alt="...">
-                        </div>
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="https://plus.unsplash.com/premium_photo-1702635214548-db9e08aa6126?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxN3x8fGVufDB8fHx8fA%3D%3D"
-                                class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                alt="...">
-                        </div>
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="https://plus.unsplash.com/premium_photo-1702635214548-db9e08aa6126?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxN3x8fGVufDB8fHx8fA%3D%3D"
-                                class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                alt="...">
-                        </div>
+                        @foreach ($reviews as $review)
+                            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                                <div class="h-full w-full ">
+                                    <div class="mb-6 md:mb-0 px-10">
+                                        <div class="mb-6 flex justify-center">
+                                            <img src="{{ $review->contact_info_ans['image'] ? $review->contact_info_ans['image'] : asset('images/image-thumb.png') }}"
+                                                class="w-24 rounded-full shadow-lg dark:shadow-black/30" />
+                                        </div>
+                                        <p class="my-4 text-xl text-neutral-500 dark:text-neutral-300">
+                                            {{ $review->private_feed_back_ans['message'] ?: $review->review_platform_ans }}
+                                        </p>
+                                        <p class="italic">- {{ $review->private_feed_back_ans['name'] ?: 'Client' }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
-                    <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse">
-                        <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1"
-                            data-carousel-slide-to="0"></button>
-                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false"
-                            aria-label="Slide 2" data-carousel-slide-to="1"></button>
-                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false"
-                            aria-label="Slide 3" data-carousel-slide-to="2"></button>
-                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false"
-                            aria-label="Slide 4" data-carousel-slide-to="3"></button>
-                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false"
-                            aria-label="Slide 5" data-carousel-slide-to="4"></button>
+                    <div class="absolute z-30 flex -translate-x-1/2 bottom-5 left-1/2 space-x-3 rtl:space-x-reverse bg-cyan-">
+                        @foreach ($reviews as $index => $review)
+                            <button type="button" class="w-3 h-3 rounded-full shadow-md" aria-current="true"
+                                aria-label="Slide 1" data-carousel-slide-to="0"></button>
+                        @endforeach
                     </div>
                     <button type="button"
                         class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
                         data-carousel-prev>
                         <span
-                            class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
+                            class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 shadow-md group-hover:bg-white/50  group-focus:ring-4 group-focus:ring-white group-focus:outline-none">
+                            <svg class="w-4 h-4 text-white rtl:rotate-180" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="M5 1 1 5l4 4" />
@@ -320,8 +306,8 @@
                         class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
                         data-carousel-next>
                         <span
-                            class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
+                            class="inline-flex items-center justify-center w-10 h-10 rounded-full shadow-md bg-white/30 group-hover:bg-white/50  group-focus:ring-4 group-focus:ring-white  group-focus:outline-none">
+                            <svg class="w-4 h-4 text-white  rtl:rotate-180" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="m1 9 4-4-4-4" />
@@ -336,60 +322,42 @@
         @elseif ($campaign->widget_id == 6)
             {{-- 9 --}}
             <section class="w-full">
-                <div id="indicators-carousel" class="relative w-full bg-gray-500" data-carousel="static">
+                <div id="indicators-carousel" class="relative w-full bg-gray-50" data-carousel="static">
                     <!-- Carousel wrapper -->
                     <div class="relative h-56 overflow-hidden rounded-lg md:h-96">
-                        <!-- Item 1 -->
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item="active">
-                            <img src="https://images.unsplash.com/photo-1707669291003-a7afa20b0a05?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw1fHx8ZW58MHx8fHx8"
-                                class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                alt="...">
-                        </div>
-                        <!-- Item 2 -->
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="https://images.unsplash.com/photo-1707343888207-2ffddba86fd5?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxlZGl0b3JpYWwtZmVlZHwxMXx8fGVufDB8fHx8fA%3D%3D"
-                                class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                alt="...">
-                        </div>
-                        <!-- Item 3 -->
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="https://plus.unsplash.com/premium_photo-1703026186056-0b37531f879e?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMnx8fGVufDB8fHx8fA%3D%3D"
-                                class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                alt="...">
-                        </div>
-                        <!-- Item 4 -->
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="/docs/images/carousel/carousel-4.svg"
-                                class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                alt="...">
-                        </div>
-                        <!-- Item 5 -->
-                        <div class="hidden duration-700 ease-in-out" data-carousel-item>
-                            <img src="/docs/images/carousel/carousel-5.svg"
-                                class="absolute block w-full -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
-                                alt="...">
-                        </div>
+                        
+                        @foreach ($reviews as $review)
+                            <div class="hidden duration-700 ease-in-out" data-carousel-item>
+                                <div class="h-full w-full ">
+                                    <div class="mb-6 md:mb-0 px-10">
+                                        <div class="mb-6 flex justify-center">
+                                            <img src="{{ $review->contact_info_ans['image'] ? $review->contact_info_ans['image'] : asset('images/image-thumb.png') }}"
+                                                class="w-24 rounded-full shadow-lg dark:shadow-black/30" />
+                                        </div>
+                                        <p class="my-4 text-xl text-neutral-500 dark:text-neutral-300">
+                                            {{ $review->private_feed_back_ans['message'] ?: $review->review_platform_ans }}
+                                        </p>
+                                        <p class="italic">- {{ $review->private_feed_back_ans['name'] ?: 'Client' }}
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
                     </div>
                     <!-- Slider indicators -->
                     <div class="absolute z-30 flex -translate-x-1/2 space-x-3 rtl:space-x-reverse bottom-5 left-1/2">
-                        <button type="button" class="w-3 h-3 rounded-full" aria-current="true" aria-label="Slide 1"
-                            data-carousel-slide-to="0"></button>
-                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false"
-                            aria-label="Slide 2" data-carousel-slide-to="1"></button>
-                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false"
-                            aria-label="Slide 3" data-carousel-slide-to="2"></button>
-                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false"
-                            aria-label="Slide 4" data-carousel-slide-to="3"></button>
-                        <button type="button" class="w-3 h-3 rounded-full" aria-current="false"
-                            aria-label="Slide 5" data-carousel-slide-to="4"></button>
+                            @foreach ($reviews as $index => $review)
+                            <button type="button" class="w-3 h-3 rounded-full shadow-md" aria-current="true"
+                                aria-label="Slide 1" data-carousel-slide-to="0"></button>
+                        @endforeach
                     </div>
                     <!-- Slider controls -->
                     <button type="button"
                         class="absolute top-0 start-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
                         data-carousel-prev>
                         <span
-                            class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
+                            class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30  group-hover:bg-white/50 shadow-md group-focus:ring-4 group-focus:ring-white  group-focus:outline-none">
+                            <svg class="w-4 h-4 text-white  rtl:rotate-180" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="M5 1 1 5l4 4" />
@@ -401,8 +369,8 @@
                         class="absolute top-0 end-0 z-30 flex items-center justify-center h-full px-4 cursor-pointer group focus:outline-none"
                         data-carousel-next>
                         <span
-                            class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30 dark:bg-gray-800/30 group-hover:bg-white/50 dark:group-hover:bg-gray-800/60 group-focus:ring-4 group-focus:ring-white dark:group-focus:ring-gray-800/70 group-focus:outline-none">
-                            <svg class="w-4 h-4 text-white dark:text-gray-800 rtl:rotate-180" aria-hidden="true"
+                            class="inline-flex items-center justify-center w-10 h-10 rounded-full bg-white/30  group-hover:bg-white/50 shadow-md group-focus:ring-4 group-focus:ring-white  group-focus:outline-none">
+                            <svg class="w-4 h-4 text-white  rtl:rotate-180" aria-hidden="true"
                                 xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"
                                     stroke-width="2" d="m1 9 4-4-4-4" />

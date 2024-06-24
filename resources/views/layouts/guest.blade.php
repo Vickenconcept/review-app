@@ -14,8 +14,10 @@
 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    {{-- <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}"> --}}
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-5f5cc9ed.css') }}">
+
 
     @livewireStyles
 </head>
@@ -70,11 +72,11 @@
     }
 
     function setpixelated(context) {
-        context['imageSmoothingEnabled'] = false; // Standard
-        context['mozImageSmoothingEnabled'] = false; // Firefox
-        context['oImageSmoothingEnabled'] = false; // Opera
-        context['webkitImageSmoothingEnabled'] = false; // Safari
-        context['msImageSmoothingEnabled'] = false; // IE
+        context['imageSmoothingEnabled'] = false; 
+        context['mozImageSmoothingEnabled'] = false; 
+        context['oImageSmoothingEnabled'] = false; 
+        context['webkitImageSmoothingEnabled'] = false; 
+        context['msImageSmoothingEnabled'] = false; 
     }
 </script>
 

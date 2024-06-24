@@ -8,7 +8,7 @@
 
     <section class="px-3 :md:p-8 space-y-8">
 
-        <div class="bg-cyan-100 text-cyan-500 p-4 rounded-md flex items-center justify-between">
+        {{-- <div class="bg-cyan-100 text-cyan-500 p-4 rounded-md flex items-center justify-between">
             <div>
                 <i class="bx bx-notice"></i><span>Are you looking for review widgets? You can find them here. <a
                         href="#" class="font-bold text-sm"> Manage widget</a>
@@ -16,7 +16,7 @@
                 </span>
             </div>
             <button><i class="bx bx-x font-semibold text-xl"></i></button>
-        </div>
+        </div> --}}
 
         {{--  --}}
         <div class="bg-gray-50 rounded-lg p-5 grid md:grid-cols-7 gap-5 ">

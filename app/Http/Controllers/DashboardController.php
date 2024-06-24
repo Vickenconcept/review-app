@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Campaign;
+use App\Models\Platform;
 use App\Models\Review;
 use App\Models\Site;
 use App\Models\User;
@@ -27,8 +28,12 @@ class DashboardController extends Controller
             }])
             ->where('id', $site->id)
             ->get();
+
+            $platforms = Platform::get();
+            
+            $platforms = $platforms->groupBy('name')->toArray();
             # code...
-            return view('dashboard', compact('reviews', 'data'));
+            return view('dashboard', compact('reviews', 'data', 'platforms'));
         }else {
 
             $userId = session()->get('userId');
