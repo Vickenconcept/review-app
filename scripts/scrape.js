@@ -31,4 +31,5 @@ import puppeteer from 'puppeteer';
     } catch (error) {
         console.error('Error:', error);
     }
+    
 })();
