@@ -83,7 +83,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('campaign', CampaignController::class);
     Route::resource('widget', WidgetController::class);
     Route::resource('reseller', ResellerController::class);
-    Route::delete('/platforms/batch-delete',[PlatformController::class, 'batchDelete'])->name('platform.batchDelete');
+    Route::delete('/platforms/batch-delete', [PlatformController::class, 'batchDelete'])->name('platform.batchDelete');
     Route::resource('platform', PlatformController::class);
     Route::post('addToFolder', [FolderController::class, 'addToFolder'])->name('addToFolder');
     Route::resource('folder', FolderController::class);
@@ -101,9 +101,6 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/setting/theme/{id}', 'updateTheme')->name('updateTheme');
         Route::get('/email', 'email')->name('email');
     });
-
-
-
 });
 
 Route::controller(FacebookController::class)->group(function () {
@@ -116,173 +113,49 @@ Route::controller(LinkedInController::class)->group(function () {
 });
 Route::get('trip', [TripAdvisorScrapeController::class, 'scrapeReviews'])->name('trip');
 
-Route::get('test', 
-// function (Request $request)
-//  {
+Route::get(
+    'test',
+    function () {
+        $api_key = env('TRIP_ADVISOR_API_KEY');
 
-//     $apifyApiToken = env('APIFY_API_TOKEN');  
-//     // Prepare the input data for the Apify actor
-//     $inputData = [
-//         'startUrls' => [
-//             [
-//                 'url' => 'https://www.tripadvisor.com/Hotel_Review-g60763-d208453-Reviews-Hilton_New_York_Times_Square-New_York_City_New_York.html'
-//             ]
-//         ],
-//         'maxItemsPerQuery' => 5,
-//         'scrapeReviewerInfo' => true,
-//         'lastReviewDate' => '',
-//         'reviewRatings' => [
-//             'ALL_REVIEW_RATINGS'
-//         ],
-//         'reviewsLanguages' => [
-//             'ALL_REVIEW_LANGUAGES'
-//         ]
-//     ];
-
-//     // Start the Apify actor
-//     $response = Http::withHeaders([
-//         'Content-Type' => 'application/json',
-//     ])->post("https://api.apify.com/v2/acts/Hvp4YfFGyLM635Q2F/runs?token=$apifyApiToken", $inputData);
-    
-//     if ($response->failed()) {
-//         return response()->json(['error' => 'Failed to start the Apify actor'], 500);
-//     }
-    
-//     $runId = $response->json()['data']['id'];
-    
-//     // Poll the actor run status until it finishes
-//     $status = 'RUNNING';
-//     while ($status === 'RUNNING' || $status === 'READY') {
-//         sleep(5);  // Wait for a few seconds before checking the status again
+        // $response = Http::withHeaders([
+        //     'Content-Type' => 'application/json',
+        //     'Accept' => 'application/json',
+        //     'Referer' => 'https://trust.test',
+        //     'Origin' => 'https://trust.test'  
+        // ])->get('https://api.content.tripadvisor.com/api/v1/location/search', [
+        //     'key' => $api_key, 
+        //     'searchQuery' => 'Nigeria',
+        //     'language' => 'en'
+        // ]);
+        // echo $response->body();
         
-//         $statusResponse = Http::withHeaders([
-//             'Authorization' => "Bearer $apifyApiToken",
-//             ])->get("https://api.apify.com/v2/actor-runs/$runId");
-            
-//             if ($statusResponse->failed()) {
-//                 return response()->json(['error' => 'Failed to fetch the actor run status'], 500);
-//             }
-            
-//             // return  $statusResponse->json();
-//             $status = $statusResponse->json()['data']['status'];
-//     }
+        $apiUrl = 'https://services.hyphenapi.com/api/translate';
+        $from = 'en';
+        $to = 'fr';
+        $text = ' my name is Ebenezer';
 
-//     if ($status !== 'SUCCEEDED') {
-//         // Fetch the logs if the run did not succeed
-//         $logsResponse = Http::withHeaders([
-//             'Authorization' => "Bearer $apifyApiToken",
-//         ])->get("https://api.apify.com/v2/actor-runs/$runId/logs");
+        $response = Http::withHeaders([
+            'Accept' => 'application/json',
+            'x-api-key' => '4xdz-hblf-fp8q-tk7q-26hk-gt4m',
+            'Content-Type' => 'application/json',
+        ])->post($apiUrl, [
+            'text' => $text,
+            'from' => $from,
+            'to' => $to,
+        ]);
+        dd($response->json());
 
-//         if ($logsResponse->failed()) {
-//             return response()->json(['error' => 'Failed to fetch the run logs'], 500);
-//         }
-
-//         return response()->json([
-//             'error' => 'Actor run did not succeed',
-//             'logs' => $logsResponse->json()
-//         ], 500);
-//     }
-
-//     // Fetch the results
-//     $resultsResponse = Http::withHeaders([
-//         'Authorization' => "Bearer $apifyApiToken",
-//     ])->get("https://api.apify.com/v2/actor-runs/$runId/dataset/items");
-
-//     if ($resultsResponse->failed()) {
-//         return response()->json(['error' => 'Failed to fetch the results'], 500);
-//     }
-
-//     return response()->json($resultsResponse->json());
-// }
-
- function (Request $request)
-{
-    $apifyApiToken = env('APIFY_API_TOKEN');  
-
-    $searchType = $request->input('search_type', 'keyword'); // e.g., 'url', 'keyword'
-    $searchValue = $request->input('search_value', 'shoe'); 
-    // $searchValue = $request->input('search_value', 'https://www.tripadvisor.com/Hotel_Review-g60763-d208453-Reviews-Hilton_New_York_Times_Square-New_York_City_New_York.html'); 
-    if (empty($searchType) || empty($searchValue)) {
-        return response()->json(['error' => 'Missing search type or search value'], 400);
-    }
-
-    $startUrls = [];
-
-    if ($searchType === 'url') {
-        if (!filter_var($searchValue, FILTER_VALIDATE_URL)) {
-            return response()->json(['error' => 'Invalid URL'], 400);
+        if ($response->successful()) {
+            return $response->json()['translatedText']; // Adjust based on the actual response structure
         }
-        $startUrls[] = ['url' => $searchValue];
-    } elseif ($searchType === 'keyword') {
-        $searchUrl = "https://www.tripadvisor.com/Search?q=" . urlencode($searchValue);
-        $startUrls[] = ['url' => $searchUrl];
-    } else {
-        return response()->json(['error' => 'Unsupported search type'], 400);
-    }
 
-    $inputData = [
-        'startUrls' => $startUrls,
-        'maxItemsPerQuery' => 50,
-        'scrapeReviewerInfo' => true,
-        'lastReviewDate' => '',
-        'reviewRatings' => [
-            'ALL_REVIEW_RATINGS'
-        ],
-        'reviewsLanguages' => [
-            'ALL_REVIEW_LANGUAGES'
-        ],
-        'customMapFunction' => '(object) => { return { ...object } }'
-    ];
-    
-    $response = Http::withHeaders([
-        'Content-Type' => 'application/json',
-        ])->post("https://api.apify.com/v2/acts/Hvp4YfFGyLM635Q2F/runs?token=$apifyApiToken", $inputData);
-        
-        if ($response->failed()) {
-            return response()->json(['error' => 'Failed to start the Apify actor'], 500);
-        }
-        
-        $runId = $response->json()['data']['id'];
-        
-        $status = 'RUNNING';
-        while ($status === 'RUNNING' || $status === 'READY') {
-            sleep(5);  
-            
-            $statusResponse = Http::withHeaders([
-                'Authorization' => "Bearer $apifyApiToken",
-                ])->get("https://api.apify.com/v2/actor-runs/$runId");
-                
-                if ($statusResponse->failed()) {
-                    return response()->json(['error' => 'Failed to fetch the actor run status'], 500);
-                }
-                
-                $status = $statusResponse->json()['data']['status'];
-            }
-            
-            if ($status !== 'SUCCEEDED') {
-                $logsResponse = Http::withHeaders([
-                    'Authorization' => "Bearer $apifyApiToken",
-                ])->get("https://api.apify.com/v2/actor-runs/$runId/logs");
-                
-                if ($logsResponse->failed()) {
-                    return response()->json(['error' => 'Failed to fetch the run logs'], 500);
-                }
-                
-                return response()->json([
-                    'error' => 'Actor run did not succeed',
-                    'logs' => $logsResponse->json()
-                ], 500);
-            }
-            
-            $resultsResponse = Http::withHeaders([
-                'Authorization' => "Bearer $apifyApiToken",
-                ])->get("https://api.apify.com/v2/actor-runs/$runId/dataset/items");
-                dd($resultsResponse->json());
-                
-    if ($resultsResponse->failed()) {
-        return response()->json(['error' => 'Failed to fetch the results'], 500);
+        return 'Translation failed';
     }
-
-    return response()->json($resultsResponse->json());
-}
 );
+// $response = Http::withHeaders([
+//     'Content-Type' => 'application/json',
+// ])->post("https://api.content.tripadvisor.com/api/v1/location/locationId/reviews?language=en");
+
+
+// 60299223533b7f79495355d682ccdcc0d1973547

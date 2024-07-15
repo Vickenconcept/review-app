@@ -174,7 +174,7 @@ class ReviewComponent extends Component
         ];
 
         $existingReviewsCount = Review::all()->count();
-        if ($existingReviewsCount >= 100) {
+        if ($existingReviewsCount >= 500) {
             throw new NotFoundHttpException('Maximum review limit reached for this resource.');
         }
 

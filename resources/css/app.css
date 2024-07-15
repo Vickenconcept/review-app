@@ -1,3 +1,4 @@
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -34,3 +35,9 @@
   ::-webkit-scrollbar-thumb:hover {
     background:  rgb(150, 150, 150); 
   }
+
+
+
+  /* @import "tom-select/dist/css/tom-select.css";
+  @import "./components/_tom-select.css"; */
+

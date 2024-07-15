@@ -52,7 +52,7 @@
                                 </div>
                                 <input type="text" id="term" wire:model="search_key"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  "
-                                    placeholder="unique identifier eg: metmuseum">
+                                    placeholder="unique identifier eg: us/hi-new-york-hostel-nyc">
                             </div>
 
                             <div>
@@ -64,14 +64,11 @@
                             </div>
                         </form>
                         <div class="text-xs bg-blue-100 text-gray-700 p-3 rounded-md font-semibold">
-                            A textual identifier that uniquely identifies a place in Facebook. This identifier is a part of the path that appears in the url for the place in Facebook. For example, if the url for the place in Facebook is 
+                            A textual identifier that uniquely identifies a place in Booking. This identifier is a part of the path that appears in the url for the hotel in booking, this includes the country code for the place and the internal id in booking. For example, if the url for the place in booking is  
                              <span class="text-red-500">
-                                https://www.facebook.com/metmuseum/ 
+                                https://www.booking.com/hotel/us/hi-new-york-hostel-nyc.en-gb.html 
                             </span>
-                            the identifier is: metmuseum
-
-
-                              
+                             the identifier is: us/hi-new-york-hostel-nyc
 
 
                             
@@ -108,7 +105,7 @@
                                         <tr class="bg-white border-b dark:bg-gray-800 ">
                                             <th scope="row"
                                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                                                <img src="{{ $data['avatar'] ?? asset('images/image-thumb.png') }}"
+                                                <img src="{{ $data['reviewer_avatar'] ?? asset('images/image-thumb.png') }}"
                                                     alt="" class="w-16 h-10 rounded-full">
                                             </th>
                                             <th scope="row"
@@ -126,7 +123,7 @@
                                             </td>
                                             
                                             <td class="px-6 py-4 whitespace-nowrap">
-                                                {{ $data['text'] }}
+                                                {{ $data['title'] }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 {{ $data['datetime'] }}

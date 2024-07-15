@@ -52,7 +52,7 @@
                                 </div>
                                 <input type="text" id="term" wire:model="search_key"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  "
-                                    placeholder="unique identifier eg: metmuseum">
+                                    placeholder="textual identifier eg: 100234">
                             </div>
 
                             <div>
@@ -64,17 +64,9 @@
                             </div>
                         </form>
                         <div class="text-xs bg-blue-100 text-gray-700 p-3 rounded-md font-semibold">
-                            A textual identifier that uniquely identifies a place in Facebook. This identifier is a part of the path that appears in the url for the place in Facebook. For example, if the url for the place in Facebook is 
-                             <span class="text-red-500">
-                                https://www.facebook.com/metmuseum/ 
-                            </span>
-                            the identifier is: metmuseum
-
-
-                              
-
-
-                            
+                            A textual identifier that uniquely identifies a place in Capterra. This identifier can be taken from the url of the software in Capterra. For example, if the url for the software in Capterra is 
+                            <span class="text-red-500">https://capterra.com/p/135003/Slack/</span>
+                             the identifier is 135003
                         </div>
                         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
                             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -87,7 +79,9 @@
                                         <th scope="col" class="px-6 py-3">
                                             Name
                                         </th>
-                                        
+                                        <th scope="col" class="px-6 py-3">
+                                            Job Title
+                                        </th>
                                         <th scope="col" class="px-6 py-3">
                                             Rating
                                         </th>
@@ -100,7 +94,12 @@
                                         <th scope="col" class="px-6 py-3">
                                             Datetime
                                         </th>
-                                       
+                                        <th scope="col" class="px-6 py-3">
+                                            Pros
+                                        </th>
+                                        <th scope="col" class="px-6 py-3">
+                                            Cons
+                                        </th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -108,7 +107,7 @@
                                         <tr class="bg-white border-b dark:bg-gray-800 ">
                                             <th scope="row"
                                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                                                <img src="{{ $data['avatar'] ?? asset('images/image-thumb.png') }}"
+                                                <img src="{{ $data['reviewer_avatar'] ?? asset('images/image-thumb.png') }}"
                                                     alt="" class="w-16 h-10 rounded-full">
                                             </th>
                                             <th scope="row"
@@ -117,6 +116,10 @@
                                                 {{ $data['reviewer'] }}
                                             </th>
                                             <td class="px-6 py-4 whitespace-nowrap">
+                                                {{ $data['reviewer_job_title'] }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap">
+                                                {{-- {{ round($data['rating']) }} --}}
                                                 @for ($i = 1; $i <= round($data['rating']); $i++)
                                                     <i class="bx bxs-star text-yellow-400 text-xl"></i>
                                                 @endfor
@@ -124,20 +127,31 @@
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 {{ round($data['rating']) * 2 }}
                                             </td>
-                                            
-                                            <td class="px-6 py-4 whitespace-nowrap">
+                                            <td class="px-6 py-4">
                                                 {{ $data['text'] }}
                                             </td>
                                             <td class="px-6 py-4 whitespace-nowrap">
                                                 {{ $data['datetime'] }}
                                             </td>
-                                            
+                                            <td class="px-6 py-4 ">
+                                                <details>
+                                                    <summary>see more</summary>
+                                                    <p> {{ $data['pros'] }}</p>
+                                                </details>
+
+                                            </td>
+                                            <td class="px-6 py-4 ">
+                                                <details>
+                                                    <summary>see more</summary>
+                                                    <p> {{ $data['cons'] }}</p>
+                                                </details>
+                                            </td>
 
                                         </tr>
 
                                     @empty
                                         <tr class="bg-white">
-                                            <td colspan="7" class="text-center p-5">
+                                            <td colspan="9" class="text-center p-5">
                                                 <p class="text-sm">NO DATA FOUND</p>
                                                 <p><i class='bx bxs-folder-open text-6xl'></i></p>
                                             </td>

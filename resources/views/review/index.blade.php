@@ -1,4 +1,5 @@
 <x-app-layout>
-
-    <livewire:all-reviews />
+    <div>
+        <livewire:all-reviews />
+    </div>
 </x-app-layout>

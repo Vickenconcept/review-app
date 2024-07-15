@@ -121,18 +121,7 @@ class GooglePlayComponent extends Component
 
         $user = auth()->user();
         $site = $user->sites()->first();
-        $activities = $site->user_activities->first();
-        
-        if ($site->serp_api_key === null) {
-            if ($activities->google_play_used >= $this->platformCount) {
-                return  session()->flash('error', 'Free search exceeded');
-            }
-        }
-        
-        $activities->google_play_used++;
-        if ($activities->google_play_used < $this->platformCount) {
-            $activities->update();
-        }
+       
         $platform = $user->platforms()->create([
             'site_id' => $site->id,
             'name' => 'google_play',
@@ -196,7 +185,7 @@ class GooglePlayComponent extends Component
             ];
 
             $existingReviewsCount = Review::all()->count();
-            if ($existingReviewsCount >= 100) {
+            if ($existingReviewsCount >= 500) {
                 throw new NotFoundHttpException('Maximum review limit reached for this resource.');
             }
 

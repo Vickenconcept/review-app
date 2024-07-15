@@ -52,7 +52,7 @@
                                 </div>
                                 <input type="text" id="term" wire:model="search_key"
                                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full ps-10 p-2.5  "
-                                    placeholder="unique identifier eg: metmuseum">
+                                    placeholder="unique identifier eg: slack.com">
                             </div>
 
                             <div>
@@ -64,11 +64,11 @@
                             </div>
                         </form>
                         <div class="text-xs bg-blue-100 text-gray-700 p-3 rounded-md font-semibold">
-                            A textual identifier that uniquely identifies a place in Facebook. This identifier is a part of the path that appears in the url for the place in Facebook. For example, if the url for the place in Facebook is 
+                            A textual identifier that uniquely identifies a place in Trustpilot. This identifier can be taken from the url of the software in Trustpilot. For example, if the url for the software in Trustpilot is 
                              <span class="text-red-500">
-                                https://www.facebook.com/metmuseum/ 
+                                https://www.trustpilot.com/review/slack.com
                             </span>
-                            the identifier is: metmuseum
+                            the identifier is slack.com
 
 
                               
@@ -108,7 +108,7 @@
                                         <tr class="bg-white border-b dark:bg-gray-800 ">
                                             <th scope="row"
                                                 class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                                                <img src="{{ $data['avatar'] ?? asset('images/image-thumb.png') }}"
+                                                <img src="{{ $data['reviewer_avatar'] ?? asset('images/image-thumb.png') }}"
                                                     alt="" class="w-16 h-10 rounded-full">
                                             </th>
                                             <th scope="row"
@@ -117,6 +117,7 @@
                                                 {{ $data['reviewer'] }}
                                             </th>
                                             <td class="px-6 py-4 whitespace-nowrap">
+                                                {{-- {{ round($data['rating']) }} --}}
                                                 @for ($i = 1; $i <= round($data['rating']); $i++)
                                                     <i class="bx bxs-star text-yellow-400 text-xl"></i>
                                                 @endfor

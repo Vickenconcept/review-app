@@ -32,12 +32,8 @@
                     class="bg-cyan-200 hover:bg-cyan-900 text-cyan-900 hover:text-cyan-50 transition-all duration-300 rounded-md py-2 px-4 shadow hover:shadow-md"
                     @click="isOpen = 'map'" wire:click="switchPage('map')">Map</button>
             </span>
-            <span class="mr-3 text-sm text-slate-600">
-                <span class="font-semibold">Total import: </span> {{ $google_used }}/{{ $platformCount }}
-            </span>
             <button title="import" wire:click="saveDataToDatabase" x-show="isOpen === 'product'" style="display: none"
-                @if ($google_used == $platformCount) disabled
-                @elseif(count($result) == 0)
+                @if(count($result) == 0)
                 disabled @endif
                 class=" bg-cyan-950 hover:bg-cyan-800 hover:shadow font-semibold text-blue-50 ml-auto border rounded-full  w-10 h-10 text-center leading-none  focus:outline-none focus:ring-2 focus:border-transparent flex items-center justify-center">
                 <span wire:loading><i class='bx bx-loader-alt animate-spin'></i></span>
@@ -45,8 +41,7 @@
             </button>
 
             <button title="import" wire:click="saveMapDataToDatabase" x-show="isOpen === 'map'" style="display: none"
-                @if ($platforms->count() == $platformCount) disabled
-                @elseif(count($result) == 0)
+                @if(count($result) == 0)
                 disabled @endif
                 class=" bg-red-950 hover:bg-red-800 hover:shadow font-semibold text-blue-50 ml-auto border rounded-full  w-10 h-10 text-center leading-none  focus:outline-none focus:ring-2 focus:border-transparent flex items-center justify-center">
                 <span wire:loading><i class='bx bx-loader-alt animate-spin'></i></span>
@@ -57,39 +52,7 @@
 
         <section class="flex-1 pt-3 md:p-6 lg:mb-0 lg:min-h-0 lg:min-w-0">
             <div class="flex flex-col lg:flex-row h-full w-full">
-                <div
-                    class=" pb-2 lg:pb-0 w-full lg:max-w-sm px-3 flex flex-row lg:flex-col flex-wrap lg:flex-nowrap mb-10 lg:mb-0">
-                    <!-- control content left -->
-                    <div class="w-full h-24 min-h-0 min-w-0 mb-4 space-y-4">
-                        <div>
-                            <p class="font-bold text-xl capitalize">for your google review</p>
-                            <h1 class="font-bold text-sm capitalize">Add Your Serp API Key</h1>
-                        </div>
-                        <form wire:submit="saveAPIKey">
-                            <input type="text" name="serp_api_key" wire:model="serp_api_key"
-                                class="form-control shadow" placeholder="o6yLhuE4_********">
 
-                            <div class="mt-3">
-                                <button wire:click="saveAPIKey"
-                                    class="w-full  text-cyan-50 bg-cyan-800 rounded-lg hover:bg-cyan-900 hover:shadow p-2 flex justify-center items-center">
-                                    <span wire:loading><i class='bx bx-loader-alt animate-spin mr-1'></i></span> Save &
-                                    Update
-                                </button>
-                            </div>
-                        </form>
-
-                        @php
-                            $firstThree = substr($site->serp_api_key, 0, 3);
-                            $lastThree = substr($site->serp_api_key, -3);
-
-                        @endphp
-                        @if ($site->serp_api_key)
-                            <p class="font-semibold text-sm bg-blue-100 p-2 rounded-md text-center"> API Key:
-                                {{ $firstThree }}***********{{ $lastThree }}</p>
-                        @endif
-                    </div>
-
-                </div>
 
                 <!-- selection buttons -->
                 <div class=" h-full lg:flex-1 px-3 min-h-0 min-w-0 mt-10 lg:mt-0" x-show="isOpen == null" style="display: none">

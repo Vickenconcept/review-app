@@ -24,12 +24,9 @@
                     </div>
                 @endif
             </span>
-            <span class="mr-3 text-sm text-slate-600">
-                <span class="font-semibold">Total import: </span> {{ $google_play_used }}/{{ $platformCount }}
-            </span>
+            
             <button title="import" wire:click="saveDataToDatabase"
-                @if ($google_play_used == $platformCount) disabled
-                @elseif(count($result) == 0)
+                @if(count($result) == 0)
                 disabled @endif
                 class=" bg-cyan-950 hover:bg-cyan-800 hover:shadow font-semibold text-blue-50 ml-auto border rounded-full  w-10 h-10 text-center leading-none  focus:outline-none focus:ring-2 focus:border-transparent flex items-center justify-center">
                 <span wire:loading><i class='bx bx-loader-alt animate-spin'></i></span>
@@ -40,7 +37,7 @@
 
         <section class="flex-1 pt-3 md:p-6 lg:mb-0 lg:min-h-0 lg:min-w-0">
             <div class="flex flex-col lg:flex-row h-full w-full">
-                <div
+                {{-- <div
                     class=" pb-2 lg:pb-0 w-full lg:max-w-sm px-3 flex flex-row lg:flex-col flex-wrap lg:flex-nowrap mb-10 lg:mb-0">
                     <!-- control content left -->
                     <div class="w-full h-24 min-h-0 min-w-0 mb-4 space-y-8">
@@ -72,7 +69,7 @@
                         @endif
                     </div>
 
-                </div>
+                </div> --}}
 
                 <div class=" h-full w- lg:flex-1 px-3 min-h-0 min-w-0 ">
                     <!-- overflow content right -->

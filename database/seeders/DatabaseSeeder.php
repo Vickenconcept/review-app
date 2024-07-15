@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+
+use App\Models\Tag;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -78,5 +80,23 @@ class DatabaseSeeder extends Seeder
             ],
             // Add more widgets as needed
         ]);
+
+        $tags = [
+            'programming',
+            'design',
+            'web development',
+            'javascript',
+            'python',
+            'css',
+            'html',
+            'backend',
+            'frontend',
+            'database'
+        ];
+
+        foreach ($tags as $tag) {
+            Tag::create(['name' => $tag]);
+        }
+
     }
 }

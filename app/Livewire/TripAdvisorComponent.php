@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class FaceBookComponent extends Component
+class TripAdvisorComponent extends Component
 {
     use WithPagination;
 
@@ -22,7 +22,7 @@ class FaceBookComponent extends Component
         $result = [],
         $platformCount = 7,
         $platforms,
-        $face_book_used;
+        $trip_advisor_used;
 
 
     public $site;
@@ -34,14 +34,13 @@ class FaceBookComponent extends Component
         $user = auth()->user();
         $this->site = $user->sites()->first();
 
-
-        if (session()->has('face_book_result')) {
-            if (session()->has('face_book_result_expires_at') && Carbon::now()->gt(session()->get('face_book_result_expires_at'))) {
-                session()->forget('face_book_result');
-                session()->forget('face_book_result_expires_at');
+        if (session()->has('trip_advisor_result')) {
+            if (session()->has('trip_advisor_result_expires_at') && Carbon::now()->gt(session()->get('trip_advisor_result_expires_at'))) {
+                session()->forget('trip_advisor_result');
+                session()->forget('trip_advisor_result_expires_at');
                 $this->result = [];
             } else {
-                $this->result = session()->get('face_book_result');
+                $this->result = session()->get('trip_advisor_result');
             }
         }
 
@@ -49,7 +48,7 @@ class FaceBookComponent extends Component
 
         $activities = $this->site->user_activities->first();
 
-        $this->face_book_used =   $activities->face_book_used;
+        $this->trip_advisor_used =   $activities->trip_advisor_used;
     }
 
 
@@ -62,7 +61,7 @@ class FaceBookComponent extends Component
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('https://wextractor.com/api/v1/reviews/facebook', [
+            ])->get('https://wextractor.com/api/v1/reviews/tripadvisor', [
                 'id' => trim($this->search_key),
                 'auth_token' =>  env('WEX_TRACTOR_API_KEY'), 
                 
@@ -72,12 +71,12 @@ class FaceBookComponent extends Component
             
             if (isset($response->json()['detail'])) {
                 $this->result = [];
-                session()->flash('error', $response->json()['detail'] . ': Check face_book API key');
+                session()->flash('error', $response->json()['detail'] . ': Check trip_advisor API key');
                 return;
             } else {
-            session()->put('face_book_result', $response->json()['reviews']);
-            session()->put('face_book_result_expires_at', $expirationTime);
-            return  $this->result = session()->get('face_book_result');
+            session()->put('trip_advisor_result', $response->json()['reviews']);
+            session()->put('trip_advisor_result_expires_at', $expirationTime);
+            return  $this->result = session()->get('trip_advisor_result');
         }
     }
     public function saveDataToDatabase()
@@ -88,7 +87,7 @@ class FaceBookComponent extends Component
 
         $platform = $user->platforms()->create([
             'site_id' => $site->id,
-            'name' => 'face_book',
+            'name' => 'trip_advisor',
         ]);
 
         $user = auth()->user();
@@ -133,9 +132,9 @@ class FaceBookComponent extends Component
                 'video' => Cache::get('cloudinary_video_url') ?? null,
                 'contact_info_ans' => [
                     'email' => null,
-                    'location' => null,
+                    'location' => $data['reviewer_location'],
                     'organisation' => null,
-                    'image' => $data['avatar'] ?? null,
+                    'image' => $data['reviewer_avatar'] ?? null,
                 ],
 
                 'private_feed_back_ans' => [
@@ -154,18 +153,17 @@ class FaceBookComponent extends Component
 
             $feedback = Review::create($data);
 
-            if (session()->has('face_book_result')) {
-                session()->forget('face_book_result');
+            if (session()->has('trip_advisor_result')) {
+                session()->forget('trip_advisor_result');
             }
 
             session()->flash('success', 'imported successfully');
-            // return redirect()->to('review');
             $this->dispatch('refreshPage');
         }
     }
 
     public function render()
     {
-        return view('livewire.face-book-component');
+        return view('livewire.trip-advisor-component');
     }
 }

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" class="h-full bg-white">
+<html lang="en" class="h-full bg-white ">
 
 <head>
     <meta charset="UTF-8">
@@ -20,10 +20,15 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
 
-    <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/assets/app-5f5cc9ed.css') }}">
 
-    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+
+
+    {{-- <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-5f5cc9ed.css') }}"> --}}
+
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @livewireStyles
     <style>
@@ -33,20 +38,16 @@
         }
     </style>
 
+
 </head>
 
-<body class="h-full">
+<body class="h-full ">
     <x-notification />
-    <div id="ap" class="h-full bg-gray- text-gray-700" x-data="{ openHelp: false }">
+    <div id="ap" class="h-full bg-gray- text-gray-700 " x-data="{ openHelp: false }">
         <x-sidebar />
         <div class=" h-full sm:ml-64">
             {{ $slot }}
 
-            <iframe id="myIframe"
-                src="https://trustconvertio.com/campaign/component/093073c1-bb5b-402e-8ac7-23c83596bd98 "
-                style=" position: relative;
-                "width="100%" height="600">
-            </iframe>
             {{-- <x-footer /> --}}
 
         </div>
@@ -193,6 +194,9 @@
             document.body.removeChild(link);
         }
     </script>
+
+
+
 
 
     @livewireScripts

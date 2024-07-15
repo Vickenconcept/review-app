@@ -2,6 +2,7 @@ import axios from 'axios';
 import 'flowbite'
 
 import './bootstrap';
+// import './tom-select';
 import notification from './notification';
 
 import Toastify from 'toastify-js'

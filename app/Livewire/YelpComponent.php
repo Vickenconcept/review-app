@@ -5,31 +5,26 @@ namespace App\Livewire;
 use App\Models\Campaign;
 use App\Models\Platform;
 use App\Models\Review;
-use Carbon\Carbon;
-use Cloudinary\Cloudinary;
-use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Http;
 use Livewire\Component;
 use Livewire\WithPagination;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Cache;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class YelpComponent extends Component
 {
-
     use WithPagination;
 
-    public $search_term,
-        $location,
-        $limit,
+    public $search_key,
+        // $offset,
         $result = [],
         $platformCount = 7,
         $platforms,
-        $yelp_used,
-        $yelp_api_key;
+        $yelp_used;
 
-    public $api_key;
+
     public $site;
 
 
@@ -39,7 +34,7 @@ class YelpComponent extends Component
         $user = auth()->user();
         $this->site = $user->sites()->first();
 
-        $this->api_key = $this->site->yelp_api_key ??  env('YELP_API_key');
+
         if (session()->has('yelp_result')) {
             if (session()->has('yelp_result_expires_at') && Carbon::now()->gt(session()->get('yelp_result_expires_at'))) {
                 session()->forget('yelp_result');
@@ -56,31 +51,31 @@ class YelpComponent extends Component
 
         $this->yelp_used =   $activities->yelp_used;
     }
+
+
     public function searchData()
     {
         $this->validate([
-            'search_term' => 'required|string',
-            'location' => 'required',
+            'search_key' => 'required|string',
         ]);
-
-        $apiKey = $this->api_key;
-        $url = 'https://api.yelp.com/v3/businesses/search';
 
         $response = Http::withHeaders([
-            'Authorization' => 'Bearer ' . $apiKey,
-        ])->get($url, [
-            'term' => $this->search_term,
-            'location' => $this->location,
-            'limit' => $this->limit,
-        ]);
-        $expirationTime = Carbon::now()->addMinutes(5);
-
-        if (isset($response->json()['error'])) {
-            $this->result = [];
-            session()->flash('error', $response->json()['error']['code'] . ': Check Yelp API key');
-            return;
-        } else {
-            session()->put('yelp_result', $response->json()['businesses']);
+            'Content-Type' => 'application/json',
+            'Accept' => 'application/json',
+            ])->get('https://wextractor.com/api/v1/reviews/yelp', [
+                'id' => trim($this->search_key),
+                'auth_token' =>  env('WEX_TRACTOR_API_KEY'), 
+                
+            ]);
+            
+            $expirationTime = Carbon::now()->addMinutes(5);
+            
+            if (isset($response->json()['detail'])) {
+                $this->result = [];
+                session()->flash('error', $response->json()['detail'] . ': Check yelp API key');
+                return;
+            } else {
+            session()->put('yelp_result', $response->json()['reviews']);
             session()->put('yelp_result_expires_at', $expirationTime);
             return  $this->result = session()->get('yelp_result');
         }
@@ -89,18 +84,7 @@ class YelpComponent extends Component
     {
         $user = auth()->user();
         $site = $user->sites()->first();
-        $activities = $site->user_activities->first();
 
-        if ($site->yelp_api_key === null) {
-            if ($site->user_activities->yelp_used >= $this->platformCount) {
-                return  session()->flash('error', 'Free search exceeded');
-            }
-        }
-        
-        $activities->yelp_used++ ;
-        if ($activities->yelp_used < $this->platformCount) {
-            $activities->update();
-        }
 
         $platform = $user->platforms()->create([
             'site_id' => $site->id,
@@ -145,25 +129,26 @@ class YelpComponent extends Component
                 'net_promote_ans' => (round($data['rating']) * 2),
                 'nps_comment_ans' => null,
                 'star_question_ans' => round($data['rating']),
-                'review_platform_ans' => null,
+                'review_platform_ans' => $data['text'],
                 'video' => Cache::get('cloudinary_video_url') ?? null,
                 'contact_info_ans' => [
                     'email' => null,
-                    'location' => $data['location']['address1'] . " " . $data['location']['city'],
+                    'location' => null,
                     'organisation' => null,
-                    'image' => $data['image_url'] ?? null,
+                    'image' => $data['reviewer_avatar'] ?? null,
                 ],
 
                 'private_feed_back_ans' => [
-                    'name' =>  $data['name'],
+                    'name' =>  $data['reviewer'],
                     'email' => null,
-                    'phonenumber' =>  $data['display_phone'],
+                    'phonenumber' =>  null,
                     'message' => null,
                 ],
+                'date' => $data['datetime']
             ];
 
             $existingReviewsCount = Review::all()->count();
-            if ($existingReviewsCount >= 100) {
+            if ($existingReviewsCount >= 500) {
                 throw new NotFoundHttpException('Maximum review limit reached for this resource.');
             }
 
@@ -178,24 +163,7 @@ class YelpComponent extends Component
             $this->dispatch('refreshPage');
         }
     }
-    public function saveAPIKey()
-    {
-        $this->validate([
-            'yelp_api_key' => 'required',
-        ]);
 
-        $user = auth()->user();
-
-        $user->sites()->first();
-        $site = $user->sites()->first();
-
-        $site->yelp_api_key = $this->yelp_api_key;
-        $site->update();
-
-        session()->flash('success', 'Updated successfully');
-
-        $this->dispatch('refreshPage');
-    }
     public function render()
     {
         return view('livewire.yelp-component');

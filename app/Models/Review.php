@@ -24,6 +24,11 @@ class Review extends Model
     {
         return $this->belongsTo(Campaign::class);
     }
+    
+    public function tags()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
 
     protected function createdAt(): Attribute
     {

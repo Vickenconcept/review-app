@@ -13,11 +13,14 @@ class TripAdvisorScrapeController extends Controller
     {
 
       
-    $searchValue = $request->input('search_value', 'shoe');
+    $searchValue = $request->input('search_value', 'serp');
 
-    $scriptPath = base_path('scripts/scrape.cjs'); // Adjust the path to your script if you renamed it to .cjs
+    $scriptPath = base_path('scripts/scrape.js'); // Adjust the path to your script if you renamed it to .cjs
     $command = "node $scriptPath " . escapeshellarg($searchValue);
     $output = shell_exec($command . ' 2>&1'); // Capture errors as well
+
+    // $output = shell_exec('node ' . base_path('path/to/scraper.js'));
+    // return response()->json(['data' => $output]);
     
     // Parse the JSON output
     $urls = json_decode($output, true);

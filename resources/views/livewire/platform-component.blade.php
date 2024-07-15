@@ -8,43 +8,58 @@
     <h1 class="text-3xl font-bold -tracking-wider  px-3 md:px-10"> Add new platform for reviews</h1>
 
     <section class="px-3 md:px-10 ">
-        <div class="grid sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
-            {{-- <div class=" w-full">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-5">
+            <div class=" w-full">
                 <button @click="openModal = true; platform ='g2'" wire:click="updatePlatform('g2')"
                     class=" {{ $platform == 'g2' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
-                    <p><i class="bx bxs-star text-3xl"></i></p>
+                    <div class="flex items-center justify-center">
+                        <img src="{{ asset('images/g2-seeklogo.svg') }}" alt="" class="pb-2 w-7">
+                    </div>
                     <p class="font-semibold text-xs">G2</p>
 
                 </button>
-            </div> --}}
+            </div>
+            <div class=" w-full">
+                <button @click="openModal = true; platform ='trust-pilot'" wire:click="updatePlatform('trust-pilot')"
+                    class=" {{ $platform == 'trust-pilot' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
+             p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
+                    <p><i class="bx bxs-star text-3xl text-green-500 "></i></p>
+                    <p class="font-semibold text-xs">Trust Pilot</p>
 
-            {{-- <div class=" w-full">
+                </button>
+            </div>
+
+            <div class=" w-full">
                 <button @click="openModal = true; platform ='capterra'" wire:click="updatePlatform('capterra')"
                     class=" {{ $platform == 'capterra' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
-                    <p><i class="bx bxs-star text-3xl"></i></p>
+                    {{-- <p><i class="bx bxs-star text-3xl"></i></p> --}}
+                    <div class="flex justify-center items-center">
+                        <img src="https://iconape.com/wp-content/files/cr/351492/svg/351492.svg" alt=""
+                            class="pb-2 w-28">
+                    </div>
                     <p class="font-semibold text-xs">Capterra</p>
 
                 </button>
-            </div> --}}
+            </div>
 
-            {{-- <div class=" w-full">
+            <div class=" w-full">
                 <button @click="openModal = true; platform ='tripadvisor'" wire:click="updatePlatform('tripadvisor')"
                     class=" {{ $platform == 'tripadvisor' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
-                    <p><i class="bx bxs-star text-3xl"></i></p>
+                    <p> <i class='bx bxl-trip-advisor text-3xl text-green-500'></i></p>
                     <p class="font-semibold text-xs">Tripadvisor</p>
 
                 </button>
-            </div> --}}
+            </div>
 
             <div class=" w-full">
                 <button @click="openModal = true; platform ='google'" wire:click="updatePlatform('google')"
                     class=" {{ $platform == 'google' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
              p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
                     <p>
-                        <i class='bx bxl-google text-green-500 text-3xl'></i>
+                        <i class='bx bxl-google text-green-400 text-3xl'></i>
                     </p>
                     <p class="font-semibold text-xs">Google</p>
 
@@ -59,7 +74,7 @@
 
                 </button>
             </div>
-            
+
             <div class=" w-full">
                 <button @click="openModal = true; platform ='yelp'" wire:click="updatePlatform('yelp')"
                     class=" {{ $platform == 'yelp' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
@@ -82,7 +97,40 @@
 
                 </button>
             </div>
-           
+            <div class=" w-full">
+                <button @click="openModal = true; platform ='airbnb'" wire:click="updatePlatform('airbnb')"
+                    class=" {{ $platform == 'airbnb' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
+             p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
+                    <p>
+                        <i class='bx bxl-play-store text-yellow-300 text-3xl'></i>
+                    </p>
+                    <p class="font-semibold text-xs">AirBnb</p>
+
+                </button>
+            </div>
+            <div class=" w-full">
+                <button @click="openModal = true; platform ='booking'" wire:click="updatePlatform('booking')"
+                    class=" {{ $platform == 'booking' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
+             p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
+                    <p>
+                        <i class='bx bxl-play-store text-yellow-300 text-3xl'></i>
+                    </p>
+                    <p class="font-semibold text-xs">Booking</p>
+
+                </button>
+            </div>
+            <div class=" w-full">
+                <button @click="openModal = true; platform ='trustedshops'" wire:click="updatePlatform('trustedshops')"
+                    class=" {{ $platform == 'trustedshops' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
+             p-5 rounded-lg text-center space-y-1  cursor-pointer col-span-1 w-full">
+                    <p>
+                        <i class='bx bxl-play-store text-yellow-300 text-3xl'></i>
+                    </p>
+                    <p class="font-semibold text-xs">TrustedShops</p>
+
+                </button>
+            </div>
+
             <div class=" w-full">
                 <button @click="openModal = true; platform ='manually'" wire:click="updatePlatform('manually')"
                     class=" {{ $platform == 'manually' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-700 hover:bg-slate-100' }}
@@ -156,7 +204,7 @@
                     </div>
 
                 </div>
-                <div class="space-y-5 py-5">
+                {{-- <div class="space-y-5 py-5">
                     <div class="relative">
                         <div class="absolute inset-y-0 start-0 flex items-center  pointer-events-none space-x-5">
                             <span class="text-gray-700 font-semibold ">Tags </span> <i
@@ -166,7 +214,8 @@
                             class="block w-full p-3 ps-20 text-sm text-gray-900 border-0 focus:ring-0 focus:border-b focus:border-cyan-900 focus:bottom-3"
                             placeholder="Add tag">
                     </div>
-                </div>
+                    
+                </div> --}}
 
                 <div class="space-y-5 py-5">
                     <div class="flex justify-between pb-4">
@@ -209,19 +258,7 @@
                 </div>
             </div>
         </section>
-        {{-- <ul>
-            @foreach ($platforms as $platform)
-                <li>{{ $platform['name'] }}</li>
-
-                <form action="{{ route('platform.destroy', ['platform'=>  $platform['id'] ]) }}" method="post">
-                    @method('DELETE')
-                    @csrf
-                    <button>
-                        delete me
-                    </button>
-                </form>
-            @endforeach
-        </ul> --}}
+        
     @endforeach
 
 
@@ -232,12 +269,8 @@
         <div @click.away="openModal = false"
             class="bg-white w-[90%] h-[33rem] shadow-inner  border rounded-2xl overflow-auto  transition-all relative duration-700">
             <div class=" h-full " wire:poll>
-                {{-- <div class="text-right">
-                    <i class="bx bx-x"></i>
-                </div> --}}
-
                 <div style="display: none" x-show="platform == 'g2'" class=" h-full w-full p-5">
-                    g2
+                    <livewire:g2-component />
                 </div>
                 <div style="display: none" x-show="platform == 'google'" class=" h-full w-full p-5">
                     <livewire:google-component />
@@ -254,10 +287,22 @@
                     <livewire:google-play-component />
                 </div>
                 <div style="display: none" x-show="platform == 'tripadvisor'" class=" h-full w-full p-5">
-                    tripadvisor
+                    <livewire:trip-advisor-component />
                 </div>
                 <div style="display: none" x-show="platform == 'capterra'" class=" h-full w-full p-5">
-                    capterra
+                    <livewire:captera-component />
+                </div>
+                <div style="display: none" x-show="platform == 'trust-pilot'" class=" h-full w-full p-5">
+                    <livewire:trust-pilot-component />
+                </div>
+                <div style="display: none" x-show="platform == 'airbnb'" class=" h-full w-full p-5">
+                    <livewire:air-bnb-component />
+                </div>
+                <div style="display: none" x-show="platform == 'booking'" class=" h-full w-full p-5">
+                    <livewire:booking-component />
+                </div>
+                <div style="display: none" x-show="platform == 'trustedshops'" class=" h-full w-full p-5">
+                    <livewire:trusted-shops-component />
                 </div>
                 <div style="display: none" x-show="platform == 'manually'" class=" h-full w-full p-5">
                     <livewire:import-manually />

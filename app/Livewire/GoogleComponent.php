@@ -138,17 +138,6 @@ class GoogleComponent extends Component
 
         $user = auth()->user();
         $site = $user->sites()->first();
-        $activities = $site->user_activities->first();
-        
-        if ($site->serp_api_key === null) {
-            if ($activities->google_used >= $this->platformCount) {
-                return  session()->flash('error', 'Free search exceeded');
-            }
-        }
-        $activities->google_used++;
-        if ($activities->google_used < $this->platformCount) {
-            $activities->update();
-        }
 
         $platform = $user->platforms()->create([
             'site_id' => $site->id,
@@ -213,7 +202,7 @@ class GoogleComponent extends Component
             ];
 
             $existingReviewsCount = Review::all()->count();
-            if ($existingReviewsCount >= 100) {
+            if ($existingReviewsCount >= 500) {
                 throw new NotFoundHttpException('Maximum review limit reached for this resource.');
             }
 
@@ -317,7 +306,7 @@ class GoogleComponent extends Component
             ];
 
             $existingReviewsCount = Review::all()->count();
-            if ($existingReviewsCount >= 100) {
+            if ($existingReviewsCount >= 500) {
                 throw new NotFoundHttpException('Maximum review limit reached for this resource.');
             }
 

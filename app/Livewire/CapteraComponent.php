@@ -13,7 +13,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
-class FaceBookComponent extends Component
+class CapteraComponent extends Component
 {
     use WithPagination;
 
@@ -22,9 +22,9 @@ class FaceBookComponent extends Component
         $result = [],
         $platformCount = 7,
         $platforms,
-        $face_book_used;
+        $captera_used;
 
-
+    public $api_key;
     public $site;
 
 
@@ -34,14 +34,14 @@ class FaceBookComponent extends Component
         $user = auth()->user();
         $this->site = $user->sites()->first();
 
-
-        if (session()->has('face_book_result')) {
-            if (session()->has('face_book_result_expires_at') && Carbon::now()->gt(session()->get('face_book_result_expires_at'))) {
-                session()->forget('face_book_result');
-                session()->forget('face_book_result_expires_at');
+        $this->api_key =  env('WEX_TRACTOR_API_KEY');
+        if (session()->has('captera_result')) {
+            if (session()->has('captera_result_expires_at') && Carbon::now()->gt(session()->get('captera_result_expires_at'))) {
+                session()->forget('captera_result');
+                session()->forget('captera_result_expires_at');
                 $this->result = [];
             } else {
-                $this->result = session()->get('face_book_result');
+                $this->result = session()->get('captera_result');
             }
         }
 
@@ -49,7 +49,7 @@ class FaceBookComponent extends Component
 
         $activities = $this->site->user_activities->first();
 
-        $this->face_book_used =   $activities->face_book_used;
+        $this->captera_used =   $activities->captera_used;
     }
 
 
@@ -59,12 +59,14 @@ class FaceBookComponent extends Component
             'search_key' => 'required|string',
         ]);
 
+        $apiKey = $this->api_key;
         $response = Http::withHeaders([
             'Content-Type' => 'application/json',
             'Accept' => 'application/json',
-            ])->get('https://wextractor.com/api/v1/reviews/facebook', [
+            ])->get('https://wextractor.com/api/v1/reviews/capterra', [
                 'id' => trim($this->search_key),
-                'auth_token' =>  env('WEX_TRACTOR_API_KEY'), 
+                // 'offset' => $this->offset ?? 0, 
+                'auth_token' => $apiKey, 
                 
             ]);
             
@@ -72,12 +74,12 @@ class FaceBookComponent extends Component
             
             if (isset($response->json()['detail'])) {
                 $this->result = [];
-                session()->flash('error', $response->json()['detail'] . ': Check face_book API key');
+                session()->flash('error', $response->json()['detail'] . ': Check captera API key');
                 return;
             } else {
-            session()->put('face_book_result', $response->json()['reviews']);
-            session()->put('face_book_result_expires_at', $expirationTime);
-            return  $this->result = session()->get('face_book_result');
+            session()->put('captera_result', $response->json()['reviews']);
+            session()->put('captera_result_expires_at', $expirationTime);
+            return  $this->result = session()->get('captera_result');
         }
     }
     public function saveDataToDatabase()
@@ -88,7 +90,7 @@ class FaceBookComponent extends Component
 
         $platform = $user->platforms()->create([
             'site_id' => $site->id,
-            'name' => 'face_book',
+            'name' => 'captera',
         ]);
 
         $user = auth()->user();
@@ -132,17 +134,17 @@ class FaceBookComponent extends Component
                 'review_platform_ans' => $data['text'],
                 'video' => Cache::get('cloudinary_video_url') ?? null,
                 'contact_info_ans' => [
-                    'email' => null,
+                    'email' => $data['reviewer_job_title'],
                     'location' => null,
                     'organisation' => null,
-                    'image' => $data['avatar'] ?? null,
+                    'image' => $data['reviewer_avatar'] ?? null,
                 ],
 
                 'private_feed_back_ans' => [
                     'name' =>  $data['reviewer'],
-                    'email' => null,
+                    'email' => $data['reviewer_job_title'],
                     'phonenumber' =>  null,
-                    'message' => null,
+                    'message' => $data['pros'],
                 ],
                 'date' => $data['datetime']
             ];
@@ -154,8 +156,8 @@ class FaceBookComponent extends Component
 
             $feedback = Review::create($data);
 
-            if (session()->has('face_book_result')) {
-                session()->forget('face_book_result');
+            if (session()->has('captera_result')) {
+                session()->forget('captera_result');
             }
 
             session()->flash('success', 'imported successfully');
@@ -166,6 +168,6 @@ class FaceBookComponent extends Component
 
     public function render()
     {
-        return view('livewire.face-book-component');
+        return view('livewire.captera-component');
     }
 }
