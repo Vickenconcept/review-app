@@ -5,7 +5,7 @@
         <h1 class="font-bold text-xl  w-full md:w-[90%] mx-auto">Private Reviews</h1>
         <div class="relative overflow-x-auto shadow sm:rounded-lg w-full md:w-[90%] mx-auto ">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-cyan-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">
 
@@ -85,7 +85,7 @@
         <h1 class="font-bold text-xl  w-full md:w-[90%] mx-auto">Regular Reviews</h1>
         <div class="relative overflow-x-auto shadow sm:rounded-lg w-full md:w-[90%] mx-auto">
             <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                <thead class="text-xs text-cyan-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                     <tr>
                         <th scope="col" class="px-6 py-3">
 

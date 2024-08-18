@@ -5,7 +5,7 @@ namespace App\Livewire;
 use App\Models\Review;
 use Livewire\Component;
 
-class SideBarComponent extends Component
+class NavBarComponent extends Component
 {
     public function render()
     {
@@ -28,7 +28,7 @@ class SideBarComponent extends Component
         $totalNumberOfEmail =  20;
         $emailPercentage = ($totalEmail / $totalNumberOfEmail) * 100;
 
-        return view('livewire.side-bar-component', compact(
+        return view('livewire.nav-bar-component', compact(
             'site', 'UserPercentage', 'totalNumberOfUsers',
             'totlalResponse','totalNumberOfResponse','responsePercentage','totalNumberOfEmail', 'emailPercentage',
             'totalEmail'));

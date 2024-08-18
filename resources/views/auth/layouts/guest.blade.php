@@ -13,21 +13,11 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-5f5cc9ed.css') }}">
 
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    {{-- <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/assets/app-5f5cc9ed.css') }}"> --}}
-
-    <style>
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
-    </style>
-    @yield('styles')
 
     @livewireStyles
 </head>
@@ -41,14 +31,12 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
 
 
-
 <script>
     window.addEventListener('beforeunload', function(event) {
         var hiddenText = document.getElementById('hiddenText');
         hiddenText.classList.remove('hidden');
     });
 </script>
-
 
 
 <script>
@@ -84,17 +72,15 @@
     }
 
     function setpixelated(context) {
-        context['imageSmoothingEnabled'] = false;
-        context['mozImageSmoothingEnabled'] = false;
-        context['oImageSmoothingEnabled'] = false;
-        context['webkitImageSmoothingEnabled'] = false;
-        context['msImageSmoothingEnabled'] = false;
+        context['imageSmoothingEnabled'] = false; 
+        context['mozImageSmoothingEnabled'] = false; 
+        context['oImageSmoothingEnabled'] = false; 
+        context['webkitImageSmoothingEnabled'] = false; 
+        context['msImageSmoothingEnabled'] = false; 
     }
 </script>
 
-<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-@yield('scripts')
 @livewireScripts
-{{-- <script type="module" src="{{ asset('build/assets/app-abe98564.js') }}"></script> --}}
+<script type="module" src="{{ asset('build/assets/app-abe98564.js') }}"></script>
 
 </html>

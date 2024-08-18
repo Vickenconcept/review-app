@@ -1,26 +1,12 @@
-<x-guest-layout>
-    {{-- {{ $reviews }} --}}
+<x-app-layout>
 
-
-    <div>
-        <div class="py-5 border-b px-3 md:px-10 flex space-x-5 items-center">
-            <a href="{{ route('home') }}">
-                <i class='bx bxs-chevron-left text-2xl' ></i>
-            </a>
-            <div class="">
-                <h3 class=" font-bold">Share reviews</h3>
-            </div>
-            <span class="text-xs">select to share</span>
+    
+    <div class="h-full  space-y-10 ">
+        <div class="w-[90%] mx-auto">
+            <h3 class=" font-medium text-2xl capitalize">Social Media Share</h3>
+                <p class=" mt-1 text-gray-400">Select the review you want to share.</p>
         </div>
-
-        <div class="flex justify-between  bg-gray-50">
-            <h1 class="font-semibold md:w-[80%] mx-auto px-3 py-5">Select the review you want to share.</h1>
-
-        </div>
-    </div>
-
-    <div class="h-full  bg-gray-50 space-y-10 pt-10">
-        <section class=" grid grid-cols-1 md:grid-cols-3 gap-5 md:w-[80%] mx-auto px-3">
+        <section class=" grid grid-cols-1 md:grid-cols-2 gap-5  mx-auto px-3">
 
             @forelse ($reviews as $review)
                 <div
@@ -66,4 +52,4 @@
     </div>
 
 
-</x-guest-layout>
+</x-app-layout>

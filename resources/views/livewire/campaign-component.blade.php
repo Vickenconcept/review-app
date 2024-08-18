@@ -15,10 +15,10 @@
 
                 <div class="ml-5 flex  items-center justify-end space-x-3 ">
                     <button wire:click="CampaignData"
-                        class="px-4 py-2 rounded-lg bg-cyan-100 text-cyan-500 hover:bg-cyan-700 hover:text-cyan-100 transition-all duration-300 flex items-center "><i
+                        class="px-4 py-2 rounded-lg bg-orange-100 text-orange-500 hover:bg-orange-600 hover:text-orange-100 transition-all duration-300 flex items-center "><i
                             class="bx bx-save mr-1"></i>save</button>
 
-                    <button class="bg-cyan-950 hover:bg-cyan-800 hover:shadow px-4 py-1.5 font-semibold text-blue-50 rounded-md " @click="openModal = true">Share</button>
+                    <button class="bg-orange-600 hover:bg-orange-500 hover:shadow px-4 py-1.5 font-semibold text-blue-50 rounded-md " @click="openModal = true">Share</button>
                 </div>
             </div>
         </nav>
@@ -37,23 +37,23 @@
                     <div class=" ">
                         <ul class=" flex flex-col md:flex-row gap-6">
                             <li @click="link = 'Send'"
-                                class="cursor-pointer text-cyan-700 flex items-center font-semibold text-sm pb-1 "
-                                :class="{ 'border-b-2 border-cyan-700': link === 'Send' }"><i
+                                class="cursor-pointer text-gray-700 flex items-center font-semibold text-sm pb-1 "
+                                :class="{ 'border-b-2 border-gray-700': link === 'Send' }"><i
                                     class='bx bxs-envelope text-xl mr-2'></i>Send via email</li>
                             <li @click="link = 'Url'"
-                                class="cursor-pointer text-cyan-700 flex items-center font-semibold text-sm pb-1"
-                                :class="{ 'border-b-2 border-cyan-700': link === 'Url' }"><i
+                                class="cursor-pointer text-gray-700 flex items-center font-semibold text-sm pb-1"
+                                :class="{ 'border-b-2 border-gray-700': link === 'Url' }"><i
                                     class='bx bx-link text-xl mr-2'></i>Url address</li>
                             <li @click="link = 'embed'"
-                                class="cursor-pointer text-cyan-700 flex items-center font-semibold text-sm pb-1"
-                                :class="{ 'border-b-2 border-cyan-700': link === 'embed' }">
+                                class="cursor-pointer text-gray-700 flex items-center font-semibold text-sm pb-1"
+                                :class="{ 'border-b-2 border-gray-700': link === 'embed' }">
                                 <i class='bx bx-code-alt text-xl mr-2'></i>
 
                                 Embed Code
                             </li>
                             <li @click="link = 'QR'"
-                                class="cursor-pointer text-cyan-700 flex items-center font-semibold text-sm pb-1"
-                                :class="{ 'border-b-2 border-cyan-700': link === 'QR' }"><i
+                                class="cursor-pointer text-gray-700 flex items-center font-semibold text-sm pb-1"
+                                :class="{ 'border-b-2 border-gray-700': link === 'QR' }"><i
                                     class='bx bx-qr-scan text-xl mr-2'></i>QR code</li>
                         </ul>
 
@@ -69,7 +69,7 @@
                                         <input type="text" value="{{ auth()->user()->email }}"
                                             class="text-gray-400 form-control text-md w-56" disabled>
                                         <button type="button" wire:click="testInvite"
-                                            class="flex items-center bg-cyan-100 text-cyan-700 hover:bg-cyan-700 hover:text-cyan-100 transition-all duration-300 font-semibold rounded-md whitespace-nowrap  px-4 py-2 ml-4">
+                                            class="flex items-center bg-orange-100 text-gray-700 hover:bg-gray-700 hover:text-orange-100 transition-all duration-300 font-semibold rounded-md whitespace-nowrap  px-4 py-2 ml-4">
                                             <i class='bx bxs-send mr-1'></i>
                                             <span wire:loading.remove>Send test</span>
                                             <span wire:loading>Loading ...</span>
@@ -145,7 +145,7 @@
                                             </button>
                                         </p>
                                         <button
-                                            class=" hidden  md:flex items-center bg-cyan-100 text-cyan-700 hover:bg-cyan-700 hover:text-cyan-100 transition-all duration-300 font-semibold rounded-md whitespace-nowrap  px-4 py-2 ml-4"
+                                            class=" hidden  md:flex items-center bg-orange-100 text-gray-700 hover:bg-gray-700 hover:text-orange-100 transition-all duration-300 font-semibold rounded-md whitespace-nowrap  px-4 py-2 ml-4"
                                             @click="toCopy(document.getElementById('copyUrl'))">
                                             <i class="bx bx-copy text-xl"></i>Copy
                                         </button>
@@ -191,7 +191,7 @@
                         {{--  --}}
                         <div x-show="link == 'QR'" style="display: none" class="mt-5 space-y-3">
 
-                            <p class="text-sm font-semibold text-cyan-700">Scan QR code to connect </p>
+                            <p class="text-sm font-semibold text-gray-700">Scan QR code to connect </p>
                             @php
 
                                 $QRCode = QrCode::size(200)
@@ -247,14 +247,14 @@
 
                     <div class="grid grid-cols-2 gap-3">
                         <label
-                            class=" {{ $campaignType == 'reviews' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-500' }} p-5 rounded-lg text-center space-y-1  cursor-pointer">
+                            class=" {{ $campaignType == 'reviews' ? 'bg-blue-950 text-orange-200' : 'bg-gray-200 text-gray-500' }} p-5 rounded-lg text-center space-y-1  cursor-pointer">
                             <p><i class="bx bxs-star text-5xl"></i></p>
                             <p class="font-semibold text-xs">Collect Reviews</p>
                             <input checked type="radio" name="campaignType" wire:model.live="campaignType"
                                 value="reviews" class="hidden">
                         </label>
                         <label
-                            class=" {{ $campaignType == 'NPS' ? 'bg-blue-950 text-cyan-200' : 'bg-gray-200 text-gray-500' }}  p-5 rounded-lg text-center space-y-2  cursor-pointer">
+                            class=" {{ $campaignType == 'NPS' ? 'bg-blue-950 text-orange-200' : 'bg-gray-200 text-gray-500' }}  p-5 rounded-lg text-center space-y-2  cursor-pointer">
                             <p><i class="bx bxs-circle text-5xl"></i></p>
                             <p class="font-semibold text-xs">Measure NPS</p>
                             <input type="radio" name="campaignType" wire:model.live="campaignType" value="NPS"
@@ -299,7 +299,7 @@
                         <div class=" shadow rounded-lg space-y-3 {{ $campaignType == 'reviews' ? '' : 'hidden' }}">
                             <div @click="isOpen !== '1'? isOpen = '1' :isOpen = null"
                                 class="flex justify-between bg-gray-50 items-center hover:bg-gray-100 rounded-lg p-3 cursor-pointer">
-                                <span class="font-bold"> <i class="bx bxs-star mx-2 text-cyan-500 text-xl"></i>Stars
+                                <span class="font-bold"> <i class="bx bxs-star mx-2 text-orange-500 text-xl"></i>Stars
                                     question</span>
                                 <i x-show="isOpen !== '1'" class='bx bx-chevron-up text-2xl'></i>
                                 <i x-show="isOpen === '1'" class='bx bx-chevron-down text-2xl'></i>
@@ -326,7 +326,7 @@
                         <div class=" shadow rounded-lg space-y-3 {{ $campaignType == 'NPS' ? '' : 'hidden' }}">
                             <div @click="isOpen !== '2'? isOpen = '2' :isOpen = null"
                                 class="flex justify-between bg-gray-50 items-center hover:bg-gray-100 rounded-lg p-3 cursor-pointer">
-                                <span class="font-bold"> <i class='bx bxs-grid mx-2 text-cyan-500 text-xl'></i>Net
+                                <span class="font-bold"> <i class='bx bxs-grid mx-2 text-orange-500 text-xl'></i>Net
                                     Promoters Score</span>
                                 <i x-show="isOpen !== '2'" class='bx bx-chevron-up text-2xl'></i>
                                 <i x-show="isOpen === '2'" class='bx bx-chevron-down text-2xl'></i>
@@ -353,7 +353,7 @@
                         <div class=" shadow rounded-lg space-y-3 {{ $campaignType == 'NPS' ? '' : 'hidden' }}">
                             <div @click="isOpen !== '3'? isOpen = '3' :isOpen = null"
                                 class="flex justify-between bg-gray-50 items-center hover:bg-gray-100 rounded-lg p-3 cursor-pointer">
-                                <span class="font-bold"> <i class='bx bxs-grid mx-2 text-cyan-500 text-xl'></i>NPS
+                                <span class="font-bold"> <i class='bx bxs-grid mx-2 text-orange-500 text-xl'></i>NPS
                                     comment</span>
                                 <i x-show="isOpen !== '3'" class='bx bx-chevron-up text-2xl'></i>
                                 <i x-show="isOpen === '3'" class='bx bx-chevron-down text-2xl'></i>
@@ -385,7 +385,7 @@
                         <div class=" shadow rounded-lg space-y-3">
                             <div @click="isOpen !== '4'? isOpen = '4' :isOpen = null"
                                 class="flex justify-between bg-gray-50 items-center hover:bg-gray-100 rounded-lg p-3 cursor-pointer">
-                                <span class="font-bold"> <i class='bx bxs-grid mx-2 text-cyan-500 text-xl'></i>Review
+                                <span class="font-bold"> <i class='bx bxs-grid mx-2 text-orange-500 text-xl'></i>Review
                                     Platforms</span>
                                 <i x-show="isOpen !== '4'" class='bx bx-chevron-up text-2xl'></i>
                                 <i x-show="isOpen === '4'" class='bx bx-chevron-down text-2xl'></i>
@@ -430,7 +430,7 @@
                         <div class=" shadow rounded-lg space-y-3">
                             <div @click="isOpen !== '5'? isOpen = '5' :isOpen = null"
                                 class="flex justify-between bg-gray-50 items-center hover:bg-gray-100 rounded-lg p-3 cursor-pointer">
-                                <span class="font-bold"> <i class='bx bxs-grid mx-2 text-cyan-500 text-xl'></i>Write a
+                                <span class="font-bold"> <i class='bx bxs-grid mx-2 text-orange-500 text-xl'></i>Write a
                                     review </span>
                                 <i x-show="isOpen !== '5'" class='bx bx-chevron-up text-2xl'></i>
                                 <i x-show="isOpen === '5'" class='bx bx-chevron-down text-2xl'></i>
@@ -460,7 +460,7 @@
                         <div class=" shadow rounded-lg space-y-3">
                             <div @click="isOpen !== '6'? isOpen = '6' :isOpen = null"
                                 class="flex justify-between bg-gray-50 items-center hover:bg-gray-100 rounded-lg p-3 cursor-pointer">
-                                <span class="font-bold"> <i class='bx bxs-grid mx-2 text-cyan-500 text-xl'></i>Leave
+                                <span class="font-bold"> <i class='bx bxs-grid mx-2 text-orange-500 text-xl'></i>Leave
                                     contact info</span>
                                 <i x-show="isOpen !== '6'" class='bx bx-chevron-up text-2xl'></i>
                                 <i x-show="isOpen === '6'" class='bx bx-chevron-down text-2xl'></i>
@@ -486,7 +486,7 @@
                         <div class=" shadow rounded-lg space-y-3 {{ $enable_video_review ? '' : 'hidden' }}">
                             <div @click="isOpen !== '7'? isOpen = '7' :isOpen = null"
                                 class="flex justify-between bg-gray-50 items-center hover:bg-gray-100 rounded-lg p-3 cursor-pointer">
-                                <span class="font-bold"> <i class='bx bxs-grid mx-2 text-cyan-500 text-xl'></i>Record
+                                <span class="font-bold"> <i class='bx bxs-grid mx-2 text-orange-500 text-xl'></i>Record
                                     a video review</span>
                                 <i x-show="isOpen !== '7'" class='bx bx-chevron-up text-2xl'></i>
                                 <i x-show="isOpen === '7'" class='bx bx-chevron-down text-2xl'></i>
@@ -518,7 +518,7 @@
                         <div class=" shadow rounded-lg space-y-3">
                             <div @click="isOpen !== '8'? isOpen = '8' :isOpen = null"
                                 class="flex justify-between bg-gray-50 items-center hover:bg-gray-100 rounded-lg p-3 cursor-pointer">
-                                <span class="font-bold"> <i class='bx bxs-grid mx-2 text-cyan-500 text-xl'></i>Review
+                                <span class="font-bold"> <i class='bx bxs-grid mx-2 text-orange-500 text-xl'></i>Review
                                     thank you page</span>
                                 <i x-show="isOpen !== '8'" class='bx bx-chevron-up text-2xl'></i>
                                 <i x-show="isOpen === '8'" class='bx bx-chevron-down text-2xl'></i>
@@ -548,7 +548,7 @@
                         <div class=" shadow rounded-lg space-y-3 {{ $no_negative ? '' : 'hidden' }}">
                             <div @click="isOpen !== '9'? isOpen = '9' :isOpen = null"
                                 class="flex justify-between bg-gray-50 items-center hover:bg-gray-100 rounded-lg p-3 cursor-pointer">
-                                <span class="font-bold"> <i class='bx bxs-grid mx-2 text-cyan-500 text-xl'></i>Collect
+                                <span class="font-bold"> <i class='bx bxs-grid mx-2 text-orange-500 text-xl'></i>Collect
                                     private feedback</span>
                                 <i x-show="isOpen !== '9'" class='bx bx-chevron-up text-2xl'></i>
                                 <i x-show="isOpen === '9'" class='bx bx-chevron-down text-2xl'></i>
@@ -578,7 +578,7 @@
                         <div class=" shadow rounded-lg space-y-3 {{ $no_negative ? '' : 'hidden' }}">
                             <div @click="isOpen !== '10'? isOpen = '10' :isOpen = null"
                                 class="flex justify-between bg-gray-50 items-center hover:bg-gray-100 rounded-lg p-3 cursor-pointer">
-                                <span class="font-bold"> <i class='bx bxs-grid mx-2 text-cyan-500 text-xl'></i>Thank
+                                <span class="font-bold"> <i class='bx bxs-grid mx-2 text-orange-500 text-xl'></i>Thank
                                     you
                                 </span>
                                 <i x-show="isOpen !== '10'" class='bx bx-chevron-up text-2xl'></i>
@@ -617,8 +617,8 @@
             <div class="p-10  md:w-3/5 flex-grow flex justify-center cursor-grab">
 
                 <div
-                    class="bg-gray-100  rounded-3xl w-full px-5 h-[30rem] flex items-center justify-center  cursor-pointer hover:bg-cyan-200  hover:opacity-25 ">
-                    {{-- <div class="bg-gray-100 z-10 rounded-3xl w-full px-5 h-96 flex items-center justify-center relative cursor-pointer  after:bg-cyan-200  after:opacity-25 after:w-full after:h-full after:top-0 after:left-0 after:absolute after:hidden hover:after:block after:rounded-lg"> --}}
+                    class="bg-gray-100  rounded-3xl w-full px-5 h-[30rem] flex items-center justify-center  cursor-pointer hover:bg-orange-200  hover:opacity-25 ">
+                    {{-- <div class="bg-gray-100 z-10 rounded-3xl w-full px-5 h-96 flex items-center justify-center relative cursor-pointer  after:bg-orange-200  after:opacity-25 after:w-full after:h-full after:top-0 after:left-0 after:absolute after:hidden hover:after:block after:rounded-lg"> --}}
                     {{-- 1 --}}
                     <div x-show="isOpen === '1'" style="display: none"
                         class="bg-gray-50 rounded-lg shadow p-5 space-y-3 text-center select-none">
@@ -679,7 +679,7 @@
                             class=" border border-gray-300 bg-gray-100 rounded-lg h-28 resize-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-xs text-gray-400">write feed back</textarea>
                         <!--Submit button-->
                         <button type="submit"
-                            class="inline-block w-full rounded bg-cyan-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out ">
+                            class="inline-block w-full rounded bg-orange-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out ">
                             next
                         </button>
                     </div>
@@ -709,7 +709,7 @@
                             class=" border border-gray-300 bg-gray-100 rounded-lg h-28 resize-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-xs text-gray-400">write feed back</textarea>
                         <!--Submit button-->
                         <button type="submit"
-                            class="inline-block w-full rounded bg-cyan-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out ">
+                            class="inline-block w-full rounded bg-orange-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out ">
                             next
                         </button>
                     </div>
@@ -748,7 +748,7 @@
 
 
                             <button type="submit"
-                                class="inline-block w-full rounded bg-cyan-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out ">
+                                class="inline-block w-full rounded bg-orange-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out ">
                                 next
                             </button>
                         </div>
@@ -809,7 +809,7 @@
                                 class="mb-2 border border-gray-300 bg-gray-100 rounded-lg h-28 resize-none focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 text-xs text-gray-400">Message</textarea>
 
                             <button type="submit"
-                                class="inline-block w-full rounded bg-cyan-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out ">
+                                class="inline-block w-full rounded bg-orange-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-white shadow transition duration-150 ease-in-out ">
                                 next
                             </button>
                         </div>

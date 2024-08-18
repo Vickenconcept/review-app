@@ -6,6 +6,7 @@ use App\Mail\WelcomeMail;
 use App\Models\Reseller;
 use App\Models\Site;
 use App\Models\User;
+use GuzzleHttp\Exception\RequestException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
@@ -46,18 +47,34 @@ class ResellerController extends Controller
 
             $data['is_admin'] = '1';
             $user = User::create($data);
-            Mail::to($data['email'])->send(new WelcomeMail($data['password']));
             $uderId = $user->id;
-
+            
             $owner = auth()->user();
             $user->resellers()->create([
                 'resell_id' => $owner->id,
             ]);
+            
 
             // session()->put('userId', $user->id);
 
 
-            $openGraphData = OpenGraph::fetch($data['url'], true);
+            // $openGraphData = OpenGraph::fetch($data['url'], true);
+
+            try {
+                // Attempt to fetch the OpenGraph data from the provided URL
+                $openGraphData = OpenGraph::fetch($data['url'], true);
+            } catch (RequestException $e) {
+                // If the URL cannot be resolved or any other error occurs, use an alternative URL
+                $alternativeUrl = 'https://trustconvertio.com/login'; // Replace with your alternative URL
+        
+                try {
+                    // Attempt to fetch the OpenGraph data from the alternative URL
+                    $openGraphData = OpenGraph::fetch($alternativeUrl, true);
+                } catch (RequestException $e) {
+                    // Handle the failure to fetch even from the alternative URL
+                    $openGraphData = null; // Or handle as needed
+                }
+            }
 
             $color = $openGraphData['theme-color'] ?? null;
             $description = $openGraphData['description'] ?? null;
@@ -76,6 +93,7 @@ class ResellerController extends Controller
 
             // Save the site and associate it with the user
             $user->sites()->save($site);
+            Mail::to($data['email'])->send(new WelcomeMail($data['password']));
             // Your code that might throw the duplicate entry error
         } catch (\Illuminate\Database\QueryException $e) {
             // Handle the exception

@@ -1,6 +1,4 @@
 <div>
-
-
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
         <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
             <thead class="text-xs text-gray-700 uppercase dark:text-gray-400">
@@ -33,9 +31,6 @@
                             {{ $user->created_at }}
                         </td>
                         <td class="px-6 py-4">
-                            {{-- <button wire:click="deletUser({{ $user->id }})">
-                                <i class='bx bxs-trash text-xl text-red-500 hover:text-red-700'></i>
-                            </button> --}}
 
                             <button id="dropdownDefaultButton" data-dropdown-toggle="dropdown"> <i
                                     class='bx bxs-trash text-xl text-red-500 hover:text-red-700'></i>
@@ -58,7 +53,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td class="bg-cyan-100 text-cyan-500 py-4 text-center rounded col-span-4" colspan="4">No Data
+                        <td class="bg-orange-100 text-orange-500 py-10 text-center rounded col-span-4" colspan="4">No Data
                             Yet.</td>
                     </tr>
                 @endforelse

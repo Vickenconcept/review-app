@@ -1,1 +1,1 @@
-<button class="bg-cyan-950 hover:bg-cyan-800 hover:shadow px-4 py-1.5 font-semibold text-blue-50 rounded-md ">{{ $slot }}</button>
+<button class="bg-orange-500 hover:bg-orange-600 hover:shadow px-4 py-2 font-semibold text-orange-50 rounded-md   whitespace-nowrap">{{ $slot }}</button>

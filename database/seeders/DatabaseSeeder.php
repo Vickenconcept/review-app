@@ -78,6 +78,42 @@ class DatabaseSeeder extends Seeder
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
+            [
+                'uuid' => Str::uuid()->toString(),
+                'name' => 'Coverflow',
+                'image' => asset('images/widget2.jpg') ,
+                'type' => 'Type 7',
+                'display' => 'Display 7',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'uuid' => Str::uuid()->toString(),
+                'name' => 'Parallax',
+                'image' => asset('images/widget2.jpg') ,
+                'type' => 'Type 8',
+                'display' => 'Display 8',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'uuid' => Str::uuid()->toString(),
+                'name' => 'Mousewheel control',
+                'image' => asset('images/widget2.jpg') ,
+                'type' => 'Type 9',
+                'display' => 'Display 9',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
+            [
+                'uuid' => Str::uuid()->toString(),
+                'name' => 'Effect cards',
+                'image' => asset('images/widget2.jpg') ,
+                'type' => 'Type 10',
+                'display' => 'Display 10',
+                'created_at' => now(),
+                'updated_at' => now(),
+            ],
             // Add more widgets as needed
         ]);
 

@@ -29,7 +29,7 @@ class FolderController extends Controller
      */
     public function store(Request $request)
     {
-
+        // dd('hello');
         $user = auth()->user();
         $siteId =  $user->sites()->first();
 
@@ -38,7 +38,6 @@ class FolderController extends Controller
             "name" => "required",
         ]);
         $valaidatedData['site_id'] =  $siteId->id;
-        // dd($valaidatedData['name'] );
 
         $folder = Folder::create($valaidatedData);
 
@@ -84,18 +83,14 @@ class FolderController extends Controller
      */
     public function destroy(Folder $folder)
     {
-        // Get all campaigns belonging to the folder
         $campaigns = $folder->campaigns;
 
-        // Update folder_id of each campaign to null
         foreach ($campaigns as $campaign) {
             $campaign->update(['folder_id' => null]);
         }
 
-        // Delete the folder
         $folder->delete();
 
-        // Optionally, you can return a response or redirect back with a message
         return redirect()->to('campaign')->with('success', 'Folder deleted successfully.');
     }
 }

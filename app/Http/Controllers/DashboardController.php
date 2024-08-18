@@ -16,7 +16,7 @@ class DashboardController extends Controller
 
         $reviews = Campaign::with(['reviews' => function ($query) {
             $query->latest();
-        }])->latest()->get()->pluck('reviews')->flatten()->take(4);
+        }])->latest()->get()->pluck('reviews')->flatten()->take(3);
 
         $user = auth()->user();
 

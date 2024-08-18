@@ -1,81 +1,61 @@
 <x-app-layout>
-    <div class="h-full space-y-8" x-data="{ link: null }">
-        <div class="py-5 border-b px-3 md:px-10 flex space-x-5 items-center">
-            <div>
-                <h3 class=" font-bold">Settings</h3>
-            </div>
-            <span class="text-xs">Invite users to your team</span>
-        </div>
+    <div class="h-full space-y-4" x-data="{ link: null }">
+        
+        <h1 class="text-xl px-3 md:px-10 capitalize font-medium">User Settings</h1>
         <div class=" py-5 md:px-10 ">
-            <ul class=" flex flex-col md:flex-row gap-6">
-                <a href="{{ route('settings.setting') }}">
-                    <li @click="link = 'Send'"
-                        class="cursor-pointer text-cyan-700 flex items-center font-semibold text-sm pb-1 "><i
-                            class='bx bxs-cog text-xl mr-2'></i> Setting</li>
-                </a>
-                <a href="{{ route('settings.users') }}">
-                    <li @click="link = 'Url'"
-                        class="cursor-pointer text-cyan-700 flex items-center font-semibold text-sm pb-1 border-b-2 border-cyan-700">
-                        <i class='bx bxs-group text-xl mr-2'></i>Users
-                    </li>
-                </a>
-                {{-- <a href="{{ route('settings.email') }}">
-                    <li @click="link = 'signature'"
-                        class="cursor-pointer text-cyan-700 flex items-center font-semibold text-sm pb-1"><i
-                            class='bx bxs-envelope text-xl mr-2'></i> Email</li>
-                </a> --}}
-                <a href="{{ route('settings.theme') }}">
-                    <li @click="link = 'QR'"
-                        class="cursor-pointer text-cyan-700 flex items-center font-semibold text-sm pb-1"><i
-                            class='bx bx-cookie text-xl mr-2'></i>Theme</li>
-                </a>
-            </ul>
+            <div class="lg:flex items-center">
+                <ul class=" flex flex-col md:flex-row gap-6 bg-white px-2 py-1 rounded-lg">
+                    <a href="{{ route('settings.setting') }}">
+                        <li @click="link = 'Send'"
+                            class="cursor-pointer text-gray-500 flex items-center font-semibold text-sm  px-3 py-2   "><i
+                                class='bx bxs-cog text-lg mr-1'></i> Setting</li>
+                    </a>
+                    <a href="{{ route('settings.users') }}">
+                        <li @click="link = 'Url'"
+                            class="cursor-pointer text-gray-500 flex items-center font-semibold text-sm  px-3 py-2   bg-gray-100 rounded-lg">
+                            <i class='bx bx-group text-lg mr-1'></i>Users
+                        </li>
+                    </a>
+                    <a href="{{ route('settings.theme') }}">
+                        <li @click="link = 'QR'"
+                            class="cursor-pointer text-gray-500 flex items-center font-semibold text-sm  px-3 py-2  "><i
+                                class='bx bx-cookie text-lg mr-1'></i>Theme</li>
+                    </a>
+                </ul>
+                <h1 class=" font-semibold text-md px-6 py-2 text-gray-500 ">Users ({{ $site->users()->count() }}/3)</h1>
+            </div>
         </div>
 
         <section>
-            <div class="relative overflow-x-auto shadow sm:rounded-lg w-full md:w-[90%] mx-auto space-y-5 py-5">
-                <h1 class=" font-semibold text-md px-6 ">Users ({{ $site->users()->count() }}/3)</h1>
-                @if ($errors->any())
-                    <div class="bg-red-200 text-red-500 p-4">
-                        <ul>
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-                @if (session('success'))
-                    <div class="bg-green-200 text-green-500 p-4">
-                        {{ session('success') }}
-                    </div>
-                @endif
-                <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-                    <thead class="text-xs text-cyan-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+            <div class="relative overflow-x-auto shadow sm:rounded-lg w-full md:w-[90%] mx-auto space-y-5 pb-5 bg-white">
+                <x-session-msg />
+                <table class="w-full text-sm text-left rtl:text-right text-gray-500 ">
+                    <thead class="text-xs  uppercase bg-gray-50  ">
                         <tr>
                             <th scope="col" class="px-6 py-3">
                                 Email
                             </th>
-                            <th scope="col" class="px-6 py-3">
+                            {{-- <th scope="col" class="px-6 py-3">
                                 Status
-                            </th>
+                            </th> --}}
                             <th scope="col" class="px-6 py-3">
                                 Role
                             </th>
                             <th scope="col" class="px-6 py-3">
-
+                                Actions
                             </th>
                         </tr>
                     </thead>
                     <tbody>
                         @forelse ($site->users as $user)
                             <tr
-                                class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                class="bg-white border- hover:bg-gray-50 ">
                                 <td class="px-6 py-3 font-semibold">
                                     {{ $user->email }}
                                 </td>
-                                <td class="px-6 py-3 font-semibold">
+                                {{-- <td class="px-6 py-3 font-semibold">
                                     Active
-                                </td>
+                                </td> --}}
                                 <td class="px-6 py-3 font-semibold">
                                     @if ($user->is_admin)
                                         Owner
@@ -114,7 +94,7 @@
                             <input type="email" name="email" value=""
                                 class="text-gray-400 form-control text-md w-56" placeholder="Add user with email">
                             <button type="submit"
-                                class="flex items-center hover:bg-cyan-100 hover:text-cyan-700 bg-cyan-700 text-cyan-100 transition-all duration-300 font-semibold rounded-md whitespace-nowrap  px-4 py-2 ml-4">
+                                class="flex items-center hover:bg-orange-200 hover:text-orange-500 bg-orange-500 text-orange-100 transition-all duration-300 font-semibold rounded-md whitespace-nowrap  px-4 py-2 ml-4">
                                 <i class='bx bx-plus mr-1'></i> Add user
                             </button>
                         </form>

@@ -75,8 +75,13 @@ Route::resource('review', ReviewController::class);
 
 
 
+
 Route::middleware(['auth'])->group(function () {
     Route::get('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
+    Route::post('addToFolder', [FolderController::class, 'addToFolder'])->name('addToFolder');
+    
+    Route::resource('folder', FolderController::class);
+
     Route::get('home', [DashboardController::class, 'index'])->name('home');
     Route::get('campaign/widget/{uuid?}', [CampaignController::class, 'selectWidget'])->name('selectWidget');
     Route::post('campaign/update-name', [CampaignController::class, 'changeName'])->name('changeCampaignName');
@@ -85,8 +90,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('reseller', ResellerController::class);
     Route::delete('/platforms/batch-delete', [PlatformController::class, 'batchDelete'])->name('platform.batchDelete');
     Route::resource('platform', PlatformController::class);
-    Route::post('addToFolder', [FolderController::class, 'addToFolder'])->name('addToFolder');
-    Route::resource('folder', FolderController::class);
+    
     Route::view('profile', 'profile')->name('profile');
     Route::post('profile/name', [ProfileController::class, 'changeName'])->name('changeName');
     Route::post('profile/password', [ProfileController::class, 'changePassword'])->name('changePassword');
@@ -103,59 +107,13 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-Route::controller(FacebookController::class)->group(function () {
-    Route::get('auth/facebook', 'redirectToFacebook')->name('auth.facebook');
-    Route::get('auth/facebook/callback', 'handleFacebookCallback');
-});
-Route::controller(LinkedInController::class)->group(function () {
-    Route::get('auth/linkedin', 'redirectToLinkedIn')->name('auth.linkedin');
-    Route::get('auth/linkedin/callback', 'handleLinkedInCallback');
-});
-Route::get('trip', [TripAdvisorScrapeController::class, 'scrapeReviews'])->name('trip');
+// Route::controller(FacebookController::class)->group(function () {
+//     Route::get('auth/facebook', 'redirectToFacebook')->name('auth.facebook');
+//     Route::get('auth/facebook/callback', 'handleFacebookCallback');
+// });
+// Route::controller(LinkedInController::class)->group(function () {
+//     Route::get('auth/linkedin', 'redirectToLinkedIn')->name('auth.linkedin');
+//     Route::get('auth/linkedin/callback', 'handleLinkedInCallback');
+// });
+// Route::get('trip', [TripAdvisorScrapeController::class, 'scrapeReviews'])->name('trip');
 
-Route::get(
-    'test',
-    function () {
-        $api_key = env('TRIP_ADVISOR_API_KEY');
-
-        // $response = Http::withHeaders([
-        //     'Content-Type' => 'application/json',
-        //     'Accept' => 'application/json',
-        //     'Referer' => 'https://trust.test',
-        //     'Origin' => 'https://trust.test'  
-        // ])->get('https://api.content.tripadvisor.com/api/v1/location/search', [
-        //     'key' => $api_key, 
-        //     'searchQuery' => 'Nigeria',
-        //     'language' => 'en'
-        // ]);
-        // echo $response->body();
-        
-        $apiUrl = 'https://services.hyphenapi.com/api/translate';
-        $from = 'en';
-        $to = 'fr';
-        $text = ' my name is Ebenezer';
-
-        $response = Http::withHeaders([
-            'Accept' => 'application/json',
-            'x-api-key' => '4xdz-hblf-fp8q-tk7q-26hk-gt4m',
-            'Content-Type' => 'application/json',
-        ])->post($apiUrl, [
-            'text' => $text,
-            'from' => $from,
-            'to' => $to,
-        ]);
-        dd($response->json());
-
-        if ($response->successful()) {
-            return $response->json()['translatedText']; // Adjust based on the actual response structure
-        }
-
-        return 'Translation failed';
-    }
-);
-// $response = Http::withHeaders([
-//     'Content-Type' => 'application/json',
-// ])->post("https://api.content.tripadvisor.com/api/v1/location/locationId/reviews?language=en");
-
-
-// 60299223533b7f79495355d682ccdcc0d1973547

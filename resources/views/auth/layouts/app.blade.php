@@ -15,8 +15,6 @@
 
     <script src="https://unpkg.com/cloudinary-video-player@2.5.0/dist/cld-video-player.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/cloudinary-core/2.13.1/cloudinary-core-shrinkwrap.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -38,12 +36,7 @@
             width: 65%;
             margin: auto;
         }
-
-        body {
-            font-family: 'Poppins', sans-serif;
-        }
     </style>
-    @yield('styles')
 
 
 </head>
@@ -51,26 +44,14 @@
 <body class="h-full ">
     <x-notification />
     <div id="ap" class="h-full bg-gray- text-gray-700 " x-data="{ openHelp: false }">
-        <x-navbar />
         <x-sidebar />
-        <div class=" h-full sm:ml-64 mt-14 bg-slate-100 pt-10 overflow-y-auto">
+        <div class=" h-full sm:ml-64">
             {{ $slot }}
-
-
-            <iframe id="myIframe" src="http://127.0.0.1:8000/campaign/component/87b4c4a4-8917-4b41-abd7-bbf6d058b9e8 "
-                style=" position: relative;
-"width="100%" height="600">
-            </iframe>
 
             {{-- <x-footer /> --}}
 
         </div>
     </div>
-
-
-    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-    @yield('scripts')
 
     <script>
         window.addEventListener('beforeunload', function(event) {

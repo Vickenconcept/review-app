@@ -1,20 +1,12 @@
 <x-guest-layout>
     <x-notification />
-    <div class="flex justify-center items-center h-screen bg-cyan-950 ">
+    <div class="flex justify-center items-center h-screen bg-gradient-to-b from-[#D0E8FF] to-[#FBCABA]">
         <div class="w-[40%] mx-auto">
             <form method="POST" action="{{ route('password.email') }}"
-                class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                class=" shadow-md rounded-2xl bg-slate-200 bg-opacity-50 px-8 pt-6 pb-8 mb-4">
                 @csrf
                 <div class="mb-4">
-                    @if ($errors->any())
-                        <div class="bg-red-200 text-red-500 p-4">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
+                   <x-session-msg />
                     @if (session('status'))
                         <div class="bg-green-200 text-green-500 p-4">
                             {{ session('status') }}
@@ -28,11 +20,11 @@
                 </div>
 
                 <button type="submit"
-                    class= "bg-cyan-950 hover:bg-cyan-800 hover:shadow px-4 py-1.5 font-semibold text-blue-50 rounded-md w-full">
+                    class= "bg-orange-500 hover:bg-orange-600 hover:shadow px-4 py-1.5 font-semibold text-blue-50 rounded-md w-full">
                     <span id="hiddenText" class="hidden"> <i class='bx bx-loader-alt animate-spin'></i></span>
                     <span>SEND</span>
                 </button>
-                <div class=" text-cyan-500 font-semibold  text-sm py-2 flex items-center justify-end">
+                <div class=" text-gray-600 font-semibold  hover:text-orange-500  text-sm py-2 flex items-center justify-end">
                     <i class='bx bxs-chevron-left-circle mr-1 text-xl' ></i><a href="{{ route('home') }}" class="hover:underline">GO BACK</a>
                 </div>
 

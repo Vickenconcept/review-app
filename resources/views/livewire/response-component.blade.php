@@ -67,10 +67,10 @@
                     <div class="h-full col-span-1 bg-gray-50 p-2 space-y-1">
                         @foreach ($reviews as $review)
                             <a href="#{{ $review->id }}-first"
-                                class="bg-white p-2 space-y-2 block focus:outline-1 focus:ring focus:ring-cyan-300">
+                                class="bg-white p-2 space-y-2 block focus:outline-1 focus:ring focus:ring-orange-500">
                                 <p class="font-semibold text-gray-400">
                                     {{ $review->star_question_ans ? $review->star_question_ans : '[no value]' }}</p>
-                                <p class="text-cyan-500 text-xs font-bold">#{{ $loop->iteration }}
+                                <p class="text-orange-500 text-xs font-bold">#{{ $loop->iteration }}
                                     {{ $review->created_at }}</p>
                             </a>
                         @endforeach
@@ -92,13 +92,13 @@
                                             </svg>
 
                                         </button>
-                                        <span class=" ml-1 text-xs bg-cyan-100 text-cyan-500 p-1 rounded-lg">
+                                        <span class=" ml-1 text-xs bg-orange-100 text-orange-500 p-1 rounded-lg">
                                             #{{ $loop->iteration }}
                                         </span>
                                     </div>
                                 </div>
                                 <div class="space-y-3">
-                                    <p class="text-cyan-700 font-bold text-sm">How would you rate our service?</p>
+                                    <p class="text-gray-700 font-bold text-sm">How would you rate our service?</p>
                                     <div class="">
                                         <button class="border px-2 py-0.5">
                                             @for ($i = 1; $i <= $review->star_question_ans; $i++)
@@ -107,15 +107,15 @@
                                         </button>
                                     </div>
 
-                                    <p class="text-cyan-700 font-bold text-sm">Please let us know what was missing or
+                                    <p class="text-gray-700 font-bold text-sm">Please let us know what was missing or
                                         disappointing in your experience with us.</p>
                                     <div class="border px-2 py-0.5 text-xs font-semibold">
                                         {{ $review->review_platform_ans }}
                                     </div>
 
                                     <div>
-                                        <p class="text-cyan-700 font-bold text-sm">Contact Info</p>
-                                        <div class="bg-cyan-100 p-2">
+                                        <p class="text-gray-700 font-bold text-sm">Contact Info</p>
+                                        <div class="bg-orange-100 p-2">
                                             @if ($review->private_feed_back_ans['name'])
                                                 <label for="" class="text-xs font-bold">Name</label>
                                                 <input type="text"
@@ -144,7 +144,7 @@
                                 </div>
                             </div>
                         @empty
-                            <div class="text-center font-bold text-cyan-400 bg-cyan-100 p-3">empty data</div>
+                            <div class="text-center font-bold text-orange-400 bg-orange-100 p-3">empty data</div>
                         @endforelse
 
                     </div>
@@ -162,10 +162,10 @@
                     <div class="h-full col-span-1 bg-gray-50 p-2 space-y-1">
                         @foreach ($reviews as $review)
                             <a href="#{{ $review->id }}-second"
-                                class="bg-white p-2 space-y-2 block focus:outline-1 focus:ring focus:ring-cyan-300">
+                                class="bg-white p-2 space-y-2 block focus:outline-1 focus:ring focus:ring-orange-500">
                                 <p class="font-semibold text-gray-400">
                                     {{ $review->star_question_ans ? $review->star_question_ans : '[no value]' }}</p>
-                                <p class="text-cyan-500 text-xs font-bold">#{{ $loop->iteration }}
+                                <p class="text-orange-500 text-xs font-bold">#{{ $loop->iteration }}
                                     {{ $review->created_at }}</p>
                             </a>
                         @endforeach
@@ -188,7 +188,7 @@
                                             </svg>
 
                                         </button>
-                                        <span class=" ml-1 text-xs bg-cyan-100 text-cyan-500 p-1 rounded-lg">
+                                        <span class=" ml-1 text-xs bg-orange-100 text-orange-500 p-1 rounded-lg">
                                             #{{ $loop->iteration }}
                                         </span>
                                     </div>
@@ -200,12 +200,12 @@
                                         class="hover:underline text-xs font-bold">{{ $review->private_feed_back_ans['name'] }}
                                         @if ($review->contact_info_ans['location'])
                                             <span
-                                                class="text-cyan-400">({{ $review->contact_info_ans['location'] }})</span>
+                                                class="text-orange-400">({{ $review->contact_info_ans['location'] }})</span>
                                         @endif
                                     </a>
                                 </div>
                                 <div class="space-y-3">
-                                    <p class="text-cyan-700 font-bold text-sm">How likely are you to recommend our
+                                    <p class="text-gray-700 font-bold text-sm">How likely are you to recommend our
                                         service to a friend or colleague? (0 - 10)</p>
                                     <div class="">
                                         <button class="border-2 px-2 py-0.5 rounded">
@@ -214,20 +214,20 @@
                                         </button>
                                     </div>
 
-                                    <p class="text-cyan-700 font-bold text-sm">What is the primary reason for your
+                                    <p class="text-gray-700 font-bold text-sm">What is the primary reason for your
                                         score?</p>
                                     <div class="border px-2 py-0.5 text-xs font-semibold">
                                         {{ $review->nps_comment_ans }}
                                     </div>
-                                    <p class="text-cyan-700 font-bold text-sm">Please let us know what was missing or
+                                    <p class="text-gray-700 font-bold text-sm">Please let us know what was missing or
                                         disappointing in your experience with us.</p>
                                     <div class="border px-2 py-0.5 text-xs font-semibold">
                                         {{ $review->review_platform_ans }}
                                     </div>
 
                                     <div>
-                                        <p class="text-cyan-700 font-bold text-sm">Contact Info</p>
-                                        <div class="bg-cyan-100 p-2">
+                                        <p class="text-gray-700 font-bold text-sm">Contact Info</p>
+                                        <div class="bg-orange-100 p-2">
                                             @if ($review->private_feed_back_ans['name'])
                                                 <label for="" class="text-xs font-bold">Name</label>
                                                 <input type="text"
@@ -256,7 +256,7 @@
                                 </div>
                             </div>
                         @empty
-                            <div class="text-center font-bold text-cyan-400 bg-cyan-100 p-3">empty data</div>
+                            <div class="text-center font-bold text-orange-400 bg-orange-100 p-3">empty data</div>
                         @endforelse
 
                     </div>

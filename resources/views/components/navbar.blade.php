@@ -1,0 +1,4 @@
+
+<livewire:nav-bar-component />
+
+
